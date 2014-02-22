@@ -1,0 +1,20 @@
+/**
+ * Created with IntelliJ IDEA.
+ * User: Yahya
+ * Date: 2/22/14
+ * Time: 12:28 PM
+ * To change this template use File | Settings | File Templates.
+ */
+package {
+public class Assets {
+
+    [Embed(source="../assets/splashscreen.jpg")]
+    public static const SPLASH_SCREEN_IMAGE:Class;
+
+    [Embed(source="../assets/background.jpg")]
+    public static const GAME_BG_IMAGE:Class;
+
+    public function Assets() {
+    }
+}
+}
