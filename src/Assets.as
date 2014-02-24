@@ -8,11 +8,19 @@
 package {
 public class Assets {
 
+
+    //Graphic Assets
+
     [Embed(source="../assets/splashscreen.jpg")]
     public static const SPLASH_SCREEN_IMAGE:Class;
 
     [Embed(source="../assets/background.jpg")]
     public static const GAME_BG_IMAGE:Class;
+
+
+    //Sound Assets
+    [Embed(source="../assets/sounds/gamemusic.mp3")]
+    public static const GAME_MUSIC:Class;
 
     public function Assets() {
     }

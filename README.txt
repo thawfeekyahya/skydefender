@@ -17,4 +17,3 @@ Level Loose     : When enemy gets passed on the left of the screen above the all
 Level Difficulty : Each new level will have more enemy count / powerful enemies coming. ( helicopter , high end war planes )
 
 Background : For each level background will changing randomly ( morning , noon , evening , night)
-
