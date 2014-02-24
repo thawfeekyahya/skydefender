@@ -22,6 +22,12 @@ public class Assets {
     [Embed(source="../assets/sounds/gamemusic.mp3")]
     public static const GAME_MUSIC:Class;
 
+    [Embed(source="../assets/player/turetBase.png")]
+    public static const PLAYER_TURRET_BASE:Class;
+
+    [Embed(source="../assets/player/turet.png")]
+    public static const PLAYER_TURRET:Class;
+
     public function Assets() {
     }
 }
