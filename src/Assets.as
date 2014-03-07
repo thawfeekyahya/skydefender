@@ -28,7 +28,9 @@ public class Assets {
     [Embed(source="../assets/player/turet.png")]
     public static const PLAYER_TURRET:Class;
 
-    public function Assets() {
-    }
+    [Embed(source="../assets/player/player_bullet.png")]
+    public static const PLAYER_BULLET:Class;
+
+
 }
 }

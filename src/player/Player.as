@@ -14,10 +14,19 @@ import net.flashpunk.graphics.Graphiclist;
 import net.flashpunk.graphics.Image;
 import net.flashpunk.utils.Input;
 
+import utils.EntityPool;
+
+import weapons.Bullets;
+
+import weapons.Bullets;
+
 public class Player extends Entity {
 
     private var turretBase:Image;
     private var turret:Image;
+    private var bulletPool:EntityPool;
+    private var bulletVect:Vector.<Bullets> = new Vector.<Bullets>();
+
 
     public function Player(x:Number = 0, y:Number = 0, graphic:Graphic = null, mask:Mask = null) {
         super(x, y, graphic, mask);
@@ -28,6 +37,7 @@ public class Player extends Entity {
     override public function added():void {
         super.added();
     }
+
 
     private function init():void {
         turretBase = new Image(Assets.PLAYER_TURRET_BASE);
@@ -46,12 +56,46 @@ public class Player extends Entity {
         turret.y = turretBase.y + 30;
         turret.smooth = true;
         turret.angle = 90;
+
+        //Create Pool Objects
+        bulletPool = new EntityPool(Bullets,500);
     }
 
 
     override public function update():void {
-        turret.angle = FP.angle(turret.x,turret.y,Input.mouseX,Input.mouseY);
+        moveTurret();
+        checkBullets();
+        checkMouseInput();
         super.update();
+    }
+
+    private function checkBullets():void {
+        for (var i:int = bulletVect.length - 1; i >= 0; i--) {
+            var bullet:Bullets = bulletVect[i];
+            if(bullet.x > FP.width || bullet.x <0 || bullet.y > FP.height || bullet.y < 0){
+                bulletPool.putEntity(bullet);
+                bulletVect.splice(i,1);
+            }
+        }
+    }
+
+    private function checkMouseInput():void {
+        if(Input.mouseDown){
+           fireBullets();
+        }
+    }
+
+    private function fireBullets():void {
+        var bullet:Bullets = Bullets(FP.world.add(bulletPool.getEntity()));
+        bullet.x = turret.x;
+        bullet.y = turret.y;
+        bullet.setAngle(FP.angle(Input.mouseX,Input.mouseY,turretBase.x,turretBase.y));
+        bullet.setSpeed(5);
+        bulletVect.push(bullet);
+    }
+
+    private function moveTurret():void {
+        turret.angle = FP.angle(turret.x,turret.y,Input.mouseX,Input.mouseY);
     }
 }
 }

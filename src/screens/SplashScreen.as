@@ -27,9 +27,8 @@ public class SplashScreen extends World {
     private function init():void {
         image = new Backdrop(Assets.SPLASH_SCREEN_IMAGE);
         addGraphic(image);
-
-        startButton     = new Button("Play",FP.halfWidth,FP.halfHeight,startButtonClicked);
-        creditsButton   = new Button("Credits",FP.halfWidth,FP.halfHeight+20,creditClicked);
+        startButton     = new Button("Play",startButtonClicked,FP.halfWidth,FP.halfHeight,100,50);
+        creditsButton   = new Button("Credits",creditClicked,FP.halfWidth,FP.halfHeight+20,100,50);
     }
 
     private function startButtonClicked():void {

@@ -13,6 +13,8 @@ import net.flashpunk.graphics.Backdrop;
 
 import player.Player;
 
+import weapons.Bullets;
+
 public class GamePlay extends World {
 
     private var backgroundImage:Backdrop;
@@ -36,6 +38,15 @@ public class GamePlay extends World {
 
         backgroundImage = new Backdrop(Assets.GAME_BG_IMAGE);
         gameMusic = new Sfx(Assets.GAME_MUSIC);
+
+        var bullet:Bullets = new Bullets();
+        bullet.x = 0;
+        bullet.y = FP.height;
+        bullet.setAngle(FP.angle(0,FP.height,FP.width,0));
+        add(bullet);
+
     }
+
+
 }
 }
