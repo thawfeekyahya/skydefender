@@ -16,16 +16,18 @@ import net.flashpunk.utils.Input;
 
 import utils.EntityPool;
 
-import weapons.Bullets;
+import weapons.Bullet;
 
-import weapons.Bullets;
+import weapons.Bullet;
 
 public class Player extends Entity {
 
     private var turretBase:Image;
     private var turret:Image;
     private var bulletPool:EntityPool;
-    private var bulletVect:Vector.<Bullets> = new Vector.<Bullets>();
+    private var bulletVect:Vector.<Bullet> = new Vector.<Bullet>();
+    private var delayTime:Number = 0;
+    private const DEALY_TIME:Number = 0.30;
 
 
     public function Player(x:Number = 0, y:Number = 0, graphic:Graphic = null, mask:Mask = null) {
@@ -58,7 +60,7 @@ public class Player extends Entity {
         turret.angle = 90;
 
         //Create Pool Objects
-        bulletPool = new EntityPool(Bullets,500);
+        bulletPool = new EntityPool(Bullet,500);
     }
 
 
@@ -71,9 +73,10 @@ public class Player extends Entity {
 
     private function checkBullets():void {
         for (var i:int = bulletVect.length - 1; i >= 0; i--) {
-            var bullet:Bullets = bulletVect[i];
+            var bullet:Bullet = bulletVect[i];
             if(bullet.x > FP.width || bullet.x <0 || bullet.y > FP.height || bullet.y < 0){
                 bulletPool.putEntity(bullet);
+                FP.world.remove(bullet);
                 bulletVect.splice(i,1);
             }
         }
@@ -86,12 +89,20 @@ public class Player extends Entity {
     }
 
     private function fireBullets():void {
-        var bullet:Bullets = Bullets(FP.world.add(bulletPool.getEntity()));
-        bullet.x = turret.x;
-        bullet.y = turret.y;
-        bullet.setAngle(FP.angle(Input.mouseX,Input.mouseY,turretBase.x,turretBase.y));
-        bullet.setSpeed(5);
-        bulletVect.push(bullet);
+        delayTime += FP.elapsed;
+        if(delayTime > DEALY_TIME) {
+            delayTime -= DEALY_TIME;
+            var bullet:Bullet = Bullet(FP.world.add(bulletPool.getEntity()));
+            bullet.x = turret.x;
+            bullet.y = turret.y;
+            var dx:Number = Input.mouseX - turret.x;
+            var dy:Number = Input.mouseY - turret.y;
+            var angle:Number = Math.atan2(dy,dx);
+            bullet.setAngle(angle);
+            Image(bullet.graphic).angle  = turret.angle;
+            bullet.setSpeed(5);
+            bulletVect.push(bullet);
+        }
     }
 
     private function moveTurret():void {

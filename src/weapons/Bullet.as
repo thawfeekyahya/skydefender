@@ -14,26 +14,27 @@ import net.flashpunk.Graphic;
 import net.flashpunk.Mask;
 import net.flashpunk.graphics.Image;
 
-public class Bullets extends Entity {
+public class Bullet extends Entity {
 
     private var angle:Number;
     private var speed:Number = 0.2;
     private var finished:Boolean;
+    private var STACK_ORDER:int = 90;
 
 
 
-    public function Bullets() {
+    public function Bullet() {
+        this.layer = STACK_ORDER;
         this.speed = speed;
         this.angle = angle;
         this.graphic = new Image(Assets.PLAYER_BULLET);
+        Image(this.graphic).centerOrigin();
     }
 
 
     override public function update():void {
-        FP.log(angle);
-        Image(this.graphic).angle = angle;
-        this.x += Math.cos(angle*Math.PI/180)*speed;
-        this.y += Math.sin(angle*Math.PI/180)*speed;
+        this.x += Math.cos(angle)*speed;
+        this.y += Math.sin(angle)*speed;
         if(this.x > FP.width || this.x < 0 || this.y > FP.height || this.y < 0){
             this.finished = true;
         }
