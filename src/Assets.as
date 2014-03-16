@@ -31,6 +31,9 @@ public class Assets {
     [Embed(source="../assets/player/bullet.png")]
     public static const PLAYER_BULLET:Class;
 
+    [Embed(source="../assets/sounds/player_shoot_basic.mp3")]
+    public static const PLAYER_SHOOT_BASIC:Class;
+
 
 }
 }

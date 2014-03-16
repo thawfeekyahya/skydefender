@@ -35,11 +35,13 @@ public class GamePlay extends World {
 
     private function init():void {
         _player = new Player();
-
         backgroundImage = new Backdrop(Assets.GAME_BG_IMAGE);
         gameMusic = new Sfx(Assets.GAME_MUSIC);
-
     }
+
+
+
+
 
 
 }

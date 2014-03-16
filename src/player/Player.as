@@ -10,25 +10,25 @@ import net.flashpunk.Entity;
 import net.flashpunk.FP;
 import net.flashpunk.Graphic;
 import net.flashpunk.Mask;
+import net.flashpunk.Sfx;
 import net.flashpunk.graphics.Graphiclist;
 import net.flashpunk.graphics.Image;
 import net.flashpunk.utils.Input;
 
 import utils.EntityPool;
-
-import weapons.Bullet;
-
 import weapons.Bullet;
 
 public class Player extends Entity {
 
+    public static var FIRE_DELAY_TIME:Number = 0.30;
+
+    private var bulletSpeed:int = 5;
     private var turretBase:Image;
     private var turret:Image;
     private var bulletPool:EntityPool;
     private var bulletVect:Vector.<Bullet> = new Vector.<Bullet>();
     private var delayTime:Number = 0;
-    private const DEALY_TIME:Number = 0.30;
-
+    private var sfxShoot:Sfx;
 
     public function Player(x:Number = 0, y:Number = 0, graphic:Graphic = null, mask:Mask = null) {
         super(x, y, graphic, mask);
@@ -61,6 +61,9 @@ public class Player extends Entity {
 
         //Create Pool Objects
         bulletPool = new EntityPool(Bullet,500);
+
+        //Create Sounds
+        sfxShoot =new Sfx(Assets.PLAYER_SHOOT_BASIC);
     }
 
 
@@ -90,8 +93,9 @@ public class Player extends Entity {
 
     private function fireBullets():void {
         delayTime += FP.elapsed;
-        if(delayTime > DEALY_TIME) {
-            delayTime -= DEALY_TIME;
+        if(delayTime > FIRE_DELAY_TIME) {
+            sfxShoot.play();
+            delayTime -= FIRE_DELAY_TIME;
             var bullet:Bullet = Bullet(FP.world.add(bulletPool.getEntity()));
             bullet.x = turret.x;
             bullet.y = turret.y;
@@ -100,13 +104,17 @@ public class Player extends Entity {
             var angle:Number = Math.atan2(dy,dx);
             bullet.setAngle(angle);
             Image(bullet.graphic).angle  = turret.angle;
-            bullet.setSpeed(5);
+            bullet.setSpeed(bulletSpeed);
             bulletVect.push(bullet);
         }
     }
 
     private function moveTurret():void {
         turret.angle = FP.angle(turret.x,turret.y,Input.mouseX,Input.mouseY);
+    }
+
+    public function setBulletSpeed(value:int):void {
+        this.bulletSpeed = value;
     }
 }
 }
