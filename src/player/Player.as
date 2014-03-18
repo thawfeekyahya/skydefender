@@ -97,11 +97,11 @@ public class Player extends Entity {
             sfxShoot.play();
             delayTime -= FIRE_DELAY_TIME;
             var bullet:Bullet = Bullet(FP.world.add(bulletPool.getEntity()));
-            bullet.x = turret.x;
-            bullet.y = turret.y;
             var dx:Number = Input.mouseX - turret.x;
             var dy:Number = Input.mouseY - turret.y;
             var angle:Number = Math.atan2(dy,dx);
+            bullet.x = turret.x;
+            bullet.y = turret.y;
             bullet.setAngle(angle);
             Image(bullet.graphic).angle  = turret.angle;
             bullet.setSpeed(bulletSpeed);
