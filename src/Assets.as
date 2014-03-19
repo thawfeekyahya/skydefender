@@ -34,6 +34,10 @@ public class Assets {
     [Embed(source="../assets/sounds/player_shoot_basic.mp3")]
     public static const PLAYER_SHOOT_BASIC:Class;
 
+    //Enemy
+    [Embed(source="../assets/enemy/plane3.png")]
+    public static const ENEMY_FLIGHT_P39:Class;
+
 
 }
 }
