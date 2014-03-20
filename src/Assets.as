@@ -38,6 +38,9 @@ public class Assets {
     [Embed(source="../assets/enemy/plane3.png")]
     public static const ENEMY_FLIGHT_P39:Class;
 
+    [Embed(source="../assets/enemy/plane5.png")]
+    public static const ENEMY_FLIGHT_RED_BARRON:Class;
+
 
 }
 }

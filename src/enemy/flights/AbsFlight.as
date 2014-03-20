@@ -6,13 +6,12 @@
  * To change this template use File | Settings | File Templates.
  */
 package enemy.flights {
-import enemy.IEnemyFlight;
 
 import flash.geom.Point;
 
 import net.flashpunk.Entity;
 
-public class AbsFlight extends Entity implements IEnemyFlight{
+public class AbsFlight extends Entity {
 
     private var deployX:int;
     private var deployY:int;
