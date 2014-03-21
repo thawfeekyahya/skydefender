@@ -14,15 +14,20 @@ public class EntityPool {
     private var counter:int;
     private var watchList:Vector.<int>;
 
-    public function EntityPool(type:Class,len:int) {
+    public function EntityPool(numCount:int,... classType) {
         pool = new Array();
-        watchList = new Vector.<int>();
-        counter = len;
+         watchList = new Vector.<int>();
+         counter = numCount *classType.length
 
-        var i:int = len;
-        while(--i > -1){
-           pool[i] = new type();
-        }
+
+         if(classType.length == 0) throw new Error("Pass At least 1 class type");
+
+         var i:int = counter;
+         for (var classCount:int=classType.length-1;classCount >= 0; classCount--) {
+         while (--i >= numCount*classCount) {
+            pool[i] = new classType[classCount];
+            }
+         }
     }
 
     public function getEntity(index:int=-1):Entity {
@@ -36,6 +41,7 @@ public class EntityPool {
                 while(watchList.indexOf(targetIndex) != -1){
                     (targetIndex <= 0) ? targetIndex = counter :targetIndex--;
                 }
+                watchList.push(targetIndex);
                 return pool[targetIndex];
             }
         } else {
