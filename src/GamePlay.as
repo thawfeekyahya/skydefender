@@ -7,6 +7,8 @@
  */
 package {
 import enemy.flights.AbsFlight;
+import enemy.flights.low.BellP39;
+import enemy.flights.low.RedBarron;
 
 import net.flashpunk.FP;
 import net.flashpunk.Sfx;
@@ -25,9 +27,16 @@ public class GamePlay extends World {
     private const IMAGE_STACK_ORDER:int = 100;
 
     private var enemyFightList:Vector.<AbsFlight>;
+    private var tempEnemyFlight:AbsFlight;
     private var enemyWaveDelay:int;
     private var enemyTimeCount:Number=0;
     private var level:int;
+
+    private var levelData:Array = [
+            [{
+                enemyFlights:[BellP39,RedBarron]
+            }]
+    ];
 
     public function GamePlay() {
         init();
@@ -62,8 +71,8 @@ public class GamePlay extends World {
         enemyTimeCount += FP.elapsed;
         FP.log(FP.elapsed);
         if(enemyTimeCount > enemyWaveDelay){
-            trace("FIRE");
             enemyTimeCount -= enemyTimeCount;
+            tempEnemyFlight = new BellP39();
         }
     }
 }
