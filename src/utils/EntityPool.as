@@ -27,6 +27,7 @@ public class EntityPool {
          while (--i >= numCount*classCount) {
             pool[i] = new classType[classCount];
             }
+            i++ //Todo:  Bad Hack Need find a way to fix this.
          }
     }
 
@@ -35,6 +36,7 @@ public class EntityPool {
             if(index != -1 && watchList.indexOf(index) == -1){
                 watchList.push(index);
                 counter--;
+                trace("Random Index -> ",index);
                 return pool[index];
             } else {
                 var targetIndex:int = --counter;
@@ -42,6 +44,7 @@ public class EntityPool {
                     (targetIndex <= 0) ? targetIndex = counter :targetIndex--;
                 }
                 watchList.push(targetIndex);
+                trace("Solid Index ->",targetIndex)
                 return pool[targetIndex];
             }
         } else {
