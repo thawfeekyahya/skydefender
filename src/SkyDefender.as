@@ -9,7 +9,7 @@ package {
 import net.flashpunk.Engine;
 import net.flashpunk.FP;
 
-import screens.SplashScreen;
+import worlds.SplashScreen;
 
 [SWF(width=640,height=480)]
 public class SkyDefender extends Engine {

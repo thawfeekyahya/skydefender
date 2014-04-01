@@ -27,7 +27,7 @@ public class Bullet extends Entity {
         this.layer = STACK_ORDER;
         this.speed = speed;
         this.angle = angle;
-        this.graphic = new Image(Assets.PLAYER_BULLET);
+        this.graphic = new Image(EmbededAssets.PLAYER_BULLET);
         Image(this.graphic).centerOrigin();
     }
 

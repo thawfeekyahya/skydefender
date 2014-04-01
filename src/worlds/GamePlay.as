@@ -5,10 +5,12 @@
  * Time: 3:35 PM
  * To change this template use File | Settings | File Templates.
  */
-package {
+package worlds {
 import enemy.flights.AbsFlight;
 import enemy.flights.low.BellP39;
 import enemy.flights.low.RedBarron;
+
+import net.flashpunk.Entity;
 
 import net.flashpunk.FP;
 import net.flashpunk.Sfx;
@@ -23,7 +25,7 @@ public class GamePlay extends World {
 
     private var backgroundImage:Backdrop;
     private var gameMusic:Sfx;
-    private var player;
+    private var player:Entity   ;
     private const IMAGE_STACK_ORDER:int = 100;
 
     private var enemyFightList:Vector.<AbsFlight>;
@@ -44,8 +46,8 @@ public class GamePlay extends World {
 
     private function init():void {
         player = new Player();
-        backgroundImage = new Backdrop(Assets.GAME_BG_IMAGE);
-        gameMusic = new Sfx(Assets.GAME_MUSIC);
+        backgroundImage = new Backdrop(EmbededAssets.GAME_BG_IMAGE);
+        gameMusic = new Sfx(EmbededAssets.GAME_MUSIC);
     }
 
     private function newLevel():void {

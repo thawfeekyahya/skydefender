@@ -36,7 +36,7 @@ public class EntityPool {
             if(index != -1 && watchList.indexOf(index) == -1){
                 watchList.push(index);
                 counter--;
-                trace("Random Index -> ",index);
+//                trace("Random Index -> ",index);
                 return pool[index];
             } else {
                 var targetIndex:int = --counter;
@@ -44,7 +44,7 @@ public class EntityPool {
                     (targetIndex <= 0) ? targetIndex = counter :targetIndex--;
                 }
                 watchList.push(targetIndex);
-                trace("Solid Index ->",targetIndex)
+//                trace("Solid Index ->",targetIndex)
                 return pool[targetIndex];
             }
         } else {
