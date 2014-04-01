@@ -14,7 +14,7 @@ public class EntityPool {
     private var counter:int;
     private var watchList:Vector.<int>;
 
-    public function EntityPool(numCount:int,... classType) {
+    public function EntityPool(numCount:int,classType:Array) {
         pool = new Array();
          watchList = new Vector.<int>();
          counter = numCount *classType.length
@@ -24,8 +24,8 @@ public class EntityPool {
 
          var i:int = counter;
          for (var classCount:int=classType.length-1;classCount >= 0; classCount--) {
-         while (--i >= numCount*classCount) {
-            pool[i] = new classType[classCount];
+            while (--i >= numCount*classCount) {
+                pool[i] = new classType[classCount];
             }
             i++ //Todo:  Bad Hack Need find a way to fix this.
          }
@@ -36,7 +36,6 @@ public class EntityPool {
             if(index != -1 && watchList.indexOf(index) == -1){
                 watchList.push(index);
                 counter--;
-                trace("Random Index -> ",index);
                 return pool[index];
             } else {
                 var targetIndex:int = --counter;
@@ -44,7 +43,6 @@ public class EntityPool {
                     (targetIndex <= 0) ? targetIndex = counter :targetIndex--;
                 }
                 watchList.push(targetIndex);
-                trace("Solid Index ->",targetIndex)
                 return pool[targetIndex];
             }
         } else {

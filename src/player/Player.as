@@ -60,7 +60,7 @@ public class Player extends Entity {
         turret.angle = 90;
 
         //Create Pool Objects
-        bulletPool = new EntityPool(Bullet,500);
+        bulletPool = new EntityPool(500,[Bullet]);
 
         //Create Sounds
         sfxShoot =new Sfx(Assets.PLAYER_SHOOT_BASIC);
@@ -96,7 +96,11 @@ public class Player extends Entity {
         if(delayTime > FIRE_DELAY_TIME) {
             sfxShoot.play();
             delayTime -= FIRE_DELAY_TIME;
-            var bullet:Bullet = Bullet(FP.world.add(bulletPool.getEntity()));
+            if (Math.random()*100 > 50) {
+                var bullet:Bullet = Bullet(FP.world.add(bulletPool.getEntity()));
+            } else {
+                var bullet:Bullet = Bullet(FP.world.add(bulletPool.getEntity(Math.random()*500)));
+            }
             var dx:Number = Input.mouseX - turret.x;
             var dy:Number = Input.mouseY - turret.y;
             var angle:Number = Math.atan2(dy,dx);
