@@ -52,7 +52,7 @@ public class GamePlay extends World {
 
     private function newLevel():void {
         level++;
-        enemyFlightWaveDelay = (enemyFlightWaveDelay < 8) ? enemyFlightWaveDelay = 8 : enemyFlightWaveDelay = 20-(level*2);     //todo: need to change this
+        enemyFlightWaveDelay = (enemyFlightWaveDelay < 8) ? enemyFlightWaveDelay = 8 : enemyFlightWaveDelay = 11-(level*2);     //todo: need to change this
         numEnemyFlights      = (numEnemyFlights > 100 ) ? numEnemyFlights = 100 : numEnemyFlights = level*10+3;
         numEnemyFlights      =  numEnemyFlights / levelData[level-1].enemyFlights.length;           //Re-calculate num Enemies based on level Data
         var enemyFlightPool:EntityPool = new EntityPool(numEnemyFlights,levelData[level-1].enemyFlights);

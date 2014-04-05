@@ -19,7 +19,7 @@ public class SkyDefender extends Engine {
 
     override public function init():void {
         super.init();
-        FP.console.enable();
+//        FP.console.enable();
         FP.world = new SplashScreen();
     }
 }

@@ -50,13 +50,13 @@ public class Player extends Entity {
 
         //Set Base in Center
         turretBase.x = 0;
-        turretBase.y = FP.height - turretBase.height - 20;
+        turretBase.y = FP.height - turretBase.height - 15;
 
         //Set Turret Position
         turret.originY = turret.height/2 ;
         turret.originX = -20;
         turret.x = turretBase.x+turretBase.width/2;
-        turret.y = turretBase.y + 30;
+        turret.y = turretBase.y+22;
         turret.smooth = true;
         turret.angle = 90;
 
