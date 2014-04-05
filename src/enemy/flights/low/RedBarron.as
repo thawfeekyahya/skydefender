@@ -17,7 +17,7 @@ public class RedBarron extends AbsFlight {
 
     public function RedBarron(moveSpeed:int=2) {
         super(moveSpeed);
-        this.graphic = new Image(Assets.ENEMY_FLIGHT_RED_BARRON);
+        this.graphic = new Image(EmbededAssets.ENEMY_FLIGHT_RED_BARRON);
     }
 
 

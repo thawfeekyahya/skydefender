@@ -14,7 +14,7 @@ public class BellP39 extends AbsFlight{
 
     public function BellP39(moveSpeed:int=5) {
         super(moveSpeed);
-        this.graphic = new Image(Assets.ENEMY_FLIGHT_P39);
+        this.graphic = new Image(EmbededAssets.ENEMY_FLIGHT_P39);
     }
 
 

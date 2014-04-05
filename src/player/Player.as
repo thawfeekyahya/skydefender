@@ -42,8 +42,8 @@ public class Player extends Entity {
 
 
     private function init():void {
-        turretBase = new Image(Assets.PLAYER_TURRET_BASE);
-        turret     = new Image(Assets.PLAYER_TURRET);
+        turretBase = new Image(EmbededAssets.PLAYER_TURRET_BASE);
+        turret     = new Image(EmbededAssets.PLAYER_TURRET);
 
         graphic = new Graphiclist(turret,turretBase);
 
@@ -63,7 +63,7 @@ public class Player extends Entity {
         bulletPool = new EntityPool(500,[Bullet]);
 
         //Create Sounds
-        sfxShoot =new Sfx(Assets.PLAYER_SHOOT_BASIC);
+        sfxShoot =new Sfx(EmbededAssets.PLAYER_SHOOT_BASIC);
     }
 
 

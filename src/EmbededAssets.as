@@ -6,7 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 package {
-public class Assets {
+public class EmbededAssets {
 
 
     //Graphic Assets
