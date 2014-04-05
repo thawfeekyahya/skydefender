@@ -5,7 +5,11 @@
  * Time: 9:52 PM
  * To change this template use File | Settings | File Templates.
  */
-package player {
+package com.thawfeek.player {
+import com.thawfeek.EmbededAssets;
+import com.thawfeek.utils.EntityPool;
+import com.thawfeek.weapons.Bullet;
+
 import net.flashpunk.Entity;
 import net.flashpunk.FP;
 import net.flashpunk.Graphic;
@@ -14,9 +18,6 @@ import net.flashpunk.Sfx;
 import net.flashpunk.graphics.Graphiclist;
 import net.flashpunk.graphics.Image;
 import net.flashpunk.utils.Input;
-
-import utils.EntityPool;
-import weapons.Bullet;
 
 public class Player extends Entity {
 

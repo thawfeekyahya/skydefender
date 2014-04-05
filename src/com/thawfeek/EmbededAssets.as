@@ -5,40 +5,40 @@
  * Time: 12:28 PM
  * To change this template use File | Settings | File Templates.
  */
-package {
+package com.thawfeek {
 public class EmbededAssets {
 
 
     //Graphic Assets
 
-    [Embed(source="../assets/splashscreen.jpg")]
+    [Embed(source="../../../assets/splashscreen.jpg")]
     public static const SPLASH_SCREEN_IMAGE:Class;
 
-    [Embed(source="../assets/background.jpg")]
+    [Embed(source="../../../assets/background.jpg")]
     public static const GAME_BG_IMAGE:Class;
 
 
     //Sound Assets
-    [Embed(source="../assets/sounds/gamemusic.mp3")]
+    [Embed(source="../../../assets/sounds/gamemusic.mp3")]
     public static const GAME_MUSIC:Class;
 
-    [Embed(source="../assets/player/turetBase.png")]
+    [Embed(source="../../../assets/player/turetBase.png")]
     public static const PLAYER_TURRET_BASE:Class;
 
-    [Embed(source="../assets/player/turet.png")]
+    [Embed(source="../../../assets/player/turet.png")]
     public static const PLAYER_TURRET:Class;
 
-    [Embed(source="../assets/player/bullet.png")]
+    [Embed(source="../../../assets/player/bullet.png")]
     public static const PLAYER_BULLET:Class;
 
-    [Embed(source="../assets/sounds/player_shoot_basic.mp3")]
+    [Embed(source="../../../assets/sounds/player_shoot_basic.mp3")]
     public static const PLAYER_SHOOT_BASIC:Class;
 
     //Enemy
-    [Embed(source="../assets/enemy/plane3.png")]
+    [Embed(source="../../../assets/enemy/plane3.png")]
     public static const ENEMY_FLIGHT_P39:Class;
 
-    [Embed(source="../assets/enemy/plane5.png")]
+    [Embed(source="../../../assets/enemy/plane5.png")]
     public static const ENEMY_FLIGHT_RED_BARRON:Class;
 
 

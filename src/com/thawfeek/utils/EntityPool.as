@@ -5,7 +5,7 @@
  * Time: 8:47 AM
  *
  */
-package utils {
+package com.thawfeek.utils {
 import net.flashpunk.Entity;
 
 public class EntityPool {

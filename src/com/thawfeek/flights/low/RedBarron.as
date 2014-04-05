@@ -1,20 +1,22 @@
 /**
  * Created with IntelliJ IDEA.
  * User: Yahya
- * Date: 3/19/14
- * Time: 10:15 PM
+ * Date: 3/20/14
+ * Time: 8:59 PM
  * To change this template use File | Settings | File Templates.
  */
-package enemy.flights.low {
-import enemy.flights.AbsFlight;
+package com.thawfeek.flights.low {
+import com.thawfeek.EmbededAssets;
+import com.thawfeek.flights.AbsFlight;
 
 import net.flashpunk.graphics.Image;
 
-public class BellP39 extends AbsFlight{
+public class RedBarron extends AbsFlight {
 
-    public function BellP39(moveSpeed:int=5) {
+
+    public function RedBarron(moveSpeed:int=2) {
         super(moveSpeed);
-        this.graphic = new Image(EmbededAssets.ENEMY_FLIGHT_P39);
+        this.graphic = new Image(EmbededAssets.ENEMY_FLIGHT_RED_BARRON);
     }
 
 

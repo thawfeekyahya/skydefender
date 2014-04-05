@@ -5,11 +5,12 @@
  * Time: 11:13 AM
  * To change this template use File | Settings | File Templates.
  */
-package screens {
+package com.thawfeek.worlds {
+import com.thawfeek.EmbededAssets;
+
 import net.flashpunk.FP;
 import net.flashpunk.World;
 import net.flashpunk.graphics.Backdrop;
-import net.flashpunk.graphics.Image;
 import net.flashpunk.utils.Button;
 
 public class SplashScreen extends World {
@@ -25,7 +26,7 @@ public class SplashScreen extends World {
     }
 
     private function init():void {
-        image = new Backdrop(Assets.SPLASH_SCREEN_IMAGE);
+        image = new Backdrop(EmbededAssets.SPLASH_SCREEN_IMAGE);
         addGraphic(image);
         startButton     = new Button("Play",startButtonClicked,FP.halfWidth,FP.halfHeight,100,50);
         creditsButton   = new Button("Credits",creditClicked,FP.halfWidth,FP.halfHeight+20,100,50);

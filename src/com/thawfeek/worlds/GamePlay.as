@@ -5,23 +5,19 @@
  * Time: 3:35 PM
  * To change this template use File | Settings | File Templates.
  */
-package worlds {
-import enemy.flights.AbsFlight;
-import enemy.flights.low.BellP39;
-import enemy.flights.low.RedBarron;
+package com.thawfeek.worlds {
+import com.thawfeek.EmbededAssets;
+import com.thawfeek.flights.AbsFlight;
+import com.thawfeek.flights.low.BellP39;
+import com.thawfeek.flights.low.RedBarron;
+import com.thawfeek.player.Player;
+import com.thawfeek.utils.EntityPool;
 
 import net.flashpunk.Entity;
-
 import net.flashpunk.FP;
 import net.flashpunk.Sfx;
 import net.flashpunk.World;
 import net.flashpunk.graphics.Backdrop;
-
-import player.Player;
-
-import utils.EntityPool;
-
-import weapons.Bullet;
 
 public class GamePlay extends World {
 
