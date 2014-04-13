@@ -8,7 +8,7 @@
 package com.thawfeek.player {
 import com.thawfeek.EmbededAssets;
 import com.thawfeek.utils.EntityPool;
-import com.thawfeek.weapons.Bullet;
+import com.thawfeek.player.weapons.Bullet;
 
 import net.flashpunk.Entity;
 import net.flashpunk.FP;
@@ -50,7 +50,7 @@ public class Player extends Entity {
 
         //Set Base in Center
         turretBase.x = 0;
-        turretBase.y = FP.height - turretBase.height - 15;
+        turretBase.y = FP.height - turretBase.height - 8;
 
         //Set Turret Position
         turret.originY = turret.height/2 ;

@@ -7,6 +7,8 @@
  */
 package com.thawfeek.flights {
 
+import com.thawfeek.GameConstants;
+
 import flash.geom.Point;
 
 import net.flashpunk.Entity;
@@ -18,6 +20,9 @@ public class AbsFlight extends Entity {
     private var destinationX:int;
     private var destinationY:int;
     private var moveSpeed:int;
+    protected var finished:Boolean;
+    protected var health:int;
+    protected var isShotDown:Boolean;
 
     public function AbsFlight(moveSpeed:int) {
         this.moveSpeed = moveSpeed;
@@ -48,6 +53,34 @@ public class AbsFlight extends Entity {
 
     public function getSpeed():int {
         return moveSpeed;
+    }
+
+    protected function getCurrentPos():Point {
+       return new Point(this.x,this.y);
+    }
+
+
+    override public function update():void {
+        super.update();
+        if(getCurrentPos().x == getDestinationPoint().x && getCurrentPos().y == getDestinationPoint().y){
+            finished = true;
+        }
+        checkCollision();
+
+    }
+
+    protected function checkCollision():void {
+        if (this.collide(GameConstants.PLAYER_BULLET, this.x, this.y)) {
+            this.health -= 2;
+            if(health <= 0){
+                isShotDown = true;
+                shotDown();
+            }
+        }
+    }
+
+    protected function shotDown():void {
+
     }
 }
 }

@@ -8,6 +8,7 @@
 package com.thawfeek.worlds {
 import com.thawfeek.EmbededAssets;
 import com.thawfeek.flights.AbsFlight;
+import com.thawfeek.flights.AbsFlight;
 import com.thawfeek.flights.low.BellP39;
 import com.thawfeek.flights.low.RedBarron;
 import com.thawfeek.player.Player;
@@ -29,14 +30,16 @@ public class GamePlay extends World {
     private var enemyFightList:Vector.<AbsFlight>;
     private var tempEnemyFlight:AbsFlight;
     private var enemyFlightWaveDelay:int = 30;
+    private var enemyFlightPool:EntityPool;
     private var enemyTimeCount:Number=0;
     private var level:int;
     private var numEnemyFlights:int;
 
 
     private var levelData:Array = [
+            undefined,
             {
-                enemyFlights:[BellP39,RedBarron]
+                enemyFlights:[BellP39]
             }
     ];
 
@@ -50,12 +53,15 @@ public class GamePlay extends World {
         gameMusic = new Sfx(EmbededAssets.GAME_MUSIC);
     }
 
+
     private function newLevel():void {
         level++;
         enemyFlightWaveDelay = (enemyFlightWaveDelay < 8) ? enemyFlightWaveDelay = 8 : enemyFlightWaveDelay = 11-(level*2);     //todo: need to change this
         numEnemyFlights      = (numEnemyFlights > 100 ) ? numEnemyFlights = 100 : numEnemyFlights = level*10+3;
-        numEnemyFlights      =  numEnemyFlights / levelData[level-1].enemyFlights.length;           //Re-calculate num Enemies based on level Data
-        var enemyFlightPool:EntityPool = new EntityPool(numEnemyFlights,levelData[level-1].enemyFlights);
+        numEnemyFlights      =  numEnemyFlights / levelData[level].enemyFlights.length;           //Re-calculate num Enemies based on level Data
+
+        if(enemyFlightPool != null) enemyFlightPool.destroy();
+        enemyFlightPool      = new EntityPool(numEnemyFlights, levelData[level].enemyFlights);
     }
 
 
@@ -76,9 +82,10 @@ public class GamePlay extends World {
         enemyTimeCount += FP.elapsed;
         if(enemyTimeCount > enemyFlightWaveDelay){
             enemyTimeCount -= enemyTimeCount;
-            tempEnemyFlight = new BellP39();
-            tempEnemyFlight.deploy(FP.width,FP.height);
-            tempEnemyFlight.destination(0,0);
+            tempEnemyFlight = AbsFlight(enemyFlightPool.getEntity(int(Math.random()*numEnemyFlights)));
+            var randomYPos:Number = Math.random()*FP.halfHeight-tempEnemyFlight.height;
+            tempEnemyFlight.deploy(FP.width,randomYPos);
+            tempEnemyFlight.destination(-tempEnemyFlight.width,randomYPos);
             FP.world.add(tempEnemyFlight);
         }
     }

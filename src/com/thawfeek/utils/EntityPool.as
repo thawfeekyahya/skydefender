@@ -59,6 +59,18 @@ public class EntityPool {
         }
     }
 
+    public function destroy():void {
+        for (var i:int = pool.length - 1; i >= 0; i--) {
+            pool.splice(i,1);
+        }
+        pool = null;
+        for (var i:int = watchList.length - 1; i >= 0; i--) {
+            watchList.splice(i,1);
+        }
+        watchList = null;
+        counter = 0;
+    }
+
 
 }
 }

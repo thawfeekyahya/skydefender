@@ -5,8 +5,9 @@
  * Time: 3:18 PM
  *
  */
-package com.thawfeek.weapons {
+package com.thawfeek.player.weapons {
 import com.thawfeek.EmbededAssets;
+import com.thawfeek.GameConstants;
 
 import net.flashpunk.Entity;
 import net.flashpunk.FP;
@@ -26,6 +27,7 @@ public class Bullet extends Entity {
         this.speed = speed;
         this.angle = angle;
         this.graphic = new Image(EmbededAssets.PLAYER_BULLET);
+        this.type = GameConstants.PLAYER_BULLET;
         Image(this.graphic).centerOrigin();
     }
 

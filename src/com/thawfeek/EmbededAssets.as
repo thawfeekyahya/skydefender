@@ -42,5 +42,9 @@ public class EmbededAssets {
     public static const ENEMY_FLIGHT_RED_BARRON:Class;
 
 
+    [Embed(source="../../../assets/effects/airplaneexplosion2.png")]
+    public static const ENEMY_FLIGHT_EXPLODE_ANIM:Class;
+
+
 }
 }
