@@ -45,6 +45,10 @@ public class EmbededAssets {
     [Embed(source="../../../assets/effects/airplaneexplosion2.png")]
     public static const ENEMY_FLIGHT_EXPLODE_ANIM:Class;
 
+    [Embed(source="../../../assets/sounds/explosion_sound.mp3")]
+   public static const SFX_ENEMY_EXPLODE:Class;
+
+
 
 }
 }

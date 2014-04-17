@@ -10,6 +10,7 @@ import com.thawfeek.EmbededAssets;
 import com.thawfeek.flights.AbsFlight;
 
 import net.flashpunk.FP;
+import net.flashpunk.Sfx;
 import net.flashpunk.Tween;
 import net.flashpunk.graphics.Graphiclist;
 import net.flashpunk.graphics.Image;
@@ -26,6 +27,7 @@ public class BellP39 extends AbsFlight{
     private var linearPath:LinearPath;
     private var graphicList:Graphiclist;
     private var angleTween:VarTween;
+    private var sfxExplosion:Sfx;
 
 
     private static var EXPLODE_ANIM:String="explodeAnim";
@@ -38,6 +40,7 @@ public class BellP39 extends AbsFlight{
         this.width = img.width;
         this.height= img.height;
         health = 1;
+        sfxExplosion = new Sfx(EmbededAssets.SFX_ENEMY_EXPLODE);
 
     }
 
@@ -46,6 +49,7 @@ public class BellP39 extends AbsFlight{
         if(!isShotDown){
             this.moveTowards(getDestinationPoint().x,getDestinationPoint().y,getSpeed());
         } else {
+            sfxExplosion.play();
             angleTween.update();
             this.x = linearPath.x;
             this.y = linearPath.y;
