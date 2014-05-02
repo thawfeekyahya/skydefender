@@ -65,7 +65,7 @@ public class BellP39 extends AbsFlight{
     override protected function shotDown():void {
         var flightImg:Image = Image(this.graphicList.children[0]);
         angleTween = new VarTween(null, Tween.ONESHOT);
-        angleTween.tween(flightImg,"angle",40,2);
+        angleTween.tween(flightImg,"angle",60,2);
         angleTween.start();
 
         linearPath = new LinearPath(explode,Tween.ONESHOT);
@@ -78,10 +78,10 @@ public class BellP39 extends AbsFlight{
 
     private function explode():void {
         var onAnimComplete:Function = function(){finished = true}
-        var explodeAnim:Spritemap = new Spritemap(EmbededAssets.ENEMY_FLIGHT_EXPLODE_ANIM,120,120,onAnimComplete);
+        var explodeAnim:Spritemap = new Spritemap(EmbededAssets.ENEMY_FLIGHT_EXPLODE_ANIM,200,200,onAnimComplete);
         explodeAnim.originX = 120 >> 1;
         explodeAnim.originY = 120 >> 1;
-        explodeAnim.add(EXPLODE_ANIM,[0,1,2,3,4,5,6,7],6,false);
+        explodeAnim.add(EXPLODE_ANIM,[0,1,2,3,4,5,6,7],12,false);
         this.graphicList.add(explodeAnim);
         explodeAnim.play(EXPLODE_ANIM);
     }
