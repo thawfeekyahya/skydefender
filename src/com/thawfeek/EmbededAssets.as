@@ -48,6 +48,9 @@ public class EmbededAssets {
     [Embed(source="../../../assets/sounds/explosion_sound.mp3")]
    public static const SFX_ENEMY_EXPLODE:Class;
 
+    [Embed(source="../../../assets/sounds/bullet_hit.mp3")]
+    public static const SFX_BULLET_HIT:Class;
+
 
 
 }

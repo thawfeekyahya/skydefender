@@ -39,9 +39,10 @@ public class BellP39 extends AbsFlight{
         this.graphic = graphicList;
         this.width = img.width;
         this.height= img.height;
-        health = 1;
+        this.centerOrigin();
+        img.centerOrigin();
+        health = 10;
         sfxExplosion = new Sfx(EmbededAssets.SFX_ENEMY_EXPLODE);
-
     }
 
 
@@ -49,7 +50,6 @@ public class BellP39 extends AbsFlight{
         if(!isShotDown){
             this.moveTowards(getDestinationPoint().x,getDestinationPoint().y,getSpeed());
         } else {
-            sfxExplosion.play();
             angleTween.update();
             this.x = linearPath.x;
             this.y = linearPath.y;
@@ -65,22 +65,27 @@ public class BellP39 extends AbsFlight{
     override protected function shotDown():void {
         var flightImg:Image = Image(this.graphicList.children[0]);
         angleTween = new VarTween(null, Tween.ONESHOT);
-        angleTween.tween(flightImg,"angle",60,2);
+        angleTween.tween(flightImg,"angle",60,1);
         angleTween.start();
 
         linearPath = new LinearPath(explode,Tween.ONESHOT);
         linearPath.addPoint(this.x,this.y);
         linearPath.addPoint(this.x-200,FP.height-this.height-20);
-        var speed:Number = 2;
+        var speed:Number;
+       (this.x < FP.halfHeight) ? speed = 2 : speed = 1;
         linearPath.setMotion(speed);
+        FP.log(speed);
         addTween(linearPath,true);
     }
 
     private function explode():void {
+        if(!sfxExplosion.playing)sfxExplosion.play();
+        var imgWidth:int = 200;
+        var imgHeight:int = 200;
         var onAnimComplete:Function = function(){finished = true}
-        var explodeAnim:Spritemap = new Spritemap(EmbededAssets.ENEMY_FLIGHT_EXPLODE_ANIM,200,200,onAnimComplete);
-        explodeAnim.originX = 120 >> 1;
-        explodeAnim.originY = 120 >> 1;
+        var explodeAnim:Spritemap = new Spritemap(EmbededAssets.ENEMY_FLIGHT_EXPLODE_ANIM,imgWidth,imgHeight,onAnimComplete);
+        explodeAnim.originX = imgWidth >> 1;
+        explodeAnim.originY = imgHeight >> 1;
         explodeAnim.add(EXPLODE_ANIM,[0,1,2,3,4,5,6,7],12,false);
         this.graphicList.add(explodeAnim);
         explodeAnim.play(EXPLODE_ANIM);

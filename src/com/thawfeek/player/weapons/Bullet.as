@@ -11,9 +11,10 @@ import com.thawfeek.GameConstants;
 
 import net.flashpunk.Entity;
 import net.flashpunk.FP;
+import net.flashpunk.Sfx;
 import net.flashpunk.graphics.Image;
 
-public class Bullet extends Entity {
+public class Bullet extends AbsWeapon {
 
     private var angle:Number;
     private var speed:Number = 0.2;
@@ -28,7 +29,9 @@ public class Bullet extends Entity {
         this.angle = angle;
         this.graphic = new Image(EmbededAssets.PLAYER_BULLET);
         this.type = GameConstants.PLAYER_BULLET;
+        this.power = 2;
         Image(this.graphic).centerOrigin();
+        weaponHitSound = new Sfx(EmbededAssets.SFX_BULLET_HIT);
     }
 
 
@@ -51,5 +54,6 @@ public class Bullet extends Entity {
     public function isFinished():Boolean {
        return this.finished;
     }
+
 }
 }

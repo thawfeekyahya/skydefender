@@ -8,10 +8,12 @@
 package com.thawfeek.flights {
 
 import com.thawfeek.GameConstants;
+import com.thawfeek.player.weapons.AbsWeapon;
 
 import flash.geom.Point;
 
 import net.flashpunk.Entity;
+import net.flashpunk.FP;
 
 public class AbsFlight extends Entity {
 
@@ -70,8 +72,11 @@ public class AbsFlight extends Entity {
     }
 
     protected function checkCollision():void {
-        if (this.collide(GameConstants.PLAYER_BULLET, this.x, this.y)) {
-            this.health -= 2;
+        var weapon:AbsWeapon = AbsWeapon(this.collide(GameConstants.PLAYER_BULLET, this.x, this.y));
+        if (weapon) {
+            this.health -= weapon.getPower();
+            weapon.playHitSound();
+            FP.world.remove(weapon);
             if(health <= 0){
                 isShotDown = true;
                 shotDown();
