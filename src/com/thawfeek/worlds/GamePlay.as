@@ -15,11 +15,14 @@ import com.thawfeek.hud.GameHud;
 import com.thawfeek.player.Player;
 import com.thawfeek.utils.EntityPool;
 
+import flash.geom.Point;
+
 import net.flashpunk.Entity;
 import net.flashpunk.FP;
 import net.flashpunk.Sfx;
 import net.flashpunk.World;
 import net.flashpunk.graphics.Backdrop;
+import net.flashpunk.graphics.Image;
 
 public class GamePlay extends World {
 
@@ -70,10 +73,13 @@ public class GamePlay extends World {
 
 
     override public function begin():void {
+        //        gameMusic.loop();
         addGraphic(backgroundImage).layer = IMAGE_STACK_ORDER;
         add(player);
         add(gameHud);
-//        gameMusic.loop();
+        gameHud.addUI(new Image(EmbededAssets.GAME_HUD_ICON_1),GameHud.HUD_UI_INFO_ITEM,"tool");
+        gameHud.show();
+        gameHud.setPosition(new Point(0,100));
         newLevel();
     }
 

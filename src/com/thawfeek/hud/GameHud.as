@@ -39,11 +39,13 @@ public class GameHud extends Entity {
 
     public function GameHud(x:Number = 0, y:Number = 0) {
         super(x, y);
-        hudGraphic = new Image(EmbededAssets.GAME_HUD_BG);
+        this.graphic = new Image(EmbededAssets.GAME_HUD_BG);
         uiDict = new Dictionary();
         position = new Point();
-        iconWidth  = 100;
-        iconHeight = 100;
+        iconWidth  = 50;
+        iconHeight = 50;
+        bufferWidth = 10;
+        bufferHeight = 10;
     }
 
     public function addUI(graphic:Image,type:String,key:String):void {
@@ -76,6 +78,8 @@ public class GameHud extends Entity {
 
     public function setPosition(val:Point){
         this.position = val;
+        this.x  = position.x;
+        this.y  = position.y;
     }
 
     public function setBuffers(width:int,height:int):void {

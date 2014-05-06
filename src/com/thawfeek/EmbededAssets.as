@@ -54,6 +54,8 @@ public class EmbededAssets {
     [Embed(source="../../../assets/player/hud.jpg")]
     public static const GAME_HUD_BG:Class;
 
+    [Embed(source="../../../assets/player/hud_icon1.png")]
+    public static const GAME_HUD_ICON_1:Class;
 
 
 }
