@@ -39,9 +39,10 @@ public class UIInfo extends Entity implements IUserInterfaceItem{
         titleText.x = (iconImage.width >> 1);
 
         //Msg Text
-        msgText = new Text("");
+        msgText = new Text("value");
         msgText.centerOrigin();
         msgText.x = (iconImage.width >> 1);
+        msgText.y =  iconImage.height;
 
         //Disable State Image
         var bitmapData:BitmapData = icon.getSrcBitmapData().clone();
@@ -49,7 +50,7 @@ public class UIInfo extends Entity implements IUserInterfaceItem{
         bitmapData.colorTransform(new Rectangle(0,0,icon.width,icon.height),colorTransform);
         disableImg = new Image(bitmapData);
 
-        this.graphic = new Graphiclist(icon,titleText,disableImg);
+        this.graphic = new Graphiclist(icon,disableImg,titleText,msgText);
     }
 
 

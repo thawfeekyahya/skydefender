@@ -49,19 +49,27 @@ public class GameHud extends Entity {
     }
 
     public function addUI(graphic:Image,type:String,key:String):void {
-       var uiItem:IUserInterfaceItem;
-       switch (type){
-           case HUD_UI_INFO_ITEM:
-               uiItem = UICreator.createInfoUI(graphic,key);
-           break;
-       }
-       if(uiItem){
-           var count:int = getDictCount();
-           uiDict[key] = uiItem;
-           var posX:int = position.x + iconWidth * count + bufferWidth * count;
-           var posY:int = position.y;
-           uiItem.setPosition(new Point(posX,posY));
-       }
+        var uiItem:IUserInterfaceItem;
+        if(uiDict[key]){
+           throw new Error("Key already exits in dictionary");
+        }
+        switch (type){
+            case HUD_UI_INFO_ITEM:
+                uiItem = UICreator.createInfoUI(graphic,key);
+            break;
+
+            default:
+                trace("Type Not Found in HUD");
+                return;
+            break;
+        }
+
+         var count:int = getDictCount();
+         uiDict[key] = uiItem;
+         var posX:int = position.x + iconWidth * count + bufferWidth * count;
+         var posY:int = position.y;
+         uiItem.setPosition(new Point(posX,posY));
+
     }
 
     public function show():void {
