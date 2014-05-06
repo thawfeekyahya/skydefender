@@ -7,8 +7,6 @@
  */
 package com.thawfeek.player.weapons {
 import net.flashpunk.Entity;
-import net.flashpunk.Graphic;
-import net.flashpunk.Mask;
 import net.flashpunk.Sfx;
 
 public class AbsWeapon extends Entity {

@@ -14,13 +14,9 @@ import net.flashpunk.Sfx;
 import net.flashpunk.Tween;
 import net.flashpunk.graphics.Graphiclist;
 import net.flashpunk.graphics.Image;
-
-import net.flashpunk.graphics.Image;
 import net.flashpunk.graphics.Spritemap;
-import net.flashpunk.tweens.misc.NumTween;
 import net.flashpunk.tweens.misc.VarTween;
 import net.flashpunk.tweens.motion.LinearPath;
-import net.flashpunk.utils.Ease;
 
 public class BellP39 extends AbsFlight{
 

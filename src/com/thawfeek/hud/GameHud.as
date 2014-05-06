@@ -12,16 +12,12 @@ import com.thawfeek.utils.UICreator;
 import com.thawfeek.utils.uielements.IUserInterfaceItem;
 
 import flash.geom.Point;
-
 import flash.utils.Dictionary;
 
 import net.flashpunk.Entity;
 import net.flashpunk.FP;
 import net.flashpunk.Graphic;
-import net.flashpunk.Mask;
 import net.flashpunk.graphics.Image;
-import net.flashpunk.graphics.Image;
-import net.flashpunk.utils.Draw;
 
 public class GameHud extends Entity {
 

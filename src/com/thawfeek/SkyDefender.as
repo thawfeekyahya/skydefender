@@ -6,7 +6,6 @@
  * To change this template use File | Settings | File Templates.
  */
 package com.thawfeek {
-import com.thawfeek.test.TestWorld;
 import com.thawfeek.worlds.SplashScreen;
 
 import net.flashpunk.Engine;

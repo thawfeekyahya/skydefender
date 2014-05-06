@@ -7,8 +7,8 @@
  */
 package com.thawfeek.player {
 import com.thawfeek.EmbededAssets;
-import com.thawfeek.utils.EntityPool;
 import com.thawfeek.player.weapons.Bullet;
+import com.thawfeek.utils.EntityPool;
 
 import net.flashpunk.Entity;
 import net.flashpunk.FP;

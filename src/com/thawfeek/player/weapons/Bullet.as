@@ -9,7 +9,6 @@ package com.thawfeek.player.weapons {
 import com.thawfeek.EmbededAssets;
 import com.thawfeek.GameConstants;
 
-import net.flashpunk.Entity;
 import net.flashpunk.FP;
 import net.flashpunk.Sfx;
 import net.flashpunk.graphics.Image;

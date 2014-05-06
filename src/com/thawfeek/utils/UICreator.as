@@ -9,7 +9,6 @@ package com.thawfeek.utils {
 import com.thawfeek.utils.uielements.IUserInterfaceItem;
 import com.thawfeek.utils.uielements.UIInfo;
 
-import net.flashpunk.Entity;
 import net.flashpunk.graphics.Image;
 
 public class UICreator {

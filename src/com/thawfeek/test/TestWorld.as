@@ -7,8 +7,6 @@
  */
 package com.thawfeek.test {
 import net.flashpunk.World;
-import net.flashpunk.graphics.Image;
-import net.flashpunk.tweens.misc.VarTween;
 
 public class TestWorld extends World {
 

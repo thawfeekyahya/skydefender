@@ -12,9 +12,6 @@ import flash.geom.Point;
 import flash.geom.Rectangle;
 
 import net.flashpunk.Entity;
-import net.flashpunk.Graphic;
-import net.flashpunk.Mask;
-import net.flashpunk.graphics.Canvas;
 import net.flashpunk.graphics.Graphiclist;
 import net.flashpunk.graphics.Image;
 import net.flashpunk.graphics.Text;
@@ -23,8 +20,6 @@ public class UIInfo extends Entity implements IUserInterfaceItem{
 
     private var icon:Image;
     private var title:String;
-    private var dispText:String;
-    private var gListData:Array;
     private var disableImg:Image;
     private var isEnabled:Boolean;
     private var msgText:Text;

@@ -10,8 +10,6 @@ import com.thawfeek.EmbededAssets;
 import com.thawfeek.flights.AbsFlight;
 
 import net.flashpunk.FP;
-
-import net.flashpunk.graphics.Image;
 import net.flashpunk.graphics.Spritemap;
 
 public class RedBarron extends AbsFlight {
