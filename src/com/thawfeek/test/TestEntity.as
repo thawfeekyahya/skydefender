@@ -8,6 +8,10 @@
 package com.thawfeek.test {
 import com.thawfeek.EmbededAssets;
 
+import flash.display.BitmapData;
+import flash.geom.ColorTransform;
+import flash.geom.Rectangle;
+
 import net.flashpunk.Entity;
 import net.flashpunk.Graphic;
 import net.flashpunk.Mask;
@@ -25,12 +29,22 @@ public class TestEntity extends Entity {
         angleTween = new VarTween();
         angleTween.tween(Image(this.graphic),"angle",380,9);
         angleTween.start();*/
+
+        var img:Image = new Image(EmbededAssets.GAME_HUD_BG);
+        var bitData:BitmapData = img.getSrcBitmapData();
+
+        var colorTransform:ColorTransform = new ColorTransform();
+        colorTransform.color = 0x00FF00;
+        bitData.colorTransform(new Rectangle(0,0,img.width,img.height),colorTransform);
+
+        var imag2:Image = new Image(bitData);
+        this.graphic= imag2;
     }
 
 
     override public function update():void {
         super.update();
-        angleTween.update();
+       // angleTween.update();
     }
 }
 }

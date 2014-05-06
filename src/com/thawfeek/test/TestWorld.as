@@ -22,6 +22,9 @@ public class TestWorld extends World {
         var testEntity = new TestEntity();
         add(testEntity);
 
+        testEntity.x = 300;
+        testEntity.y = 200;
+
 
     }
 
