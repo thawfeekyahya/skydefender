@@ -25,7 +25,7 @@ import net.flashpunk.utils.Draw;
 
 public class GameHud extends Entity {
 
-    public static const HUD_UI_INFO_ITEM;
+    public static const HUD_UI_INFO_ITEM = "infoItem";
     public static const HUD_UI_TEXT_ITEM;
     public static const HUD_UI_BUTTON_ITEM;
 

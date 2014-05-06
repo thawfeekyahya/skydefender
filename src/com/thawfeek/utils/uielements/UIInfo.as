@@ -29,20 +29,19 @@ public class UIInfo extends Entity implements IUserInterfaceItem{
     private var isEnabled:Boolean;
     private var msgText:Text;
 
-    public function UIInfo(graphic:Image,title:String) {
-        super(0,0);
-        this.icon = graphic;
+    public function UIInfo(iconImage:Image,title:String) {
+        this.icon = iconImage;
         this.title = title;
 
         //Title Text
         var titleText:Text = new Text(title)
         titleText.centerOrigin();
-        titleText.x = (graphic.width >> 1);
+        titleText.x = (iconImage.width >> 1);
 
         //Msg Text
         msgText = new Text("");
         msgText.centerOrigin();
-        msgText.x = (graphic.width >> 1);
+        msgText.x = (iconImage.width >> 1);
 
         //Disable State Image
         var bitmapData:BitmapData = icon.getSrcBitmapData().clone();
@@ -50,8 +49,7 @@ public class UIInfo extends Entity implements IUserInterfaceItem{
         bitmapData.colorTransform(new Rectangle(0,0,icon.width,icon.height),colorTransform);
         disableImg = new Image(bitmapData);
 
-        gListData = [icon,titleText,disableImg];
-        this.graphic = new Graphiclist(gListData);
+        this.graphic = new Graphiclist(icon,titleText,disableImg);
     }
 
 
@@ -82,8 +80,8 @@ public class UIInfo extends Entity implements IUserInterfaceItem{
     }
 
     public function setPosition(val:Point):void {
-        Graphiclist(this.graphic).x = val.x;
-        Graphiclist(this.graphic).y = val.y;
+        this.x = val.x;
+        this.y = val.y;
     }
 }
 }

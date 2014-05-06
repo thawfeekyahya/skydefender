@@ -77,9 +77,13 @@ public class GamePlay extends World {
         addGraphic(backgroundImage).layer = IMAGE_STACK_ORDER;
         add(player);
         add(gameHud);
-        gameHud.addUI(new Image(EmbededAssets.GAME_HUD_ICON_1),GameHud.HUD_UI_INFO_ITEM,"tool");
-        gameHud.show();
         gameHud.setPosition(new Point(0,100));
+        gameHud.addUI(new Image(EmbededAssets.GAME_HUD_ICON_1),GameHud.HUD_UI_INFO_ITEM,"tool");
+        gameHud.addUI(new Image(EmbededAssets.GAME_HUD_ICON_1),GameHud.HUD_UI_INFO_ITEM,"text");
+        gameHud.addUI(new Image(EmbededAssets.GAME_HUD_ICON_1),GameHud.HUD_UI_INFO_ITEM,"sett");
+        gameHud.addUI(new Image(EmbededAssets.GAME_HUD_ICON_1),GameHud.HUD_UI_INFO_ITEM,"too");
+        gameHud.addUI(new Image(EmbededAssets.GAME_HUD_ICON_1),GameHud.HUD_UI_INFO_ITEM,"is");
+        gameHud.show();
         newLevel();
     }
 
