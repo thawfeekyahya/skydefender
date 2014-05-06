@@ -11,6 +11,7 @@ import com.thawfeek.flights.AbsFlight;
 import com.thawfeek.flights.AbsFlight;
 import com.thawfeek.flights.low.BellP39;
 import com.thawfeek.flights.low.RedBarron;
+import com.thawfeek.hud.GameHud;
 import com.thawfeek.player.Player;
 import com.thawfeek.utils.EntityPool;
 
@@ -25,6 +26,8 @@ public class GamePlay extends World {
     private var backgroundImage:Backdrop;
     private var gameMusic:Sfx;
     private var player:Entity   ;
+    private var gameHud:GameHud;
+
     private const IMAGE_STACK_ORDER:int = 100;
 
     private var enemyFightList:Vector.<AbsFlight>;
@@ -49,6 +52,7 @@ public class GamePlay extends World {
 
     private function init():void {
         player = new Player();
+        gameHud = new GameHud();
         backgroundImage = new Backdrop(EmbededAssets.GAME_BG_IMAGE);
         gameMusic = new Sfx(EmbededAssets.GAME_MUSIC);
     }
@@ -68,6 +72,7 @@ public class GamePlay extends World {
     override public function begin():void {
         addGraphic(backgroundImage).layer = IMAGE_STACK_ORDER;
         add(player);
+        add(gameHud);
 //        gameMusic.loop();
         newLevel();
     }

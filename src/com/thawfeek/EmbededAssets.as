@@ -51,6 +51,9 @@ public class EmbededAssets {
     [Embed(source="../../../assets/sounds/bullet_hit.mp3")]
     public static const SFX_BULLET_HIT:Class;
 
+    [Embed(source="../../../assets/player/hud.jpg")]
+    public static const GAME_HUD_BG:Class;
+
 
 
 }

@@ -20,11 +20,11 @@ public class TestEntity extends Entity {
     public function TestEntity(x:Number = 0, y:Number = 0, graphic:Graphic = null, mask:Mask = null) {
         super(x, y, graphic, mask);
 
-        this.graphic = new Image(EmbededAssets.PLAYER_TURRET_BASE);
+        /*this.graphic = new Image(EmbededAssets.PLAYER_TURRET_BASE);
 
         angleTween = new VarTween();
         angleTween.tween(Image(this.graphic),"angle",380,9);
-        angleTween.start();
+        angleTween.start();*/
     }
 
 

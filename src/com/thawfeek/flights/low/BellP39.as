@@ -32,7 +32,7 @@ public class BellP39 extends AbsFlight{
 
     private static var EXPLODE_ANIM:String="explodeAnim";
 
-    public function BellP39(moveSpeed:int=5) {
+    public function BellP39(moveSpeed:int=2) {
         super(moveSpeed);
         var img:Image = new Image(EmbededAssets.ENEMY_FLIGHT_P39);
         graphicList = new Graphiclist(img)
@@ -41,7 +41,7 @@ public class BellP39 extends AbsFlight{
         this.height= img.height;
         this.centerOrigin();
         img.centerOrigin();
-        health = 10;
+        health = 5;
         sfxExplosion = new Sfx(EmbededAssets.SFX_ENEMY_EXPLODE);
     }
 
