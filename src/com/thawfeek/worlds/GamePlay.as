@@ -94,10 +94,14 @@ public class GamePlay extends World {
 
     private function makeEnemies():void {
         enemyTimeCount += FP.elapsed;
+
         if(enemyTimeCount > enemyFlightWaveDelay && enemyFlightCount < numEnemyFlights){
             enemyFlightCount++;
+            FP.log("flight count "+enemyFlightCount);
             enemyTimeCount -= enemyTimeCount;
-            tempEnemyFlight = AbsFlight(enemyFlightPool.getEntity(int(Math.random()*numEnemyFlights)));
+            var rand:int = Math.floor(Math.random()*numEnemyFlights);
+            FP.log("random val "+rand);
+            tempEnemyFlight = AbsFlight(enemyFlightPool.getEntity(rand));
             var randomYPos:Number = Math.random()*FP.halfHeight-tempEnemyFlight.height;
             tempEnemyFlight.deploy(FP.width,randomYPos);
             tempEnemyFlight.destination(-tempEnemyFlight.width,randomYPos);

@@ -31,14 +31,14 @@ public class EntityPool {
          }
     }
 
-    public function getEntity(index:int=-1):Entity {
-        if(counter > 0 ){
+    public function getEntity(index:int):Entity {
+        if(counter > 0 && index > -1){
             if(index != -1 && watchList.indexOf(index) == -1){
                 watchList.push(index);
                 counter--;
                 return pool[index];
             } else {
-                var targetIndex:int = --counter;
+                var targetIndex:int = index;
                 while(watchList.indexOf(targetIndex) != -1){
                     (targetIndex <= 0) ? targetIndex = counter :targetIndex--;
                 }
@@ -46,13 +46,15 @@ public class EntityPool {
                 return pool[targetIndex];
             }
         } else {
-            throw new Error("Pool Exhausted");
+            throw new Error("Pool Exhausted or Invalid Index");
         }
     }
 
     public function putEntity(entity:Entity):void {
         if(watchList.length > 0){
-            pool[watchList.shift()] = entity;
+            var targetIndex:int = pool.indexOf(entity);
+            watchList.splice(targetIndex,1);
+            pool[targetIndex] = entity;
             counter++;
         } else {
             pool[counter++] = entity;

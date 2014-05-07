@@ -74,8 +74,8 @@ public class BellP39 extends AbsFlight{
 
 
     override protected function dispose():void {
-        super.dispose();
         clearTweens();
+        super.dispose();
     }
 
     override protected function shotDown():void {
@@ -90,7 +90,6 @@ public class BellP39 extends AbsFlight{
         var speed:Number;
        (this.x < FP.halfHeight) ? speed = 2 : speed = 1;
         linearPath.setMotion(speed);
-        FP.log(speed);
         addTween(linearPath,true);
     }
 
