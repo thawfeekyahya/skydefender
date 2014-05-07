@@ -28,6 +28,8 @@ public class BellP39 extends AbsFlight{
 
     private static var EXPLODE_ANIM:String="explodeAnim";
 
+    private var explodeAnim:Spritemap;
+
     public function BellP39(moveSpeed:int=2) {
         super(moveSpeed);
         var img:Image = new Image(EmbededAssets.ENEMY_FLIGHT_P39);
@@ -39,6 +41,20 @@ public class BellP39 extends AbsFlight{
         img.centerOrigin();
         health = 5;
         sfxExplosion = new Sfx(EmbededAssets.SFX_ENEMY_EXPLODE);
+
+        var onAnimComplete:Function = function(){
+            explodeAnim.visible = false;
+            finished = true;
+        };
+
+        var frameWidth:int = 200;
+        var frameHeight:int = 200;
+        explodeAnim = new Spritemap(EmbededAssets.ENEMY_FLIGHT_EXPLODE_ANIM, frameWidth, frameHeight, onAnimComplete);
+        explodeAnim.originX = frameWidth >> 1;
+        explodeAnim.originY = frameHeight >> 1;
+        explodeAnim.add(EXPLODE_ANIM,[0,1,2,3,4,5,6,7],12,false);
+        explodeAnim.visible = false;
+        this.graphicList.add(explodeAnim);
     }
 
 
@@ -51,12 +67,16 @@ public class BellP39 extends AbsFlight{
             this.y = linearPath.y;
         }
         if(this.finished){
-            FP.world.remove(this);
+            dispose();
         }
         super.update();
     }
 
 
+    override protected function dispose():void {
+        super.dispose();
+        clearTweens();
+    }
 
     override protected function shotDown():void {
         var flightImg:Image = Image(this.graphicList.children[0]);
@@ -76,14 +96,8 @@ public class BellP39 extends AbsFlight{
 
     private function explode():void {
         if(!sfxExplosion.playing)sfxExplosion.play();
-        var imgWidth:int = 200;
-        var imgHeight:int = 200;
-        var onAnimComplete:Function = function(){finished = true}
-        var explodeAnim:Spritemap = new Spritemap(EmbededAssets.ENEMY_FLIGHT_EXPLODE_ANIM,imgWidth,imgHeight,onAnimComplete);
-        explodeAnim.originX = imgWidth >> 1;
-        explodeAnim.originY = imgHeight >> 1;
-        explodeAnim.add(EXPLODE_ANIM,[0,1,2,3,4,5,6,7],12,false);
-        this.graphicList.add(explodeAnim);
+        explodeAnim.visible = true;
+        explodeAnim.setAnimFrame(EXPLODE_ANIM,0);
         explodeAnim.play(EXPLODE_ANIM);
     }
 }

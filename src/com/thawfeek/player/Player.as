@@ -30,6 +30,7 @@ public class Player extends Entity {
     private var bulletVect:Vector.<Bullet> = new Vector.<Bullet>();
     private var delayTime:Number = 0;
     private var sfxShoot:Sfx;
+    private const BULLET_COUNT:int = 500;
 
     public function Player(x:Number = 0, y:Number = 0, graphic:Graphic = null, mask:Mask = null) {
         super(x, y, graphic, mask);
@@ -61,7 +62,7 @@ public class Player extends Entity {
         turret.angle = 90;
 
         //Create Pool Objects
-        bulletPool = new EntityPool(500,[Bullet]);
+        bulletPool = new EntityPool(BULLET_COUNT,[Bullet]);
 
         //Create Sounds
         sfxShoot =new Sfx(EmbededAssets.PLAYER_SHOOT_BASIC);
@@ -100,7 +101,7 @@ public class Player extends Entity {
             if (Math.random()*100 > 50) {
                 var bullet:Bullet = Bullet(FP.world.add(bulletPool.getEntity()));
             } else {
-                var bullet:Bullet = Bullet(FP.world.add(bulletPool.getEntity(Math.random()*500)));
+                var bullet:Bullet = Bullet(FP.world.add(bulletPool.getEntity(Math.random()*BULLET_COUNT)));
             }
             var dx:Number = Input.mouseX - turret.x;
             var dy:Number = Input.mouseY - turret.y;

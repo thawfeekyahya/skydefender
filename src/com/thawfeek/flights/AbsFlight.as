@@ -87,5 +87,9 @@ public class AbsFlight extends Entity {
     protected function shotDown():void {
 
     }
+
+    protected function dispose():void {
+        FP.world.remove(this);
+    }
 }
 }

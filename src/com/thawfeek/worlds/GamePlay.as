@@ -38,7 +38,7 @@ public class GamePlay extends World {
     private var enemyTimeCount:Number=0;
     private var level:int;
     private var numEnemyFlights:int;
-
+    private var enemyFlightCount:int;
 
     private var levelData:Array = [
             undefined,
@@ -61,8 +61,9 @@ public class GamePlay extends World {
 
     private function newLevel():void {
         level++;
+        enemyFlightCount = 0;
         enemyFlightWaveDelay = (enemyFlightWaveDelay < 8) ? enemyFlightWaveDelay = 8 : enemyFlightWaveDelay = 11-(level*2);     //todo: need to change this
-        numEnemyFlights      = (numEnemyFlights > 100 ) ? numEnemyFlights = 100 : numEnemyFlights = level*10+3;
+        numEnemyFlights      = (numEnemyFlights > 100 ) ? numEnemyFlights = 100 : numEnemyFlights =3; // level*10+3;
         numEnemyFlights      =  numEnemyFlights / levelData[level].enemyFlights.length;           //Re-calculate num Enemies based on level Data
 
         if(enemyFlightPool != null) enemyFlightPool.destroy();
@@ -75,7 +76,7 @@ public class GamePlay extends World {
         addGraphic(backgroundImage).layer = IMAGE_STACK_ORDER;
         add(player);
         add(gameHud);
-        gameHud.setPosition(new Point(0,100));
+        gameHud.setPosition(new Point(50,100));
         gameHud.addUI(new Image(EmbededAssets.GAME_HUD_ICON_1),GameHud.HUD_UI_INFO_ITEM,"tool");
         gameHud.addUI(new Image(EmbededAssets.GAME_HUD_ICON_1),GameHud.HUD_UI_INFO_ITEM,"text");
         gameHud.addUI(new Image(EmbededAssets.GAME_HUD_ICON_1),GameHud.HUD_UI_INFO_ITEM,"sett");
@@ -93,7 +94,8 @@ public class GamePlay extends World {
 
     private function makeEnemies():void {
         enemyTimeCount += FP.elapsed;
-        if(enemyTimeCount > enemyFlightWaveDelay){
+        if(enemyTimeCount > enemyFlightWaveDelay && enemyFlightCount < numEnemyFlights){
+            enemyFlightCount++;
             enemyTimeCount -= enemyTimeCount;
             tempEnemyFlight = AbsFlight(enemyFlightPool.getEntity(int(Math.random()*numEnemyFlights)));
             var randomYPos:Number = Math.random()*FP.halfHeight-tempEnemyFlight.height;

@@ -32,7 +32,7 @@ public class EntityPool {
     }
 
     public function getEntity(index:int=-1):Entity {
-        if(counter > 0){
+        if(counter > 0 ){
             if(index != -1 && watchList.indexOf(index) == -1){
                 watchList.push(index);
                 counter--;
