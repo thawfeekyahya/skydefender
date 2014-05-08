@@ -42,12 +42,8 @@ public class EntityPool {
             } else {
                 var targetIndex:int = index;
                 while(watchList.indexOf(targetIndex) != -1){
-                    (targetIndex <= 0) ? targetIndex = counter-1 :targetIndex--;
+                    (targetIndex <= 0) ? targetIndex = totalCount-1 :targetIndex--;
                 }
-                if(counter > 500 || targetIndex < 0){
-                    trace();
-                }
-
                 watchList.push(targetIndex);
                 counter--;
                 return pool[targetIndex];
