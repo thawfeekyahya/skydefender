@@ -98,7 +98,7 @@ public class Player extends Entity {
         if(delayTime > FIRE_DELAY_TIME) {
             sfxShoot.play();
             delayTime -= FIRE_DELAY_TIME;
-            var rand:int = Math.random()*BULLET_COUNT;
+            var rand:int =  Math.random()*BULLET_COUNT;
             var bullet:Bullet = Bullet(FP.world.add(bulletPool.getEntity(rand)));
             var dx:Number = Input.mouseX - turret.x;
             var dy:Number = Input.mouseY - turret.y;

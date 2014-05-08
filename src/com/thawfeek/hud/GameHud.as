@@ -21,9 +21,9 @@ import net.flashpunk.graphics.Image;
 
 public class GameHud extends Entity {
 
-    public static const HUD_UI_INFO_ITEM = "infoItem";
-    public static const HUD_UI_TEXT_ITEM;
-    public static const HUD_UI_BUTTON_ITEM;
+    public static const HUD_UI_INFO_ITEM:String = "infoItem";
+    public static const HUD_UI_TEXT_ITEM:String;
+    public static const HUD_UI_BUTTON_ITEM:String;
 
     private var hudGraphic:Graphic;
     private var uiDict:Dictionary;
@@ -80,7 +80,7 @@ public class GameHud extends Entity {
         }
     }
 
-    public function setPosition(val:Point){
+    public function setPosition(val:Point):void{
         this.position = val;
         this.x  = position.x;
         this.y  = position.y;

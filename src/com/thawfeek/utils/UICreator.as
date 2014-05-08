@@ -17,7 +17,7 @@ public class UICreator {
     }
 
     public static function createInfoUI(graphic:Image,title:String):IUserInterfaceItem {
-        var uiInfoItem = new UIInfo(graphic,title);
+        var uiInfoItem:IUserInterfaceItem = new UIInfo(graphic,title);
         return uiInfoItem;
     }
 }

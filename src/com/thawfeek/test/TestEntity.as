@@ -16,6 +16,7 @@ import net.flashpunk.Entity;
 import net.flashpunk.Graphic;
 import net.flashpunk.Mask;
 import net.flashpunk.graphics.Image;
+import net.flashpunk.graphics.Text;
 import net.flashpunk.tweens.misc.VarTween;
 
 public class TestEntity extends Entity {
@@ -30,7 +31,7 @@ public class TestEntity extends Entity {
         angleTween.tween(Image(this.graphic),"angle",380,9);
         angleTween.start();*/
 
-        var img:Image = new Image(EmbededAssets.GAME_HUD_BG);
+       /* var img:Image = new Image(EmbededAssets.GAME_HUD_BG);
         var bitData:BitmapData = img.getSrcBitmapData();
 
         var colorTransform:ColorTransform = new ColorTransform();
@@ -38,7 +39,18 @@ public class TestEntity extends Entity {
         bitData.colorTransform(new Rectangle(0,0,img.width,img.height),colorTransform);
 
         var imag2:Image = new Image(bitData);
-        this.graphic= imag2;
+        this.graphic= imag2;*/
+        EmbededAssets;
+        Text.font = "Arial";
+        Text.size = 6;
+        var text:Text = new Text("");
+        text.font = "Arial";
+        text.width = 100;
+        text.wordWrap = true;
+        text.text= "Hi Hello this is a long word in a sing line to test flash punk text property center align";
+
+
+        addGraphic(text);
     }
 
 

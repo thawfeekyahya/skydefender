@@ -42,7 +42,7 @@ public class BellP39 extends AbsFlight{
         health = 5;
         sfxExplosion = new Sfx(EmbededAssets.SFX_ENEMY_EXPLODE);
 
-        var onAnimComplete:Function = function(){
+        var onAnimComplete:Function = function():void{
             explodeAnim.visible = false;
             finished = true;
         };

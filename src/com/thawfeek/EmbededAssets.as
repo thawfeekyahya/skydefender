@@ -57,6 +57,15 @@ public class EmbededAssets {
     [Embed(source="../../../assets/player/hud_icon1.png")]
     public static const GAME_HUD_ICON_1:Class;
 
+    [Embed(source="../../../assets/player/hud_icon2.png")]
+    public static const GAME_HUD_ICON_2:Class;
+
+    [Embed(source="../../../assets/player/hud_icon3.png")]
+    public static const GAME_HUD_ICON_3:Class;
+
+    [Embed(source="../../../assets/fonts/arial.ttf",embedAsCFF="false",fontFamily="Arial")]
+    public static const FONT_HUD:Class;
+
 
 }
 }
