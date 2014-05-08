@@ -12,12 +12,14 @@ public class EntityPool {
 
     private var pool:Array;
     private var counter:int;
+    private var totalCount:int;
     private var watchList:Vector.<int>;
 
     public function EntityPool(numCount:int,classType:Array) {
         pool = new Array();
          watchList = new Vector.<int>();
          counter = numCount *classType.length
+         totalCount = counter;
 
 
          if(classType.length == 0) throw new Error("Pass At least 1 class type");
@@ -35,16 +37,21 @@ public class EntityPool {
         if(counter > 0 && index > -1 && index < pool.length){
             if(watchList.indexOf(index) == -1){
                 watchList.push(index);
+                counter--;
                 return pool[index];
             } else {
                 var targetIndex:int = index;
                 while(watchList.indexOf(targetIndex) != -1){
-                    (targetIndex <= 0) ? targetIndex = counter :targetIndex--;
+                    (targetIndex <= 0) ? targetIndex = counter-1 :targetIndex--;
                 }
+                if(counter > 500 || targetIndex < 0){
+                    trace();
+                }
+
                 watchList.push(targetIndex);
+                counter--;
                 return pool[targetIndex];
             }
-            counter--;
         } else {
             throw new Error("Pool Exhausted or Invalid Index");
         }
@@ -58,6 +65,9 @@ public class EntityPool {
             counter++;
         } else {
             pool[counter++] = entity;
+        }
+        if(counter > totalCount){
+            throw new Error("Counter value cannot go beyond total count");
         }
     }
 

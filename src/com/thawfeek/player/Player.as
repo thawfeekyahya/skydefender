@@ -79,10 +79,10 @@ public class Player extends Entity {
     private function checkBullets():void {
         for (var i:int = bulletVect.length - 1; i >= 0; i--) {
             var bullet:Bullet = bulletVect[i];
-            if(bullet.x > FP.width || bullet.x <0 || bullet.y > FP.height || bullet.y < 0){
+            if(bullet.x > FP.width || bullet.x <0 || bullet.y > FP.height || bullet.y < 0 ){
                 bulletPool.putEntity(bullet);
-                FP.world.remove(bullet);
                 bulletVect.splice(i,1);
+                FP.world.remove(bullet);
             }
         }
     }
@@ -98,7 +98,8 @@ public class Player extends Entity {
         if(delayTime > FIRE_DELAY_TIME) {
             sfxShoot.play();
             delayTime -= FIRE_DELAY_TIME;
-            var bullet:Bullet = Bullet(FP.world.add(bulletPool.getEntity(Math.random()*BULLET_COUNT)));
+            var rand:int = Math.random()*BULLET_COUNT;
+            var bullet:Bullet = Bullet(FP.world.add(bulletPool.getEntity(rand)));
             var dx:Number = Input.mouseX - turret.x;
             var dy:Number = Input.mouseY - turret.y;
             var angle:Number = Math.atan2(dy,dx);

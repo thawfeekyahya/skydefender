@@ -34,6 +34,11 @@ public class Bullet extends AbsWeapon {
     }
 
 
+    override public function added():void {
+        super.added();
+        this.finished = false;
+    }
+
     override public function update():void {
         this.x += Math.cos(angle)*speed;
         this.y += Math.sin(angle)*speed;
