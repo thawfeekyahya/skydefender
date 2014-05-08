@@ -32,10 +32,9 @@ public class EntityPool {
     }
 
     public function getEntity(index:int):Entity {
-        if(counter > 0 && index > -1){
-            if(index != -1 && watchList.indexOf(index) == -1){
+        if(counter > 0 && index > -1 && index < pool.length){
+            if(watchList.indexOf(index) == -1){
                 watchList.push(index);
-                counter--;
                 return pool[index];
             } else {
                 var targetIndex:int = index;
@@ -45,6 +44,7 @@ public class EntityPool {
                 watchList.push(targetIndex);
                 return pool[targetIndex];
             }
+            counter--;
         } else {
             throw new Error("Pool Exhausted or Invalid Index");
         }
@@ -53,7 +53,7 @@ public class EntityPool {
     public function putEntity(entity:Entity):void {
         if(watchList.length > 0){
             var targetIndex:int = pool.indexOf(entity);
-            watchList.splice(targetIndex,1);
+            watchList.splice(watchList.indexOf(targetIndex),1);
             pool[targetIndex] = entity;
             counter++;
         } else {
