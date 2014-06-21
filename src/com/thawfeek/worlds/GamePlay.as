@@ -14,6 +14,7 @@ import com.thawfeek.player.Player;
 import com.thawfeek.utils.EntityPool;
 
 import flash.geom.Point;
+import flash.geom.Rectangle;
 
 import net.flashpunk.Entity;
 import net.flashpunk.FP;
@@ -30,6 +31,8 @@ public class GamePlay extends World {
     private var gameHud:GameHud;
 
     private const IMAGE_STACK_ORDER:int = 100;
+    private const GAME_PLAY_HEIGHT:int = 350;
+    private const GAME_PLAY_WIDTH:int  = 640;
 
     private var enemyFightList:Vector.<AbsFlight>;
     private var tempEnemyFlight:AbsFlight;
@@ -39,6 +42,7 @@ public class GamePlay extends World {
     private var level:int;
     private var numEnemyFlights:int;
     private var enemyFlightCount:int;
+    private var gamePlayArea:Rectangle;
 
     private var levelData:Array = [
             undefined,
@@ -53,7 +57,8 @@ public class GamePlay extends World {
 
     private function init():void {
         player = new Player();
-        gameHud = new GameHud();
+        gameHud = new GameHud(0,20);
+        gamePlayArea = new Rectangle();
         backgroundImage = new Backdrop(EmbededAssets.GAME_BG_IMAGE);
         gameMusic = new Sfx(EmbededAssets.GAME_MUSIC);
     }
@@ -63,7 +68,7 @@ public class GamePlay extends World {
         level++;
         enemyFlightCount = 0;
         enemyFlightWaveDelay = (enemyFlightWaveDelay < 8) ? enemyFlightWaveDelay = 8 : enemyFlightWaveDelay = 11-(level*2);     //todo: need to change this
-        numEnemyFlights      = (numEnemyFlights > 100 ) ? numEnemyFlights = 100 : numEnemyFlights =3; // level*10+3;
+        numEnemyFlights      = (numEnemyFlights > 100 ) ? numEnemyFlights = 100 : numEnemyFlights  = level*10+3;
         numEnemyFlights      =  numEnemyFlights / levelData[level].enemyFlights.length;           //Re-calculate num Enemies based on level Data
 
         if(enemyFlightPool != null) enemyFlightPool.destroy();
@@ -76,21 +81,26 @@ public class GamePlay extends World {
         addGraphic(backgroundImage).layer = IMAGE_STACK_ORDER;
         add(player);
         add(gameHud);
-        gameHud.setPosition(new Point(50,100));
         gameHud.addUI(new Image(EmbededAssets.GAME_HUD_ICON_1),GameHud.HUD_UI_INFO_ITEM,"Fire Speed");
         gameHud.addUI(new Image(EmbededAssets.GAME_HUD_ICON_2),GameHud.HUD_UI_INFO_ITEM,"Primary weapon");
         gameHud.addUI(new Image(EmbededAssets.GAME_HUD_ICON_3),GameHud.HUD_UI_INFO_ITEM,"Seconday weapon");
         gameHud.show();
+
+        gamePlayArea.x = 0;
+        gamePlayArea.y = gameHud.y+gameHud.height;
+        gamePlayArea.width = GAME_PLAY_WIDTH;
+        gamePlayArea.height = GAME_PLAY_HEIGHT-gamePlayArea.x;
+
         newLevel();
     }
 
 
     override public function update():void {
-        makeEnemies();
+        generateEnemies();
         super.update();
     }
 
-    private function makeEnemies():void {
+    private function generateEnemies():void {
         enemyTimeCount += FP.elapsed;
 
         if(enemyTimeCount > enemyFlightWaveDelay && enemyFlightCount < numEnemyFlights){
@@ -98,7 +108,7 @@ public class GamePlay extends World {
             enemyTimeCount -= enemyTimeCount;
             var rand:int = Math.floor(Math.random()*numEnemyFlights);
             tempEnemyFlight = AbsFlight(enemyFlightPool.getEntity(rand));
-            var randomYPos:Number = Math.random()*FP.halfHeight-tempEnemyFlight.height;
+            var randomYPos:Number = gamePlayArea.y +tempEnemyFlight.height+ (Math.random()*(gamePlayArea.height/2));
             tempEnemyFlight.deploy(FP.width,randomYPos);
             tempEnemyFlight.destination(-tempEnemyFlight.width,randomYPos);
             FP.world.add(tempEnemyFlight);
