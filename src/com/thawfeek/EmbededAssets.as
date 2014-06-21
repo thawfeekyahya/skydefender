@@ -26,10 +26,19 @@ public class EmbededAssets {
     public static const PLAYER_TURRET_BASE:Class;
 
     [Embed(source="../../../assets/player/turet.png")]
-    public static const PLAYER_TURRET:Class;
+    public static const TURRET_BASIC:Class;
+
+    [Embed(source="../../../assets/player/turret_rapid_fire.png")]
+    public static const TURRET_RAPID_FIRE:Class;
 
     [Embed(source="../../../assets/player/bullet.png")]
-    public static const PLAYER_BULLET:Class;
+    public static const PLAYER_BULLET_SMALL:Class;
+
+    [Embed(source="../../../assets/player/bullet_medium.png")]
+    public static const PLAYER_BULLET_MEDIUM:Class;
+
+    [Embed(source="../../../assets/player/bullet_heavy.png")]
+    public static const PLAYER_BULLET_HEAVY:Class;
 
     [Embed(source="../../../assets/sounds/player_shoot_basic.mp3")]
     public static const PLAYER_SHOOT_BASIC:Class;

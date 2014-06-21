@@ -7,7 +7,9 @@
  */
 package com.thawfeek.player {
 import com.thawfeek.EmbededAssets;
-import com.thawfeek.player.weapons.Bullet;
+import com.thawfeek.player.weapons.BulletHeavy;
+import com.thawfeek.player.weapons.BulletMedium;
+import com.thawfeek.player.weapons.BulletSmall;
 import com.thawfeek.utils.EntityPool;
 
 import net.flashpunk.Entity;
@@ -21,12 +23,21 @@ import net.flashpunk.utils.Input;
 
 public class Player extends Entity {
 
-    private var fireDelay:Number = 0.30;
-    private var bulletSpeed:int = 5;
+    public static const TURRET_BASIC:int = 0;
+    public static const TURRET_RAPID_FIRE:int = 1;
+    public static const TURRET_SILVER_KILLER:int = 2;
+    public static const TURRET_THUNDER_BOLT:int = 3;
+
+    public static const BULLET_SMALL:int = 0;
+    public static const BULLET_MEDIUM:int = 1;
+    public static const BULLET_HEAVY:int = 3;
+
+    private var fireDelay:Number;
+    private var bulletSpeed:int;
     private var turretBase:Image;
     private var turret:Image;
     private var bulletPool:EntityPool;
-    private var bulletVect:Vector.<Bullet> = new Vector.<Bullet>();
+    private var bulletVect:Vector.<BulletSmall> = new Vector.<BulletSmall>();
     private var delayTime:Number = 0;
     private var sfxShoot:Sfx;
     private const BULLET_COUNT:int = 500;
@@ -43,8 +54,9 @@ public class Player extends Entity {
 
 
     private function init():void {
+        changeTurret(TURRET_RAPID_FIRE);
+
         turretBase = new Image(EmbededAssets.PLAYER_TURRET_BASE);
-        turret     = new Image(EmbededAssets.PLAYER_TURRET);
 
         graphic = new Graphiclist(turret,turretBase);
 
@@ -61,7 +73,7 @@ public class Player extends Entity {
         turret.angle = 90;
 
         //Create Pool Objects
-        bulletPool = new EntityPool(BULLET_COUNT,[Bullet]);
+        changeBullet(BULLET_MEDIUM);
 
         //Create Sounds
         sfxShoot =new Sfx(EmbededAssets.PLAYER_SHOOT_BASIC);
@@ -77,7 +89,7 @@ public class Player extends Entity {
 
     private function checkBullets():void {
         for (var i:int = bulletVect.length - 1; i >= 0; i--) {
-            var bullet:Bullet = bulletVect[i];
+            var bullet:BulletSmall = bulletVect[i];
             if(bullet.x > FP.width || bullet.x <0 || bullet.y > FP.height || bullet.y < 0 ){
                 bulletPool.putEntity(bullet);
                 bulletVect.splice(i,1);
@@ -98,7 +110,7 @@ public class Player extends Entity {
             sfxShoot.play();
             delayTime -= fireDelay;
             var rand:int =  Math.random()*BULLET_COUNT;
-            var bullet:Bullet = Bullet(FP.world.add(bulletPool.getEntity(rand)));
+            var bullet:BulletSmall = BulletSmall(FP.world.add(bulletPool.getEntity(rand)));
             var dx:Number = Input.mouseX - turret.x;
             var dy:Number = Input.mouseY - turret.y;
             var angle:Number = Math.atan2(dy,dx);
@@ -115,8 +127,55 @@ public class Player extends Entity {
         turret.angle = FP.angle(turret.x,turret.y,Input.mouseX,Input.mouseY);
     }
 
-    public function setBulletSpeed(value:int):void {
-        this.bulletSpeed = value;
+    public function changeBullet(type:int):void {
+        switch (type){
+
+            case BULLET_HEAVY:
+                 if(bulletPool !=null) bulletPool.destroy();
+                 bulletPool = new EntityPool(BULLET_COUNT,[BulletHeavy]);
+            break;
+
+            case BULLET_MEDIUM:
+                if(bulletPool !=null) bulletPool.destroy();
+                bulletPool = new EntityPool(BULLET_COUNT,[BulletMedium]);
+            break;
+
+            case BULLET_SMALL:
+                if(bulletPool !=null) bulletPool.destroy();
+                bulletPool = new EntityPool(BULLET_COUNT,[BulletSmall]);
+            break;
+        }
+    }
+
+
+    public function changeTurret(type:int):void {
+        switch (type){
+
+            case TURRET_BASIC:
+                fireDelay = 0.30;
+                bulletSpeed = 5;
+                turret     = new Image(EmbededAssets.TURRET_BASIC);
+            break;
+
+            case TURRET_RAPID_FIRE:
+                fireDelay = 0.20;
+                bulletSpeed = 10;
+                turret     = new Image(EmbededAssets.TURRET_RAPID_FIRE);
+            break;
+
+            case TURRET_SILVER_KILLER:
+                fireDelay = 0.15;
+                bulletSpeed = 15;
+                turret     = new Image(EmbededAssets.TURRET_BASIC);
+            break;
+
+            case TURRET_THUNDER_BOLT:
+                fireDelay = 0.10;
+                bulletSpeed = 20;
+                turret     = new Image(EmbededAssets.TURRET_BASIC);
+            break;
+        }
+
     }
 }
 }

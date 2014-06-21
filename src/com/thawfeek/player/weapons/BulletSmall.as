@@ -13,7 +13,7 @@ import net.flashpunk.FP;
 import net.flashpunk.Sfx;
 import net.flashpunk.graphics.Image;
 
-public class Bullet extends AbsWeapon {
+public class BulletSmall extends AbsWeapon {
 
     private var angle:Number;
     private var speed:Number = 0.2;
@@ -22,11 +22,11 @@ public class Bullet extends AbsWeapon {
 
 
 
-    public function Bullet() {
+    public function BulletSmall() {
         this.layer = STACK_ORDER;
         this.speed = speed;
         this.angle = angle;
-        this.graphic = new Image(EmbededAssets.PLAYER_BULLET);
+        this.graphic = new Image(EmbededAssets.PLAYER_BULLET_SMALL);
         this.type = GameConstants.PLAYER_BULLET;
         this.power = 2;
         Image(this.graphic).centerOrigin();

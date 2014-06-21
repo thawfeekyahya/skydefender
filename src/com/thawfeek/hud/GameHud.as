@@ -40,8 +40,8 @@ public class GameHud extends Entity {
         position = new Point();
         position.x = x;
         position.y = y;
-        iconWidth  = 50;
-        iconHeight = 50;
+        iconWidth  = 40;
+        iconHeight = 40;
         bufferWidth = 10;
         bufferHeight = 10;
         this.width  = Image(this.graphic).width;
