@@ -21,8 +21,7 @@ import net.flashpunk.utils.Input;
 
 public class Player extends Entity {
 
-    public static var FIRE_DELAY_TIME:Number = 0.30;
-
+    private var fireDelay:Number = 0.30;
     private var bulletSpeed:int = 5;
     private var turretBase:Image;
     private var turret:Image;
@@ -95,9 +94,9 @@ public class Player extends Entity {
 
     private function fireBullets():void {
         delayTime += FP.elapsed;
-        if(delayTime > FIRE_DELAY_TIME) {
+        if(delayTime > fireDelay) {
             sfxShoot.play();
-            delayTime -= FIRE_DELAY_TIME;
+            delayTime -= fireDelay;
             var rand:int =  Math.random()*BULLET_COUNT;
             var bullet:Bullet = Bullet(FP.world.add(bulletPool.getEntity(rand)));
             var dx:Number = Input.mouseX - turret.x;

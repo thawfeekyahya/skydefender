@@ -44,6 +44,8 @@ public class GameHud extends Entity {
         iconHeight = 50;
         bufferWidth = 10;
         bufferHeight = 10;
+        this.width  = Image(this.graphic).width;
+        this.height = Image(this.graphic).height;
         super(x, y);
     }
 
