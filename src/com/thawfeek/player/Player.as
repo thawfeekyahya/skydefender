@@ -54,7 +54,7 @@ public class Player extends Entity {
 
 
     private function init():void {
-        changeTurret(TURRET_RAPID_FIRE);
+        setTurret(TURRET_RAPID_FIRE);
 
         turretBase = new Image(EmbededAssets.PLAYER_TURRET_BASE);
 
@@ -73,7 +73,7 @@ public class Player extends Entity {
         turret.angle = 90;
 
         //Create Pool Objects
-        changeBullet(BULLET_MEDIUM);
+        setBullet(BULLET_MEDIUM);
 
         //Create Sounds
         sfxShoot =new Sfx(EmbededAssets.PLAYER_SHOOT_BASIC);
@@ -127,7 +127,7 @@ public class Player extends Entity {
         turret.angle = FP.angle(turret.x,turret.y,Input.mouseX,Input.mouseY);
     }
 
-    public function changeBullet(type:int):void {
+    public function setBullet(type:int):void {
         switch (type){
 
             case BULLET_HEAVY:
@@ -148,7 +148,7 @@ public class Player extends Entity {
     }
 
 
-    public function changeTurret(type:int):void {
+    public function setTurret(type:int):void {
         switch (type){
 
             case TURRET_BASIC:

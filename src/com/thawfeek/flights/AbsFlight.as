@@ -14,6 +14,7 @@ import flash.geom.Point;
 
 import net.flashpunk.Entity;
 import net.flashpunk.FP;
+import net.flashpunk.graphics.Graphiclist;
 
 public class AbsFlight extends Entity {
 
@@ -22,12 +23,15 @@ public class AbsFlight extends Entity {
     private var destinationX:int;
     private var destinationY:int;
     private var moveSpeed:int;
+    protected var graphicList;
     protected var finished:Boolean;
     protected var health:int;
     protected var isShotDown:Boolean;
 
     public function AbsFlight(moveSpeed:int) {
         this.moveSpeed = moveSpeed;
+        this.graphicList = new Graphiclist();
+        this.graphic = graphicList;
     }
 
     public function deploy(targetX:int, targetY:int):void {
@@ -36,6 +40,8 @@ public class AbsFlight extends Entity {
         this.x = targetX;
         this.y = targetY;
     }
+
+
 
     public function destination(targetX:int, targetY:int):void {
         destinationX = targetX;
@@ -80,16 +86,22 @@ public class AbsFlight extends Entity {
             if(health <= 0){
                 isShotDown = true;
                 shotDown();
+                dropReward();
             }
         }
+    }
+
+    protected function dropReward():void {
+
     }
 
     protected function shotDown():void {
 
     }
 
-    protected function dispose():void {
+    protected function remove():void {
         FP.world.remove(this);
     }
+
 }
 }

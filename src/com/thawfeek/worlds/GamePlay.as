@@ -9,6 +9,7 @@ package com.thawfeek.worlds {
 import com.thawfeek.EmbededAssets;
 import com.thawfeek.flights.AbsFlight;
 import com.thawfeek.flights.low.BellP39;
+import com.thawfeek.flights.low.RedBarron;
 import com.thawfeek.hud.GameHud;
 import com.thawfeek.player.Player;
 import com.thawfeek.utils.EntityPool;
@@ -47,7 +48,7 @@ public class GamePlay extends World {
     private var levelData:Array = [
             undefined,
             {
-                enemyFlights:[BellP39]
+                enemyFlights:[RedBarron]
             }
     ];
 

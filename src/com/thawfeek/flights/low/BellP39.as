@@ -21,7 +21,6 @@ import net.flashpunk.tweens.motion.LinearPath;
 public class BellP39 extends AbsFlight{
 
     private var linearPath:LinearPath;
-    private var graphicList:Graphiclist;
     private var angleTween:VarTween;
     private var sfxExplosion:Sfx;
 
@@ -33,8 +32,7 @@ public class BellP39 extends AbsFlight{
     public function BellP39(moveSpeed:int=2) {
         super(moveSpeed);
         var img:Image = new Image(EmbededAssets.ENEMY_FLIGHT_P39);
-        graphicList = new Graphiclist(img)
-        this.graphic = graphicList;
+        graphicList.add(img);
         this.width = img.width;
         this.height= img.height;
         this.centerOrigin();
@@ -67,15 +65,15 @@ public class BellP39 extends AbsFlight{
             this.y = linearPath.y;
         }
         if(this.finished){
-            dispose();
+            remove();
         }
         super.update();
     }
 
 
-    override protected function dispose():void {
+    override protected function remove():void {
         clearTweens();
-        super.dispose();
+        super.remove();
     }
 
     override protected function shotDown():void {
@@ -98,6 +96,17 @@ public class BellP39 extends AbsFlight{
         explodeAnim.visible = true;
         explodeAnim.setAnimFrame(EXPLODE_ANIM,0);
         explodeAnim.play(EXPLODE_ANIM);
+    }
+
+
+    override public function removed():void {
+        explodeAnim = null;
+        angleTween = null;
+        linearPath = null;
+        sfxExplosion.stop();
+        sfxExplosion = null;
+        graphicList.removeAll();
+        super.removed();
     }
 }
 }
