@@ -36,6 +36,7 @@ public class AbsFlight extends Entity {
     }
 
     public function deploy(targetX:int, targetY:int):void {
+        finished = false;
         deployX = targetX;
         deployY = targetY;
         this.x = targetX;
@@ -104,6 +105,10 @@ public class AbsFlight extends Entity {
 
     protected function remove():void {
         FP.world.remove(this);
+    }
+
+    public function isFinished():Boolean {
+        return this.finished;
     }
 
 }

@@ -11,6 +11,7 @@ import com.thawfeek.skydefender.GameConfig;
 import com.thawfeek.skydefender.GameConfig;
 import com.thawfeek.skydefender.GameConstants;
 import com.thawfeek.skydefender.flights.AbsFlight;
+import com.thawfeek.skydefender.flights.low.BellP39;
 import com.thawfeek.skydefender.flights.low.RedBarron;
 import com.thawfeek.skydefender.hud.GameHud;
 import com.thawfeek.skydefender.player.Player;
@@ -40,6 +41,7 @@ public class GamePlay extends World {
 
     private var enemyFightList:Vector.<AbsFlight>;
     private var tempEnemyFlight:AbsFlight;
+    private var enemyFlightArray:Array;
     private var enemyFlightWaveDelay:int = 30;
     private var enemyFlightPool:EntityPool;
     private var enemyTimeCount:Number=0;
@@ -47,11 +49,16 @@ public class GamePlay extends World {
     private var numEnemyFlights:int;
     private var enemyFlightCount:int;
     private var gamePlayArea:Rectangle;
+    private var gameStarted:Boolean;
+
 
     private var levelData:Array = [
             undefined,
             {
                 enemyFlights:[RedBarron]
+            },
+            {
+                enemyFlights:[BellP39]
             }
     ];
 
@@ -71,11 +78,11 @@ public class GamePlay extends World {
     private function newLevel():void {
         level++;
         enemyFlightCount = 0;
+        enemyFlightArray = [];
         enemyFlightWaveDelay = (enemyFlightWaveDelay < 8) ? enemyFlightWaveDelay = 8 : enemyFlightWaveDelay = 11-(level*2);     //todo: need to change this
-        numEnemyFlights      = (numEnemyFlights > 100 ) ? numEnemyFlights = 100 : numEnemyFlights  = level*10+3;
+        numEnemyFlights      = (numEnemyFlights > 100 ) ? numEnemyFlights = 100 : numEnemyFlights  = 2;//level*10+3;
         numEnemyFlights      =  numEnemyFlights / levelData[level].enemyFlights.length;           //Re-calculate num Enemies based on level Data
 
-        if(enemyFlightPool != null) enemyFlightPool.destroy();
         enemyFlightPool      = new EntityPool(numEnemyFlights, levelData[level].enemyFlights);
     }
 
@@ -101,22 +108,51 @@ public class GamePlay extends World {
 
 
     override public function update():void {
-        generateEnemies();
-        super.update();
+        if(!gameStarted){
+            if(Input.mousePressed) gameStarted = true;
+        }
+        if (gameStarted) {
+            generateEnemies();
+            checkForLevelEnd();
+            super.update();
+        }
+    }
+
+    private function checkForLevelEnd():void {
+        checkEnemyFlights();
+        if(enemyFlightArray.length == 0 && enemyFlightCount == numEnemyFlights){
+            gameStarted = false;
+            cleanUpLevel();
+            newLevel();
+        }
+    }
+
+    private function checkEnemyFlights():void {
+        for (var i:int = enemyFlightArray.length - 1; i >= 0; i--) {
+            var enemyFlight:AbsFlight = enemyFlightArray[i];
+            if(enemyFlight.isFinished()){
+                enemyFlightArray.splice(i,1);
+            }
+        }
+    }
+
+    private function cleanUpLevel():void {
+       enemyFlightPool.destroy();
     }
 
     private function generateEnemies():void {
         enemyTimeCount += FP.elapsed;
 
         if(enemyTimeCount > enemyFlightWaveDelay && enemyFlightCount < numEnemyFlights){
-            enemyFlightCount++;
             enemyTimeCount -= enemyTimeCount;
             var rand:int = Math.floor(Math.random()*numEnemyFlights);
             tempEnemyFlight = AbsFlight(enemyFlightPool.getEntity(rand));
             var randomYPos:Number = gamePlayArea.y +tempEnemyFlight.height+ (Math.random()*(gamePlayArea.height/2));
             tempEnemyFlight.deploy(FP.width,randomYPos);
             tempEnemyFlight.destination(-tempEnemyFlight.width,randomYPos);
+            enemyFlightArray.push(tempEnemyFlight);
             FP.world.add(tempEnemyFlight);
+            enemyFlightCount++;
         }
     }
 }

@@ -55,7 +55,7 @@ public class Player extends Entity {
 
 
     private function init():void {
-        setTurret(TURRET_RAPID_FIRE);
+        setTurret(TURRET_THUNDER_BOLT);
 
         turretBase = new Image(EmbededAssets.PLAYER_TURRET_BASE);
 
