@@ -7,6 +7,7 @@
  */
 package com.thawfeek.skydefender.flights {
 
+import com.thawfeek.skydefender.GameConfig;
 import com.thawfeek.skydefender.GameConstants;
 import com.thawfeek.skydefender.player.weapons.AbsWeapon;
 
@@ -81,7 +82,9 @@ public class AbsFlight extends Entity {
         var weapon:AbsWeapon = AbsWeapon(this.collide(GameConstants.PLAYER_BULLET, this.x, this.y));
         if (weapon) {
             this.health -= weapon.getPower();
-            weapon.playHitSound();
+
+            if(GameConfig.getInstance().isSoundOn()) weapon.playHitSound();
+
             FP.world.remove(weapon);
             if(health <= 0){
                 isShotDown = true;

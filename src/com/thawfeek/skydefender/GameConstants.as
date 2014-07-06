@@ -10,5 +10,6 @@ public class GameConstants {
 
     public static const PLAYER_BULLET:String = "playerBullet";
 
+
 }
 }

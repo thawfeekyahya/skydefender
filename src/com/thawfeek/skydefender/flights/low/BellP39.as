@@ -7,6 +7,8 @@
  */
 package com.thawfeek.skydefender.flights.low {
 import com.thawfeek.skydefender.EmbededAssets;
+import com.thawfeek.skydefender.GameConfig;
+import com.thawfeek.skydefender.flights.AbsFlight;
 
 import net.flashpunk.FP;
 import net.flashpunk.Sfx;
@@ -36,7 +38,7 @@ public class BellP39 extends AbsFlight {
         this.centerOrigin();
         img.centerOrigin();
         health = 5;
-        sfxExplosion = new Sfx(EmbededAssets.SFX_ENEMY_EXPLODE);
+        sfxExplosion = GameConfig.getInstance().addSound(EmbededAssets.SFX_ENEMY_EXPLODE);
 
         var onAnimComplete:Function = function ():void {
             explodeAnim.visible = false;
@@ -90,7 +92,7 @@ public class BellP39 extends AbsFlight {
     }
 
     private function explode():void {
-        if (!sfxExplosion.playing)sfxExplosion.play();
+        if (!sfxExplosion.playing && GameConfig.getInstance().isSoundOn()) sfxExplosion.play();
         explodeAnim.visible = true;
         explodeAnim.setAnimFrame(EXPLODE_ANIM, 0);
         explodeAnim.play(EXPLODE_ANIM);

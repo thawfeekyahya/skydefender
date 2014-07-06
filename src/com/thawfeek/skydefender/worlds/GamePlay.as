@@ -7,6 +7,9 @@
  */
 package com.thawfeek.skydefender.worlds {
 import com.thawfeek.skydefender.EmbededAssets;
+import com.thawfeek.skydefender.GameConfig;
+import com.thawfeek.skydefender.GameConfig;
+import com.thawfeek.skydefender.GameConstants;
 import com.thawfeek.skydefender.flights.AbsFlight;
 import com.thawfeek.skydefender.flights.low.RedBarron;
 import com.thawfeek.skydefender.hud.GameHud;
@@ -21,6 +24,8 @@ import net.flashpunk.Sfx;
 import net.flashpunk.World;
 import net.flashpunk.graphics.Backdrop;
 import net.flashpunk.graphics.Image;
+import net.flashpunk.utils.Input;
+import net.flashpunk.utils.Key;
 
 public class GamePlay extends World {
 
@@ -59,7 +64,7 @@ public class GamePlay extends World {
         gameHud = new GameHud(0,20);
         gamePlayArea = new Rectangle();
         backgroundImage = new Backdrop(EmbededAssets.GAME_BG_IMAGE);
-        gameMusic = new Sfx(EmbededAssets.GAME_MUSIC);
+        gameMusic = GameConfig.getInstance().addSound(EmbededAssets.GAME_MUSIC);
     }
 
 
@@ -76,7 +81,8 @@ public class GamePlay extends World {
 
 
     override public function begin():void {
-        //        gameMusic.loop();
+        GameConfig.getInstance().muteSounds(true);
+        if(GameConfig.getInstance().isSoundOn()) gameMusic.loop();
         addGraphic(backgroundImage).layer = IMAGE_STACK_ORDER;
         add(player);
         add(gameHud);
