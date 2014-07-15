@@ -5,7 +5,7 @@
  * Time: 10:03 AM
  *
  */
-package com.thawfeek.skydefender.utils.uielements {
+package com.thawfeek.skydefender.ui.uielements {
 import flash.display.BitmapData;
 import flash.geom.ColorTransform;
 import flash.geom.Point;

@@ -11,7 +11,6 @@ import com.thawfeek.skydefender.GameConfig;
 import com.thawfeek.skydefender.GameConstants;
 
 import net.flashpunk.FP;
-import net.flashpunk.Sfx;
 import net.flashpunk.graphics.Image;
 
 public class BulletSmall extends AbsWeapon {

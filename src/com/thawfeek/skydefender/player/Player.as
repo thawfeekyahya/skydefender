@@ -12,6 +12,7 @@ import com.thawfeek.skydefender.player.weapons.BulletHeavy;
 import com.thawfeek.skydefender.player.weapons.BulletMedium;
 import com.thawfeek.skydefender.player.weapons.BulletSmall;
 import com.thawfeek.skydefender.utils.EntityPool;
+import com.thawfeek.skydefender.worlds.GamePlay;
 
 import net.flashpunk.Entity;
 import net.flashpunk.FP;
@@ -100,7 +101,7 @@ public class Player extends Entity {
     }
 
     private function checkMouseInput():void {
-        if(Input.mouseDown){
+        if(Input.mouseDown && GamePlay(FP.world).isGameStarted()){
            fireBullets();
         }
     }

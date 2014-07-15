@@ -5,7 +5,7 @@
  * Time: 10:08 AM
  *
  */
-package com.thawfeek.skydefender.utils.uielements {
+package com.thawfeek.skydefender.ui.uielements {
 import flash.geom.Point;
 
 public interface IUserInterfaceItem {

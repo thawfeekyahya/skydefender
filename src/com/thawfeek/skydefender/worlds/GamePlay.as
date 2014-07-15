@@ -8,8 +8,6 @@
 package com.thawfeek.skydefender.worlds {
 import com.thawfeek.skydefender.EmbededAssets;
 import com.thawfeek.skydefender.GameConfig;
-import com.thawfeek.skydefender.GameConfig;
-import com.thawfeek.skydefender.GameConstants;
 import com.thawfeek.skydefender.flights.AbsFlight;
 import com.thawfeek.skydefender.flights.low.BellP39;
 import com.thawfeek.skydefender.flights.low.RedBarron;
@@ -26,7 +24,6 @@ import net.flashpunk.World;
 import net.flashpunk.graphics.Backdrop;
 import net.flashpunk.graphics.Image;
 import net.flashpunk.utils.Input;
-import net.flashpunk.utils.Key;
 
 public class GamePlay extends World {
 
@@ -59,6 +56,9 @@ public class GamePlay extends World {
             },
             {
                 enemyFlights:[BellP39]
+            },
+            {
+                enemyFlights:[BellP39,RedBarron]
             }
     ];
 
@@ -88,7 +88,7 @@ public class GamePlay extends World {
 
 
     override public function begin():void {
-        GameConfig.getInstance().muteSounds(true);
+        //GameConfig.getInstance().muteSounds(false);
         if(GameConfig.getInstance().isSoundOn()) gameMusic.loop();
         addGraphic(backgroundImage).layer = IMAGE_STACK_ORDER;
         add(player);
@@ -154,6 +154,10 @@ public class GamePlay extends World {
             FP.world.add(tempEnemyFlight);
             enemyFlightCount++;
         }
+    }
+
+    public function isGameStarted():Boolean{
+        return gameStarted;
     }
 }
 }

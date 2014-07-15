@@ -5,9 +5,9 @@
  * Time: 10:01 AM
  *
  */
-package com.thawfeek.skydefender.utils {
-import com.thawfeek.skydefender.utils.uielements.IUserInterfaceItem;
-import com.thawfeek.skydefender.utils.uielements.UIInfo;
+package com.thawfeek.skydefender.ui {
+import com.thawfeek.skydefender.ui.uielements.IUserInterfaceItem;
+import com.thawfeek.skydefender.ui.uielements.UIInfo;
 
 import net.flashpunk.graphics.Image;
 
