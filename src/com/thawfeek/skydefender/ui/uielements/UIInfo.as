@@ -6,6 +6,8 @@
  *
  */
 package com.thawfeek.skydefender.ui.uielements {
+import com.thawfeek.skydefender.ui.uielements.Dummy;
+
 import flash.display.BitmapData;
 import flash.geom.ColorTransform;
 import flash.geom.Point;
@@ -24,7 +26,7 @@ public class UIInfo extends Entity implements IUserInterfaceItem{
     private var isEnabled:Boolean;
     private var msgText:Text;
 
-    public function UIInfo(iconImage:Image,title:String) {
+    public function UIInfo(dummy:Dummy,iconImage:Image,title:String) {
         this.icon = iconImage;
         this.title = title;
 

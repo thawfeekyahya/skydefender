@@ -8,7 +8,7 @@
  */
 package com.thawfeek.skydefender.hud {
 import com.thawfeek.skydefender.EmbededAssets;
-import com.thawfeek.skydefender.ui.UICreator;
+import com.thawfeek.skydefender.ui.uielements.UICreator;
 import com.thawfeek.skydefender.ui.uielements.IUserInterfaceItem;
 
 import flash.geom.Point;
