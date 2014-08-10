@@ -5,7 +5,8 @@
  * Time: 3:18 PM
  *
  */
-package com.thawfeek.skydefender.player.weapons {
+package com.thawfeek.skydefender.player.weapons.bullets {
+import com.thawfeek.skydefender.player.weapons.*;
 import com.thawfeek.skydefender.EmbededAssets;
 import com.thawfeek.skydefender.GameConfig;
 import com.thawfeek.skydefender.GameConstants;

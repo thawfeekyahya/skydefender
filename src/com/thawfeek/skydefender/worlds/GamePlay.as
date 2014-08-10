@@ -83,6 +83,7 @@ public class GamePlay extends World {
 
 
     private function newLevel():void {
+        uiMsgBox.show();
         level++;
         enemyFlightCount = 0;
         enemyFlightArray = [];
@@ -100,7 +101,6 @@ public class GamePlay extends World {
         add(player);
         add(gameHud);
         add(uiMsgBox as Entity);
-        uiMsgBox.show();
         gameHud.addUI(new Image(EmbededAssets.GAME_HUD_ICON_1),GameHud.HUD_UI_INFO_ITEM,"Fire Speed");
         gameHud.addUI(new Image(EmbededAssets.GAME_HUD_ICON_2),GameHud.HUD_UI_INFO_ITEM,"Primary weapon");
         gameHud.addUI(new Image(EmbededAssets.GAME_HUD_ICON_3),GameHud.HUD_UI_INFO_ITEM,"Seconday weapon");
@@ -121,8 +121,7 @@ public class GamePlay extends World {
                 gameStarted = true;
                 uiMsgBox.hide();
             }
-        }
-        if (gameStarted) {
+        } else {
             generateEnemies();
             checkForLevelEnd();
             super.update();
@@ -148,7 +147,8 @@ public class GamePlay extends World {
     }
 
     private function cleanUpLevel():void {
-       enemyFlightPool.destroy();
+        gameStarted = false;
+        enemyFlightPool.destroy();
     }
 
     private function generateEnemies():void {

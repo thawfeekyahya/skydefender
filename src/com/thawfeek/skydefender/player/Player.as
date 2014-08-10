@@ -8,9 +8,9 @@
 package com.thawfeek.skydefender.player {
 import com.thawfeek.skydefender.EmbededAssets;
 import com.thawfeek.skydefender.GameConfig;
-import com.thawfeek.skydefender.player.weapons.BulletHeavy;
-import com.thawfeek.skydefender.player.weapons.BulletMedium;
-import com.thawfeek.skydefender.player.weapons.BulletSmall;
+import com.thawfeek.skydefender.player.weapons.bullets.BulletHeavy;
+import com.thawfeek.skydefender.player.weapons.bullets.BulletMedium;
+import com.thawfeek.skydefender.player.weapons.bullets.BulletSmall;
 import com.thawfeek.skydefender.utils.EntityPool;
 import com.thawfeek.skydefender.worlds.GamePlay;
 
@@ -39,12 +39,13 @@ public class Player extends Entity {
     private var turretBase:Image;
     private var turret:Image;
     private var bulletPool:EntityPool;
-    private var bulletVect:Vector.<BulletSmall> = new Vector.<BulletSmall>();
+    private var bulletVect:Vector.<BulletSmall>;
     private var delayTime:Number = 0;
     private var sfxShoot:Sfx;
     private const BULLET_COUNT:int = 500;
 
     public function Player(x:Number = 0, y:Number = 0, graphic:Graphic = null, mask:Mask = null) {
+        bulletVect = new Vector.<BulletSmall>();
         super(x, y, graphic, mask);
         init();
     }
@@ -92,7 +93,7 @@ public class Player extends Entity {
     private function checkBullets():void {
         for (var i:int = bulletVect.length - 1; i >= 0; i--) {
             var bullet:BulletSmall = bulletVect[i];
-            if(bullet.x > FP.width || bullet.x <0 || bullet.y > FP.height || bullet.y < 0 ){
+            if(bullet.isFinished() ){
                 bulletPool.putEntity(bullet);
                 bulletVect.splice(i,1);
                 FP.world.remove(bullet);
