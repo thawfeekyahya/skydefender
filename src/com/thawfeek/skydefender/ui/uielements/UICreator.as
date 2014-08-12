@@ -24,5 +24,9 @@ public class UICreator {
     public static function createMsgBoxUI(text:String, point:Point):IUserInterfaceItem {
         return new UIMsgBox(new Dummy(),text,point);
     }
+
+    public static function createScoreElement(elementName:String,value:String,pos:Point):IUserInterfaceItem {
+        return new UIScoreElement(new Dummy(),elementName,value,pos);
+    }
 }
 }

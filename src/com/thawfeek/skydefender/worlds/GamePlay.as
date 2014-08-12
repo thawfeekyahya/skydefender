@@ -8,6 +8,7 @@
 package com.thawfeek.skydefender.worlds {
 import com.thawfeek.skydefender.EmbededAssets;
 import com.thawfeek.skydefender.GameConfig;
+import com.thawfeek.skydefender.GameConstants;
 import com.thawfeek.skydefender.flights.AbsFlight;
 import com.thawfeek.skydefender.flights.low.BellP39;
 import com.thawfeek.skydefender.flights.low.RedBarron;
@@ -21,6 +22,7 @@ import com.thawfeek.skydefender.utils.EntityPool;
 import flash.geom.Point;
 
 import flash.geom.Rectangle;
+import flash.utils.Dictionary;
 
 import net.flashpunk.Entity;
 import net.flashpunk.FP;
@@ -52,7 +54,12 @@ public class GamePlay extends World {
     private var enemyFlightCount:int;
     private var gamePlayArea:Rectangle;
     private var gameStarted:Boolean;
+
+
     private var uiMsgBox:IUserInterfaceItem;
+    private var playerScore:IUserInterfaceItem;
+
+    private var scoreBoardElementDict:Dictionary;
 
 
     private var levelData:Array = [
@@ -69,21 +76,26 @@ public class GamePlay extends World {
     ];
 
     public function GamePlay() {
-        init();
     }
 
+    //TODO: Init function should be made sync with begin()
     private function init():void {
         player = new Player();
         gameHud = new GameHud(0,20);
         gamePlayArea = new Rectangle();
+        scoreBoardElementDict = new Dictionary(true);
         uiMsgBox = UICreator.createMsgBoxUI("Click to Start",new Point(FP.halfWidth,FP.halfHeight));
         backgroundImage = new Backdrop(EmbededAssets.GAME_BG_IMAGE);
         gameMusic = GameConfig.getInstance().addSound(EmbededAssets.GAME_MUSIC);
+        playerScore = UICreator.createScoreElement(GameConstants.SCORE_ELEMENT_PLAYER_SCORE,"0",new Point(200,300));
+        scoreBoardElementDict[GameConstants.SCORE_ELEMENT_PLAYER_SCORE] = playerScore;
+        uiMsgBox.show();
+        playerScore.show();
     }
 
 
     private function newLevel():void {
-        uiMsgBox.show();
+
         level++;
         enemyFlightCount = 0;
         enemyFlightArray = [];
@@ -95,12 +107,12 @@ public class GamePlay extends World {
 
 
     override public function begin():void {
+        init();
         //GameConfig.getInstance().muteSounds(false);
         if(GameConfig.getInstance().isSoundOn()) gameMusic.loop();
         addGraphic(backgroundImage).layer = IMAGE_STACK_ORDER;
         add(player);
         add(gameHud);
-        add(uiMsgBox as Entity);
         gameHud.addUI(new Image(EmbededAssets.GAME_HUD_ICON_1),GameHud.HUD_UI_INFO_ITEM,"Fire Speed");
         gameHud.addUI(new Image(EmbededAssets.GAME_HUD_ICON_2),GameHud.HUD_UI_INFO_ITEM,"Primary weapon");
         gameHud.addUI(new Image(EmbededAssets.GAME_HUD_ICON_3),GameHud.HUD_UI_INFO_ITEM,"Seconday weapon");
@@ -169,6 +181,10 @@ public class GamePlay extends World {
 
     public function isGameStarted():Boolean{
         return gameStarted;
+    }
+
+    public function updateScoreBoard(element:String,val:int):void {
+       scoreBoardElementDict[element].setText(val);
     }
 }
 }

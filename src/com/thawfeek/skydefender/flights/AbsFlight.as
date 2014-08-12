@@ -10,6 +10,7 @@ package com.thawfeek.skydefender.flights {
 import com.thawfeek.skydefender.GameConfig;
 import com.thawfeek.skydefender.GameConstants;
 import com.thawfeek.skydefender.player.weapons.AbsWeapon;
+import com.thawfeek.skydefender.worlds.GamePlay;
 
 import flash.geom.Point;
 
@@ -24,9 +25,11 @@ public class AbsFlight extends Entity {
     private var destinationX:int;
     private var destinationY:int;
     private var moveSpeed:int;
+    private var scoreBoardUpdated:Boolean;
     protected var graphicList:Graphiclist;
     protected var finished:Boolean;
     protected var health:int;
+    protected var hitScore:int;
     protected var isShotDown:Boolean;
 
     public function AbsFlight(moveSpeed:int) {
@@ -91,8 +94,16 @@ public class AbsFlight extends Entity {
                 isShotDown = true;
                 shotDown();
                 dropReward();
+                if(!scoreBoardUpdated) {
+                    updateScoreBoard();
+                }
             }
         }
+    }
+
+    protected function updateScoreBoard():void {
+        scoreBoardUpdated = true;
+        GamePlay(world).updateScoreBoard(GameConstants.SCORE_ELEMENT_PLAYER_SCORE,hitScore);
     }
 
     protected function dropReward():void {
@@ -110,6 +121,8 @@ public class AbsFlight extends Entity {
     public function isFinished():Boolean {
         return this.finished;
     }
+
+
 
 }
 }

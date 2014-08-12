@@ -20,11 +20,11 @@ public class UIMsgBox extends Entity implements IUserInterfaceItem {
 
     private var msgTxt:Text;
 
-    public function UIMsgBox(dummy:Dummy,msg:String,pos:Point) {
+    public function UIMsgBox(dummy:Dummy,msg:String,pos:Point,msgWidth:int=300) {
         msgTxt = new Text(msg);
         this.x = pos.x;
         this.y = pos.y;
-        msgTxt.width = 300;
+        msgTxt.width = msgWidth;
         msgTxt.wordWrap = true;
 //        msgTxt.x = (icon.width >> 1 - titleText.textWidth >> 1);
         msgTxt.text = msg;

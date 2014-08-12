@@ -26,6 +26,7 @@ public class RedBarron extends AbsFlight {
         this.width = 70;
         this.height = 28;
         this.health = 8;
+        hitScore = 10;
         this.centerOrigin();
         spriteMap.centerOrigin();
 

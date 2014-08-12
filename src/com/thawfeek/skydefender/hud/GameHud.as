@@ -59,6 +59,7 @@ public class GameHud extends Entity {
                 uiItem = UICreator.createInfoUI(graphic,key);
             break;
 
+
             default:
                 trace("Type Not Found in HUD");
                 return;

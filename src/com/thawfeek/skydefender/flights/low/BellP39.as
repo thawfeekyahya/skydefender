@@ -38,6 +38,7 @@ public class BellP39 extends AbsFlight {
         this.centerOrigin();
         img.centerOrigin();
         health = 5;
+        hitScore = 20;
         sfxExplosion = GameConfig.getInstance().addSound(EmbededAssets.SFX_ENEMY_EXPLODE);
 
         var onAnimComplete:Function = function ():void {

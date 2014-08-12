@@ -19,12 +19,12 @@ public class BulletSmall extends AbsWeapon {
     private var angle:Number;
     private var speed:Number = 0.2;
     private var finished:Boolean;
-    private var STACK_ORDER:int = 90;
+    private const LAYER_STACK_ORDER:int = 90;
 
 
 
     public function BulletSmall() {
-        this.layer = STACK_ORDER;
+        this.layer = LAYER_STACK_ORDER;
         this.speed = speed;
         this.angle = angle;
         this.graphic = new Image(EmbededAssets.PLAYER_BULLET_SMALL);
