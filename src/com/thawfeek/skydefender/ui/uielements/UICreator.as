@@ -7,6 +7,8 @@
  */
 package com.thawfeek.skydefender.ui.uielements {
 
+import com.thawfeek.skydefender.shop.IShopDelegate;
+
 import flash.geom.Point;
 
 import net.flashpunk.graphics.Image;
@@ -27,6 +29,10 @@ public class UICreator {
 
     public static function createScoreElement(elementName:String,value:String,pos:Point):IUserInterfaceItem {
         return new UIScoreElement(new Dummy(),elementName,value,pos);
+    }
+
+    public static function createShopItem(graphic:Image,name:String,shopDelegate:IShopDelegate,itemID:int):IUserInterfaceItem {
+        return new UIShopItem(new Dummy(),graphic,name,shopDelegate,itemID);
     }
 }
 }

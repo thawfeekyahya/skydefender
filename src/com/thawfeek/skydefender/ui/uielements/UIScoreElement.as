@@ -52,9 +52,7 @@ public class UIScoreElement extends Entity implements IUserInterfaceItem {
     }
 
     public function setText(val:String):void {
-        var score:int = this.value+parseInt(val);
-        txtField.text = elementName + " "+ score.toString();
-        this.value = score;
+        txtField.text = elementName + " "+ val;
     }
 
     public function setPosition(val:Point):void {

@@ -36,7 +36,7 @@ public class GamePlay extends World {
 
     private var backgroundImage:Backdrop;
     private var gameMusic:Sfx;
-    private var player:Entity   ;
+    private var player:Player   ;
     private var gameHud:GameHud;
 
     private const IMAGE_STACK_ORDER:int = 100;
@@ -54,10 +54,11 @@ public class GamePlay extends World {
     private var enemyFlightCount:int;
     private var gamePlayArea:Rectangle;
     private var gameStarted:Boolean;
+    private var playerScore:int;
 
 
     private var uiMsgBox:IUserInterfaceItem;
-    private var playerScore:IUserInterfaceItem;
+    private var uiScoreBoard:IUserInterfaceItem;
 
     private var scoreBoardElementDict:Dictionary;
 
@@ -87,15 +88,14 @@ public class GamePlay extends World {
         uiMsgBox = UICreator.createMsgBoxUI("Click to Start",new Point(FP.halfWidth,FP.halfHeight));
         backgroundImage = new Backdrop(EmbededAssets.GAME_BG_IMAGE);
         gameMusic = GameConfig.getInstance().addSound(EmbededAssets.GAME_MUSIC);
-        playerScore = UICreator.createScoreElement(GameConstants.SCORE_ELEMENT_PLAYER_SCORE,"0",new Point(200,300));
-        scoreBoardElementDict[GameConstants.SCORE_ELEMENT_PLAYER_SCORE] = playerScore;
-        uiMsgBox.show();
-        playerScore.show();
+        uiScoreBoard = UICreator.createScoreElement(GameConstants.PLAYER_SCORE,"0",new Point(200,300));
+        scoreBoardElementDict[GameConstants.PLAYER_SCORE] = uiScoreBoard;
+        uiScoreBoard.show();
     }
 
 
     private function newLevel():void {
-
+        uiMsgBox.show();
         level++;
         enemyFlightCount = 0;
         enemyFlightArray = [];
@@ -184,7 +184,15 @@ public class GamePlay extends World {
     }
 
     public function updateScoreBoard(element:String,val:int):void {
-       scoreBoardElementDict[element].setText(val);
+       var targetValue:int;
+       switch (element) {
+           case GameConstants.PLAYER_SCORE:
+               player.setScore(val);
+               targetValue = player.getScore();
+               break;
+       }
+
+       scoreBoardElementDict[element].setText(targetValue);
     }
 }
 }

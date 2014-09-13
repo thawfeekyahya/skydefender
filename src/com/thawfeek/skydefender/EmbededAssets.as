@@ -17,6 +17,8 @@ public class EmbededAssets {
     [Embed(source="../../../../assets/background.jpg")]
     public static const GAME_BG_IMAGE:Class;
 
+    [Embed(source="../../../../assets/shop/shopMenu.png")]
+    public static const SHOP_BG:Class;
 
     //Sound Assets
     [Embed(source="../../../../assets/sounds/gamemusic.mp3")]

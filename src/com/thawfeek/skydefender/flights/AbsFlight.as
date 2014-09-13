@@ -103,7 +103,7 @@ public class AbsFlight extends Entity {
 
     protected function updateScoreBoard():void {
         scoreBoardUpdated = true;
-        GamePlay(world).updateScoreBoard(GameConstants.SCORE_ELEMENT_PLAYER_SCORE,hitScore);
+        GamePlay(world).updateScoreBoard(GameConstants.PLAYER_SCORE,hitScore);
     }
 
     protected function dropReward():void {

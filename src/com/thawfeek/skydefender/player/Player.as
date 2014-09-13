@@ -43,6 +43,7 @@ public class Player extends Entity {
     private var delayTime:Number = 0;
     private var sfxShoot:Sfx;
     private const BULLET_COUNT:int = 500;
+    private var score:int;
 
     public function Player(x:Number = 0, y:Number = 0, graphic:Graphic = null, mask:Mask = null) {
         bulletVect = new Vector.<BulletSmall>();
@@ -179,6 +180,14 @@ public class Player extends Entity {
             break;
         }
 
+    }
+
+    public function setScore(val:int):void {
+        this.score += val;
+    }
+
+    public function getScore():int {
+        return this.score;
     }
 }
 }
