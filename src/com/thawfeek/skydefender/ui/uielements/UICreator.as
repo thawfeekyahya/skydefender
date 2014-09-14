@@ -31,8 +31,6 @@ public class UICreator {
         return new UIScoreElement(new Dummy(),elementName,value,pos);
     }
 
-    public static function createShopItem(graphic:Image,name:String,shopDelegate:IShopDelegate,itemID:int):IUserInterfaceItem {
-        return new UIShopItem(new Dummy(),graphic,name,shopDelegate,itemID);
-    }
+
 }
 }

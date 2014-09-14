@@ -43,7 +43,7 @@ public class UIInfo extends Entity implements IUserInterfaceItem{
 
         //Msg Text
         msgText = new Text("value");
-        msgText.y =  iconImage.height-msgText.textHeight;
+        msgText.y =  icon.height-msgText.textHeight;
         msgText.x = (icon.width >> 1 - msgText.textWidth >> 1);
 
         //Disable State Image

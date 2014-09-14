@@ -20,6 +20,9 @@ public class EmbededAssets {
     [Embed(source="../../../../assets/shop/shopMenu.png")]
     public static const SHOP_BG:Class;
 
+    [Embed(source="../../../../assets/shop/btn.png")]
+    public static const SHOP_FW_BTN:Class;
+
     //Sound Assets
     [Embed(source="../../../../assets/sounds/gamemusic.mp3")]
     public static const GAME_MUSIC:Class;
