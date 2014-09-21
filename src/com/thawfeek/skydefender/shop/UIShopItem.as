@@ -6,6 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 package com.thawfeek.skydefender.shop {
+import com.thawfeek.skydefender.EmbededAssets;
 import com.thawfeek.skydefender.ui.uielements.*;
 import com.thawfeek.skydefender.shop.IShopDelegate;
 
@@ -26,11 +27,9 @@ import net.flashpunk.utils.Input;
 
 public class UIShopItem extends Entity  {
 
-    private var intialized:Boolean;
+    private var eventAdded:Boolean;
     private var delegate:IShopDelegate;
     private var itemID:int;
-
-    private var title:String;
 
     private var titleText:Text;
     private var descripText:Text;
@@ -43,15 +42,25 @@ public class UIShopItem extends Entity  {
 
         Text.font = "Arial"
         Text.size = 10;
-        titleText  = new Text(title);
+        titleText  = new Text("title");
         descripText = new Text("value");
 
+        this.width = 50;
+        this.height = 50;
 
-        createItem(itemData);
-        enable(); //enable by default
+        //TODO remove this
+        this.graphic = new Image(EmbededAssets.GAME_HUD_ICON_3);
+
+        if (itemData) {
+            createItem(itemData);
+            enable(); //enable by default
+        }
     }
 
     private function createItem(itemData:ItemData):void {
+
+
+        itemID = itemData.getID();
 
         titleText.text = itemData.getTitle();
         descripText.text = itemData.getDescription();
@@ -87,10 +96,10 @@ public class UIShopItem extends Entity  {
     }
 
     override public function update():void {
-        if(!intialized){
+        if(!eventAdded){
             if(FP.stage != null){
                 FP.stage.addEventListener(MouseEvent.CLICK, onUIClicked);
-                intialized = true;
+                eventAdded = true;
             }
         }
         super.update();
@@ -102,7 +111,7 @@ public class UIShopItem extends Entity  {
         }
     }
 
-    public function updateItem(data:ItemData):void {
+    public function loadItemData(data:ItemData):void {
         createItem(data);
     }
 }

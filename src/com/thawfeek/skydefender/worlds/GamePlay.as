@@ -14,6 +14,8 @@ import com.thawfeek.skydefender.flights.low.BellP39;
 import com.thawfeek.skydefender.flights.low.RedBarron;
 import com.thawfeek.skydefender.hud.GameHud;
 import com.thawfeek.skydefender.player.Player;
+import com.thawfeek.skydefender.shop.IShopMenu;
+import com.thawfeek.skydefender.shop.ShopMenu;
 import com.thawfeek.skydefender.ui.uielements.IUserInterfaceItem;
 import com.thawfeek.skydefender.ui.uielements.UICreator;
 import com.thawfeek.skydefender.ui.uielements.UIMsgBox;
@@ -55,7 +57,7 @@ public class GamePlay extends World {
     private var gamePlayArea:Rectangle;
     private var gameStarted:Boolean;
     private var playerScore:int;
-
+    private var shopShowCase:IShopMenu;
 
     private var uiMsgBox:IUserInterfaceItem;
     private var uiScoreBoard:IUserInterfaceItem;
@@ -91,6 +93,9 @@ public class GamePlay extends World {
         uiScoreBoard = UICreator.createScoreElement(GameConstants.PLAYER_SCORE,"0",new Point(200,300));
         scoreBoardElementDict[GameConstants.PLAYER_SCORE] = uiScoreBoard;
         uiScoreBoard.show();
+
+        shopShowCase = new ShopMenu(100,200);
+        shopShowCase.showShopShowCase();
     }
 
 

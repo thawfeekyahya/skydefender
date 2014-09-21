@@ -11,7 +11,7 @@ import com.thawfeek.skydefender.ui.uielements.IUserInterfaceItem;
 public interface IShopMenu {
     function addShopItem(item:ItemData);
     function removeShopItem(id:int);
-    function showShop():void;
-    function hideShop():void;
+    function showShopShowCase():void;
+    function hideShopShowCase():void;
 }
 }
