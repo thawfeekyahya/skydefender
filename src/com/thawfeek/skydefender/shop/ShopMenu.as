@@ -19,14 +19,17 @@ public class ShopMenu extends Entity implements  IShopDelegate,IShopMenu{
 
     private var forwardBtn:Button;
     private var backwardBtn:Button;
-    private var data:Vector.<ItemData>;
-    private var gridSize:int;
-    private var totalCount:int;
+    private var data:Array;
+    private var rowColSize:int;         // row x col size // 3x3 or 4x4
+    private var maxGridPerPage:int;
     private var gridArray:Array;
     private var bufferWidth:int;
     private var bufferHeight:int;
     private var gridStartX:int;
     private var gridStartY:int
+
+    private var startIndex:int;
+    private var itemIDArray:Array;
 
     public function ShopMenu(x:int=0,y:int=0) {
 
@@ -35,46 +38,74 @@ public class ShopMenu extends Entity implements  IShopDelegate,IShopMenu{
         gridStartX = this.x + 100;
         gridStartY = this.y + 5;
 
-        gridSize = 3;
-        totalCount = 9;
+        rowColSize = 3;
+        maxGridPerPage = 9;
 
         bufferHeight = 10;
         bufferWidth  = 10;
 
-        data = new Vector.<ItemData>();
+        data = [];
         gridArray = [];
+        itemIDArray = [];
 
         var bkgImg:Image = new Image(EmbededAssets.SHOP_BG);
         super(x,y,bkgImg);
 
-        this.width = 400;
-        this.height = 300;
+        this.width = bkgImg.width;
+        this.height = bkgImg.height;
 
 
         forwardBtn = new Button("forward",forwardClick,0,0,100,50);
         backwardBtn = new Button("backward",backwardClick,0,0,100,50);
 
-        forwardBtn.x = 300;
+        forwardBtn.setX(this.x + this.width - forwardBtn.width);
+        forwardBtn.setY(this.y+20);
+        backwardBtn.setX(this.x + backwardBtn.width);
+        backwardBtn.setY(this.y+20);
 
         createGrids();
 
     }
 
     private function createGrids():void {
-        for (var i:int = 0; i < totalCount; i++) {
+       // var testItemData:ItemData = new ItemData("Test",EmbededAssets.SHOP_FW_BTN,"Rapid Fire Gun",300,1);
+        for (var i:int = 0; i < maxGridPerPage; i++) {
             var grid:UIShopItem = new UIShopItem(null,this);
-            grid.x = gridStartX + grid.width  * int(i % gridSize);
-            grid.y = gridStartY + grid.height * int(i / gridSize);
+            grid.x = gridStartX + grid.width  * int(i % rowColSize);
+            grid.y = gridStartY + grid.height * int(i / rowColSize);
             gridArray.push(grid);
         }
     }
 
     private function backwardClick():void {
-
+        startIndex -= maxGridPerPage;
+        if (startIndex >= 0) {
+            populateGrid(startIndex, data);
+        }
     }
 
     private function forwardClick():void {
+        startIndex += maxGridPerPage;
+        if(startIndex < data.length) {
+            populateGrid(startIndex,data);
+        }
 
+    }
+
+    private function populateGrid(startIndex:int, data:Array):void {
+        for (var i:int = 0,j:int=0; i < startIndex+maxGridPerPage; i++,j++) {
+            renderItem(j,i);
+        }
+    }
+
+    private function renderItem(itemIndex:int,itemDataIndex:int):void {
+        var item:UIShopItem = gridArray[itemIndex];
+        var data:ItemData   = data[itemDataIndex];
+        item.visible = false;
+        if(data != null){
+            item.loadItemData(data);
+            item.visible = true;
+        }
     }
 
     public function onShopItemAction(itemID:int):void {
@@ -84,10 +115,27 @@ public class ShopMenu extends Entity implements  IShopDelegate,IShopMenu{
     }
 
     public function addShopItem(item:ItemData) {
-        data.push(item);
+        if(registerItemID(item.getID())) {
+            data.push(item);
+        } else {
+            throw new Error("Shop ID is Already Registered");
+        }
+    }
+
+    private function registerItemID(id:int):Boolean {
+        var registered:Boolean = true;
+        for (var i:int = 0; i < data.length; i++) {
+            var itemData:ItemData = data[i];
+            if(itemData.getID() == id){
+                registered = false;
+                break;
+            }
+        }
+        return registered;
     }
 
     public function removeShopItem(id:int) {
+
     }
 
     public function showShopShowCase():void {
@@ -95,6 +143,16 @@ public class ShopMenu extends Entity implements  IShopDelegate,IShopMenu{
         for (var i:int = 0; i < gridArray.length; i++) {
             var grid:UIShopItem = gridArray[i];
             FP.world.add(grid);
+        }
+        FP.world.add(forwardBtn);
+        FP.world.add(backwardBtn);
+        loadShopItems();
+    }
+
+    private function loadShopItems():void {
+        if (data.length > 0) {
+            startIndex = 0;
+            populateGrid(startIndex, data);
         }
     }
 

@@ -15,6 +15,7 @@ import com.thawfeek.skydefender.flights.low.RedBarron;
 import com.thawfeek.skydefender.hud.GameHud;
 import com.thawfeek.skydefender.player.Player;
 import com.thawfeek.skydefender.shop.IShopMenu;
+import com.thawfeek.skydefender.shop.ItemData;
 import com.thawfeek.skydefender.shop.ShopMenu;
 import com.thawfeek.skydefender.ui.uielements.IUserInterfaceItem;
 import com.thawfeek.skydefender.ui.uielements.UICreator;
@@ -95,6 +96,10 @@ public class GamePlay extends World {
         uiScoreBoard.show();
 
         shopShowCase = new ShopMenu(100,200);
+        var testItemData:ItemData = new ItemData("Test",EmbededAssets.SHOP_FW_BTN,"Rapid Fire Gun",300,1);
+        var testItemData2:ItemData = new ItemData("Test",EmbededAssets.SHOP_FW_BTN,"Rapid Fire Gun",300,2);
+        shopShowCase.addShopItem(testItemData);
+        shopShowCase.addShopItem(testItemData2);
         shopShowCase.showShopShowCase();
     }
 

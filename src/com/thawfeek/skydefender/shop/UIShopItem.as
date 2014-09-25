@@ -48,9 +48,6 @@ public class UIShopItem extends Entity  {
         this.width = 50;
         this.height = 50;
 
-        //TODO remove this
-        this.graphic = new Image(EmbededAssets.GAME_HUD_ICON_3);
-
         if (itemData) {
             createItem(itemData);
             enable(); //enable by default
