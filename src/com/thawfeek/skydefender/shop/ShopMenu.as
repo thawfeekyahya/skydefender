@@ -80,20 +80,21 @@ public class ShopMenu extends Entity implements  IShopDelegate,IShopMenu{
     private function backwardClick():void {
         startIndex -= maxGridPerPage;
         if (startIndex >= 0) {
-            populateGrid(startIndex, data);
+            populateGrid(startIndex);
         }
+        toggleNavButtons();
     }
 
     private function forwardClick():void {
         startIndex += maxGridPerPage;
         if(startIndex < data.length) {
-            populateGrid(startIndex,data);
+            populateGrid(startIndex);
         }
-
+        toggleNavButtons();
     }
 
-    private function populateGrid(startIndex:int, data:Array):void {
-        for (var i:int = 0,j:int=0; i < startIndex+maxGridPerPage; i++,j++) {
+    private function populateGrid(startIndex:int):void {
+        for (var i:int = startIndex,j:int=0; i < startIndex+maxGridPerPage; i++,j++) {
             renderItem(j,i);
         }
     }
@@ -120,6 +121,7 @@ public class ShopMenu extends Entity implements  IShopDelegate,IShopMenu{
         } else {
             throw new Error("Shop ID is Already Registered");
         }
+        toggleNavButtons();
     }
 
     private function registerItemID(id:int):Boolean {
@@ -152,11 +154,30 @@ public class ShopMenu extends Entity implements  IShopDelegate,IShopMenu{
     private function loadShopItems():void {
         if (data.length > 0) {
             startIndex = 0;
-            populateGrid(startIndex, data);
+            populateGrid(startIndex);
         }
     }
 
     public function hideShopShowCase():void {
+    }
+
+    private function toggleNavButtons():void {
+        if(startIndex == 0){
+            backwardBtn.visible = false;
+            if(data.length <= maxGridPerPage){
+                forwardBtn.visible = false;
+            }  else {
+                forwardBtn.visible = true;
+            }
+        } else{
+           if(startIndex+maxGridPerPage >= data.length){
+               forwardBtn.visible = false;
+               backwardBtn.visible = true;
+           } else {
+               forwardBtn.visible = true;
+               backwardBtn.visible = true;
+           }
+        }
     }
 }
 }

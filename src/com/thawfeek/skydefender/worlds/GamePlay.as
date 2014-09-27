@@ -95,11 +95,17 @@ public class GamePlay extends World {
         scoreBoardElementDict[GameConstants.PLAYER_SCORE] = uiScoreBoard;
         uiScoreBoard.show();
 
-        shopShowCase = new ShopMenu(100,200);
-        var testItemData:ItemData = new ItemData("Test",EmbededAssets.SHOP_FW_BTN,"Rapid Fire Gun",300,1);
-        var testItemData2:ItemData = new ItemData("Test",EmbededAssets.SHOP_FW_BTN,"Rapid Fire Gun",300,2);
-        shopShowCase.addShopItem(testItemData);
-        shopShowCase.addShopItem(testItemData2);
+        //TODO: Test function
+        tempShopTest();
+    }
+
+    private function tempShopTest():void {
+        shopShowCase = new ShopMenu(100, 200);
+        var testItemData:ItemData;
+        for (var i:int = 0; i < 100; i++) {
+            testItemData = new ItemData("Test"+i, EmbededAssets.SHOP_FW_BTN, "GUN", 300, i);
+            shopShowCase.addShopItem(testItemData);
+        }
         shopShowCase.showShopShowCase();
     }
 
