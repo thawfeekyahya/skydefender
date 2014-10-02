@@ -7,6 +7,7 @@
  */
 package com.thawfeek.skydefender.shop {
 import com.thawfeek.skydefender.EmbededAssets;
+import com.thawfeek.skydefender.player.Player;
 import com.thawfeek.skydefender.ui.uielements.IUserInterfaceItem;
 import com.thawfeek.skydefender.ui.uielements.UICreator;
 
@@ -30,6 +31,7 @@ public class ShopMenu extends Entity implements  IShopDelegate,IShopMenu{
 
     private var startIndex:int;
     private var itemIDArray:Array;
+    private var displayList:Array;
 
     public function ShopMenu(x:int=0,y:int=0) {
 
@@ -47,13 +49,13 @@ public class ShopMenu extends Entity implements  IShopDelegate,IShopMenu{
         data = [];
         gridArray = [];
         itemIDArray = [];
+        displayList = [];
 
         var bkgImg:Image = new Image(EmbededAssets.SHOP_BG);
         super(x,y,bkgImg);
 
         this.width = bkgImg.width;
         this.height = bkgImg.height;
-
 
         forwardBtn = new Button("forward",forwardClick,0,0,100,50);
         backwardBtn = new Button("backward",backwardClick,0,0,100,50);
@@ -63,31 +65,34 @@ public class ShopMenu extends Entity implements  IShopDelegate,IShopMenu{
         backwardBtn.setX(this.x + backwardBtn.width);
         backwardBtn.setY(this.y+20);
 
+        displayList.push(this);
+        displayList.push(forwardBtn);
+        displayList.push(backwardBtn);
         createGrids();
-
     }
 
     private function createGrids():void {
        // var testItemData:ItemData = new ItemData("Test",EmbededAssets.SHOP_FW_BTN,"Rapid Fire Gun",300,1);
         for (var i:int = 0; i < maxGridPerPage; i++) {
-            var grid:UIShopItem = new UIShopItem(null,this);
+            var grid:UIShopItem = new UIShopItem(this);
             grid.x = gridStartX + grid.width  * int(i % rowColSize);
             grid.y = gridStartY + grid.height * int(i / rowColSize);
             gridArray.push(grid);
         }
+        displayList = displayList.concat(gridArray);
     }
 
     private function backwardClick():void {
-        startIndex -= maxGridPerPage;
         if (startIndex >= 0) {
+            startIndex -= maxGridPerPage;
             populateGrid(startIndex);
         }
         toggleNavButtons();
     }
 
     private function forwardClick():void {
-        startIndex += maxGridPerPage;
         if(startIndex < data.length) {
+            startIndex += maxGridPerPage;
             populateGrid(startIndex);
         }
         toggleNavButtons();
@@ -109,22 +114,24 @@ public class ShopMenu extends Entity implements  IShopDelegate,IShopMenu{
         }
     }
 
-    public function onShopItemAction(itemID:int):void {
-        switch (itemID){
-
+    public function onShopItemAction(itemData:ItemData):void {
+        var price:int = itemData.getPrice();
+        var player:Player = Player.getInstance();
+        var playerScore = player.getScore();
+        if(playerScore > price) {
+            player.buyShopItem(itemData);
         }
     }
 
     public function addShopItem(item:ItemData) {
-        if(registerItemID(item.getID())) {
+        if(isItemRegistered(item.getID())) {
             data.push(item);
         } else {
             throw new Error("Shop ID is Already Registered");
         }
-        toggleNavButtons();
     }
 
-    private function registerItemID(id:int):Boolean {
+    private function isItemRegistered(id:int):Boolean {
         var registered:Boolean = true;
         for (var i:int = 0; i < data.length; i++) {
             var itemData:ItemData = data[i];
@@ -137,21 +144,24 @@ public class ShopMenu extends Entity implements  IShopDelegate,IShopMenu{
     }
 
     public function removeShopItem(id:int) {
-
+        for (var i:int = 0; i < data.length; i++) {
+            var itemData:ItemData = data[i];
+            if (itemData.getID() == id) {
+                data.splice(i, 1);
+                break;
+            }
+        }
     }
 
     public function showShopShowCase():void {
-        FP.world.add(this);
-        for (var i:int = 0; i < gridArray.length; i++) {
-            var grid:UIShopItem = gridArray[i];
-            FP.world.add(grid);
+        for (var i:int = 0; i < displayList.length; i++) {
+            var e:Entity = displayList[i];
+            FP.world.add(e);
         }
-        FP.world.add(forwardBtn);
-        FP.world.add(backwardBtn);
-        loadShopItems();
+        loadShopGrids();
     }
 
-    private function loadShopItems():void {
+    private function loadShopGrids():void {
         if (data.length > 0) {
             startIndex = 0;
             populateGrid(startIndex);
@@ -159,6 +169,11 @@ public class ShopMenu extends Entity implements  IShopDelegate,IShopMenu{
     }
 
     public function hideShopShowCase():void {
+        startIndex  = 0;
+        for (var i:int = 0; i < displayList.length; i++) {
+            var e:Entity = displayList[i];
+            FP.world.remove(e);
+        }
     }
 
     private function toggleNavButtons():void {

@@ -84,7 +84,7 @@ public class GamePlay extends World {
 
     //TODO: Init function should be made sync with begin()
     private function init():void {
-        player = new Player();
+        player = Player.getInstance();
         gameHud = new GameHud(0,20);
         gamePlayArea = new Rectangle();
         scoreBoardElementDict = new Dictionary(true);
@@ -95,15 +95,15 @@ public class GamePlay extends World {
         scoreBoardElementDict[GameConstants.PLAYER_SCORE] = uiScoreBoard;
         uiScoreBoard.show();
 
-        //TODO: Test function
+        //TODO: Shop Test function
         tempShopTest();
     }
 
     private function tempShopTest():void {
         shopShowCase = new ShopMenu(100, 200);
         var testItemData:ItemData;
-        for (var i:int = 0; i < 100; i++) {
-            testItemData = new ItemData("Test"+i, EmbededAssets.SHOP_FW_BTN, "GUN", 300, i);
+        for (var i:int = 0; i < 20; i++) {
+            testItemData = new ItemData("Test"+i, EmbededAssets.SHOP_FW_BTN, "GUN", i*5, i);
             shopShowCase.addShopItem(testItemData);
         }
         shopShowCase.showShopShowCase();
@@ -112,6 +112,7 @@ public class GamePlay extends World {
 
     private function newLevel():void {
         uiMsgBox.show();
+        if(level == levelData.length-1) level = 0;
         level++;
         enemyFlightCount = 0;
         enemyFlightArray = [];

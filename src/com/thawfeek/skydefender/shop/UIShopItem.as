@@ -29,14 +29,15 @@ public class UIShopItem extends Entity  {
 
     private var eventAdded:Boolean;
     private var delegate:IShopDelegate;
-    private var itemID:int;
+    private var itemData:ItemData;
 
     private var titleText:Text;
     private var descripText:Text;
     private var disableImg:Image;
     private var isEnabled:Boolean;
 
-    public function UIShopItem(itemData:ItemData,delegate:IShopDelegate) {
+    public function UIShopItem(delegate:IShopDelegate) {
+
 
         this.delegate = delegate;
 
@@ -48,16 +49,11 @@ public class UIShopItem extends Entity  {
         this.width = 50;
         this.height = 50;
 
-        if (itemData) {
-            createItem(itemData);
-            enable(); //enable by default
-        }
     }
 
     private function createItem(itemData:ItemData):void {
 
-
-        itemID = itemData.getID();
+        this.itemData = itemData;
 
         titleText.text = itemData.getTitle();
         descripText.text = itemData.getDescription();
@@ -76,6 +72,8 @@ public class UIShopItem extends Entity  {
         disableImg = new Image(bitmapData);
 
         this.graphic = new Graphiclist(itemData.getIcon(), disableImg, titleText, descripText);
+
+        enable(); //Show Enabled Image
     }
 
     public function enable():void {
@@ -104,12 +102,18 @@ public class UIShopItem extends Entity  {
 
     private function onUIClicked(e:MouseEvent):void {
         if(collidePoint(x,y,Input.mouseX,Input.mouseY)){
-            delegate.onShopItemAction(itemID);
+            delegate.onShopItemAction(this.itemData);
         }
     }
 
     public function loadItemData(data:ItemData):void {
         createItem(data);
     }
+
+    public function show(val:Boolean):void {
+        this.visible = val;
+        this.collidable = val;
+    }
+
 }
 }

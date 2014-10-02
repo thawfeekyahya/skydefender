@@ -8,9 +8,12 @@
 package com.thawfeek.skydefender.player {
 import com.thawfeek.skydefender.EmbededAssets;
 import com.thawfeek.skydefender.GameConfig;
+import com.thawfeek.skydefender.player.Player;
 import com.thawfeek.skydefender.player.weapons.bullets.BulletHeavy;
 import com.thawfeek.skydefender.player.weapons.bullets.BulletMedium;
 import com.thawfeek.skydefender.player.weapons.bullets.BulletSmall;
+import com.thawfeek.skydefender.shop.ItemData;
+import com.thawfeek.skydefender.shop.ShopItemID;
 import com.thawfeek.skydefender.utils.EntityPool;
 import com.thawfeek.skydefender.worlds.GamePlay;
 
@@ -25,14 +28,7 @@ import net.flashpunk.utils.Input;
 
 public class Player extends Entity {
 
-    public static const TURRET_BASIC:int = 0;
-    public static const TURRET_RAPID_FIRE:int = 1;
-    public static const TURRET_SILVER_KILLER:int = 2;
-    public static const TURRET_THUNDER_BOLT:int = 3;
 
-    public static const BULLET_SMALL:int = 0;
-    public static const BULLET_MEDIUM:int = 1;
-    public static const BULLET_HEAVY:int = 3;
 
     private var fireDelay:Number;
     private var bulletSpeed:int;
@@ -45,10 +41,20 @@ public class Player extends Entity {
     private const BULLET_COUNT:int = 500;
     private var score:int;
 
-    public function Player(x:Number = 0, y:Number = 0, graphic:Graphic = null, mask:Mask = null) {
+    private static var instance:Player;
+    private var gList:Graphiclist;
+
+    public function Player(dummy:Dummy,x:Number = 0, y:Number = 0, graphic:Graphic = null, mask:Mask = null) {
         bulletVect = new Vector.<BulletSmall>();
         super(x, y, graphic, mask);
         init();
+    }
+
+    public static function getInstance():Player {
+        if(!Player.instance){
+            Player.instance = new Player(new Dummy());
+        }
+        return Player.instance;
     }
 
 
@@ -58,26 +64,19 @@ public class Player extends Entity {
 
 
     private function init():void {
-        setTurret(TURRET_THUNDER_BOLT);
+
+        gList = new Graphiclist();
 
         turretBase = new Image(EmbededAssets.PLAYER_TURRET_BASE);
-
-        graphic = new Graphiclist(turret,turretBase);
-
-        //Set Base in Center
         turretBase.x = 0;
         turretBase.y = FP.height - turretBase.height - 8;
 
-        //Set Turret Position
-        turret.originY = turret.height/2 ;
-        turret.originX = -20;
-        turret.x = turretBase.x+turretBase.width/2;
-        turret.y = turretBase.y+22;
-        turret.smooth = true;
-        turret.angle = 90;
+        setTurret(ShopItemID.TURRET_THUNDER_BOLT);
+
+        this.graphic = gList;
 
         //Create Pool Objects
-        setBullet(BULLET_MEDIUM);
+        setBullet(ShopItemID.BULLET_MEDIUM);
 
         //Create Sounds
         sfxShoot = GameConfig.getInstance().addSound(EmbededAssets.PLAYER_SHOOT_BASIC);
@@ -131,20 +130,20 @@ public class Player extends Entity {
         turret.angle = FP.angle(turret.x,turret.y,Input.mouseX,Input.mouseY);
     }
 
-    public function setBullet(type:int):void {
+    private function setBullet(type:int):void {
         switch (type){
 
-            case BULLET_HEAVY:
+            case ShopItemID.BULLET_HEAVY:
                  if(bulletPool !=null) bulletPool.destroy();
                  bulletPool = new EntityPool(BULLET_COUNT,[BulletHeavy]);
             break;
 
-            case BULLET_MEDIUM:
+            case ShopItemID.BULLET_MEDIUM:
                 if(bulletPool !=null) bulletPool.destroy();
                 bulletPool = new EntityPool(BULLET_COUNT,[BulletMedium]);
             break;
 
-            case BULLET_SMALL:
+            case ShopItemID.BULLET_SMALL:
                 if(bulletPool !=null) bulletPool.destroy();
                 bulletPool = new EntityPool(BULLET_COUNT,[BulletSmall]);
             break;
@@ -152,34 +151,71 @@ public class Player extends Entity {
     }
 
 
-    public function setTurret(type:int):void {
+    private function setTurret(type:int):void {
         switch (type){
 
-            case TURRET_BASIC:
+            case ShopItemID.TURRET_BASIC:
                 fireDelay = 0.30;
                 bulletSpeed = 5;
                 turret     = new Image(EmbededAssets.TURRET_BASIC);
             break;
 
-            case TURRET_RAPID_FIRE:
+            case ShopItemID.TURRET_RAPID_FIRE:
                 fireDelay = 0.20;
                 bulletSpeed = 10;
                 turret     = new Image(EmbededAssets.TURRET_RAPID_FIRE);
             break;
 
-            case TURRET_SILVER_KILLER:
+            case ShopItemID.TURRET_SILVER_KILLER:
                 fireDelay = 0.15;
                 bulletSpeed = 15;
                 turret     = new Image(EmbededAssets.TURRET_BASIC);
             break;
 
-            case TURRET_THUNDER_BOLT:
+            case ShopItemID.TURRET_THUNDER_BOLT:
                 fireDelay = 0.10;
                 bulletSpeed = 20;
                 turret     = new Image(EmbededAssets.TURRET_BASIC);
             break;
         }
 
+        //Set Turret Position
+        turret.originY = turret.height/2 ;
+        turret.originX = -20;
+        turret.x = turretBase.x+turretBase.width/2;
+        turret.y = turretBase.y+22;
+        turret.smooth = true;
+        turret.angle = 90;
+
+        if(gList.count > 0) gList.removeAll();
+        gList.add(turret);
+        gList.add(turretBase);
+
+    }
+
+    public function buyShopItem(itemData:ItemData):void {
+        var id:int = itemData.getID();
+        switch (id){
+            case ShopItemID.BULLET_HEAVY:
+                    setBullet(ShopItemID.BULLET_HEAVY);
+                break;
+            case ShopItemID.BULLET_MEDIUM:
+                    setBullet(ShopItemID.BULLET_MEDIUM);
+                break;
+            case ShopItemID.BULLET_SMALL:
+                    setBullet(ShopItemID.BULLET_SMALL);
+                break;
+            case ShopItemID.TURRET_RAPID_FIRE:
+                    setTurret(ShopItemID.TURRET_RAPID_FIRE);
+                break;
+            case ShopItemID.TURRET_SILVER_KILLER:
+                    setTurret(ShopItemID.TURRET_SILVER_KILLER);
+                break;
+            case ShopItemID.TURRET_THUNDER_BOLT:
+                    setTurret(ShopItemID.TURRET_THUNDER_BOLT);
+                break;
+
+        }
     }
 
     public function setScore(val:int):void {
@@ -190,4 +226,8 @@ public class Player extends Entity {
         return this.score;
     }
 }
+}
+
+internal class Dummy {
+
 }

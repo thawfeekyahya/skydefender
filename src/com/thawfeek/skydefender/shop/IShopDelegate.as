@@ -7,6 +7,6 @@
  */
 package com.thawfeek.skydefender.shop {
 public interface IShopDelegate {
-    function onShopItemAction(itemID:int):void;
+    function onShopItemAction(itemData:ItemData):void;
 }
 }
