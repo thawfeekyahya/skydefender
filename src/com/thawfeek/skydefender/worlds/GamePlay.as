@@ -42,7 +42,16 @@ public class GamePlay extends World {
     private var player:Player   ;
     private var gameHud:GameHud;
 
-    private const IMAGE_STACK_ORDER:int = 100;
+    private static const STATE_GAME_PLAY:int = 0;
+    private static const STATE_GAME_PAUSED:int = 1;
+    private static const STATE_GAME_SHOP:int = 2;
+
+    private var currentState:int = -1;
+    private var prevState:int;
+    private var currStateFunction:Function;
+
+    private const BG_STACK_ORDER:int = 100;
+    private const HUD_STACK_ORDER:int = 95;
     private const GAME_PLAY_HEIGHT:int = 350;
     private const GAME_PLAY_WIDTH:int  = 640;
 
@@ -86,12 +95,13 @@ public class GamePlay extends World {
     private function init():void {
         player = Player.getInstance();
         gameHud = new GameHud(0,20);
+        gameHud.layer = HUD_STACK_ORDER;
         gamePlayArea = new Rectangle();
         scoreBoardElementDict = new Dictionary(true);
         uiMsgBox = UICreator.createMsgBoxUI("Click to Start",new Point(FP.halfWidth,FP.halfHeight));
         backgroundImage = new Backdrop(EmbededAssets.GAME_BG_IMAGE);
         gameMusic = GameConfig.getInstance().addSound(EmbededAssets.GAME_MUSIC);
-        uiScoreBoard = UICreator.createScoreElement(GameConstants.PLAYER_SCORE,"0",new Point(200,300));
+        uiScoreBoard = UICreator.createScoreElement(GameConstants.PLAYER_SCORE,"0",new Point(400,40));
         scoreBoardElementDict[GameConstants.PLAYER_SCORE] = uiScoreBoard;
         uiScoreBoard.show();
 
@@ -106,11 +116,12 @@ public class GamePlay extends World {
             testItemData = new ItemData("Test"+i, EmbededAssets.SHOP_FW_BTN, "GUN", i*5, i);
             shopShowCase.addShopItem(testItemData);
         }
-        shopShowCase.showShopShowCase();
+        //shopShowCase.showShopShowCase();
     }
 
 
     private function newLevel():void {
+        switchState(STATE_GAME_PAUSED);
         uiMsgBox.show();
         if(level == levelData.length-1) level = 0;
         level++;
@@ -122,12 +133,48 @@ public class GamePlay extends World {
         enemyFlightPool      = new EntityPool(numEnemyFlights, levelData[level].enemyFlights);
     }
 
+    private function switchState(state:int):void {
+        if(state != currentState){
+            prevState = currentState;
+            currentState = state;
+
+            switch (currentState) {
+                case STATE_GAME_PLAY:
+                    gameStarted = true;
+                    currStateFunction = runGame;
+                break;
+
+                case STATE_GAME_PAUSED:
+                    gameStarted = false;
+                    currStateFunction = checkForGameStart;
+                break;
+
+                case STATE_GAME_SHOP:
+                     gameStarted = false;
+                     currStateFunction = stubFunction;
+                break;
+            }
+        }
+
+    }
+
+    private function stubFunction():void {
+
+    }
+
+    private function checkForGameStart():void {
+        if(Input.mousePressed){
+            switchState(STATE_GAME_PLAY);
+            uiMsgBox.hide();
+        }
+    }
+
 
     override public function begin():void {
         init();
         //GameConfig.getInstance().muteSounds(false);
         if(GameConfig.getInstance().isSoundOn()) gameMusic.loop();
-        addGraphic(backgroundImage).layer = IMAGE_STACK_ORDER;
+        addGraphic(backgroundImage).layer = BG_STACK_ORDER;
         add(player);
         add(gameHud);
         gameHud.addUI(new Image(EmbededAssets.GAME_HUD_ICON_1),GameHud.HUD_UI_INFO_ITEM,"Fire Speed");
@@ -145,24 +192,15 @@ public class GamePlay extends World {
 
 
     override public function update():void {
-        if(!gameStarted){
-            if(Input.mousePressed){
-                gameStarted = true;
-                uiMsgBox.hide();
-            }
-        } else {
-            generateEnemies();
-            checkForLevelEnd();
-            super.update();
-        }
+        currStateFunction();
+        super.update();
     }
-
     private function checkForLevelEnd():void {
         checkEnemyFlights();
         if(enemyFlightArray.length == 0 && enemyFlightCount == numEnemyFlights){
-            gameStarted = false;
             cleanUpLevel();
-            newLevel();
+            switchState(STATE_GAME_SHOP);
+            shopShowCase.showShopShowCase();
         }
     }
 
@@ -176,7 +214,6 @@ public class GamePlay extends World {
     }
 
     private function cleanUpLevel():void {
-        gameStarted = false;
         enemyFlightPool.destroy();
     }
 
@@ -210,6 +247,11 @@ public class GamePlay extends World {
        }
 
        scoreBoardElementDict[element].setText(targetValue);
+    }
+
+    private function runGame():void {
+        generateEnemies();
+        checkForLevelEnd();
     }
 }
 }

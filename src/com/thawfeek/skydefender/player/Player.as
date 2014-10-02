@@ -71,12 +71,12 @@ public class Player extends Entity {
         turretBase.x = 0;
         turretBase.y = FP.height - turretBase.height - 8;
 
-        setTurret(ShopItemID.TURRET_THUNDER_BOLT);
+        setTurret(ShopItemID.TURRET_BASIC);
 
         this.graphic = gList;
 
         //Create Pool Objects
-        setBullet(ShopItemID.BULLET_MEDIUM);
+        setBullet(ShopItemID.BULLET_SMALL);
 
         //Create Sounds
         sfxShoot = GameConfig.getInstance().addSound(EmbededAssets.PLAYER_SHOOT_BASIC);
@@ -127,7 +127,9 @@ public class Player extends Entity {
     }
 
     private function moveTurret():void {
-        turret.angle = FP.angle(turret.x,turret.y,Input.mouseX,Input.mouseY);
+        if (GamePlay(FP.world).isGameStarted()) {
+            turret.angle = FP.angle(turret.x, turret.y, Input.mouseX, Input.mouseY);
+        }
     }
 
     private function setBullet(type:int):void {
