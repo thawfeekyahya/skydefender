@@ -9,6 +9,8 @@ package com.thawfeek.skydefender.worlds {
 import com.thawfeek.skydefender.EmbededAssets;
 import com.thawfeek.skydefender.GameConfig;
 import com.thawfeek.skydefender.GameConstants;
+import com.thawfeek.skydefender.event.EventConstants;
+import com.thawfeek.skydefender.event.IEventDelegate;
 import com.thawfeek.skydefender.flights.AbsFlight;
 import com.thawfeek.skydefender.flights.low.BellP39;
 import com.thawfeek.skydefender.flights.low.RedBarron;
@@ -16,6 +18,7 @@ import com.thawfeek.skydefender.hud.GameHud;
 import com.thawfeek.skydefender.player.Player;
 import com.thawfeek.skydefender.shop.IShopMenu;
 import com.thawfeek.skydefender.shop.ItemData;
+import com.thawfeek.skydefender.shop.ShopItemID;
 import com.thawfeek.skydefender.shop.ShopMenu;
 import com.thawfeek.skydefender.ui.uielements.IUserInterfaceItem;
 import com.thawfeek.skydefender.ui.uielements.UICreator;
@@ -35,7 +38,7 @@ import net.flashpunk.graphics.Backdrop;
 import net.flashpunk.graphics.Image;
 import net.flashpunk.utils.Input;
 
-public class GamePlay extends World {
+public class GamePlay extends World implements IEventDelegate{
 
     private var backgroundImage:Backdrop;
     private var gameMusic:Sfx;
@@ -45,6 +48,7 @@ public class GamePlay extends World {
     private static const STATE_GAME_PLAY:int = 0;
     private static const STATE_GAME_PAUSED:int = 1;
     private static const STATE_GAME_SHOP:int = 2;
+    private static const STATE_NEW_LEVEL:int = 3;
 
     private var currentState:int = -1;
     private var prevState:int;
@@ -98,7 +102,7 @@ public class GamePlay extends World {
         gameHud.layer = HUD_STACK_ORDER;
         gamePlayArea = new Rectangle();
         scoreBoardElementDict = new Dictionary(true);
-        uiMsgBox = UICreator.createMsgBoxUI("Click to Start",new Point(FP.halfWidth,FP.halfHeight));
+        uiMsgBox = UICreator.createMsgBoxUI("Click to Start",new Point(FP.halfWidth-40,FP.halfHeight));
         backgroundImage = new Backdrop(EmbededAssets.GAME_BG_IMAGE);
         gameMusic = GameConfig.getInstance().addSound(EmbededAssets.GAME_MUSIC);
         uiScoreBoard = UICreator.createScoreElement(GameConstants.PLAYER_SCORE,"0",new Point(400,40));
@@ -110,11 +114,16 @@ public class GamePlay extends World {
     }
 
     private function tempShopTest():void {
-        shopShowCase = new ShopMenu(100, 200);
-        var testItemData:ItemData;
-        for (var i:int = 0; i < 20; i++) {
-            testItemData = new ItemData("Test"+i, EmbededAssets.SHOP_FW_BTN, "GUN", i*5, i);
-            shopShowCase.addShopItem(testItemData);
+        shopShowCase = new ShopMenu(this,100, 200);
+        var itemData:Array = [new ItemData("120m Bullet", EmbededAssets.SHOP_FW_BTN, "Heavy", 80, ShopItemID.BULLET_HEAVY),
+                              new ItemData("90m Bullet", EmbededAssets.SHOP_FW_BTN, "Medium", 40, ShopItemID.BULLET_MEDIUM),
+                              new ItemData("40m Bullet", EmbededAssets.SHOP_FW_BTN, "Normal", 20, ShopItemID.BULLET_SMALL),
+                              new ItemData("Rapid Fire", EmbededAssets.SHOP_FW_BTN, "Pump Action", 140, ShopItemID.TURRET_RAPID_FIRE),
+                              new ItemData("Silver Killer", EmbededAssets.SHOP_FW_BTN, "Hydraulic", 180, ShopItemID.TURRET_SILVER_KILLER),
+                              new ItemData("Thunder Bolt", EmbededAssets.SHOP_FW_BTN, "Turbo Turret", 220, ShopItemID.TURRET_THUNDER_BOLT)
+                             ];
+        for (var i:int = 0 ,len:int = itemData.length; i < len; i++) {
+            shopShowCase.addShopItem(itemData[i]);
         }
         //shopShowCase.showShopShowCase();
     }
@@ -153,6 +162,11 @@ public class GamePlay extends World {
                      gameStarted = false;
                      currStateFunction = stubFunction;
                 break;
+
+                case STATE_NEW_LEVEL:
+                    currStateFunction = stubFunction;
+                    newLevel();
+                break;
             }
         }
 
@@ -187,7 +201,7 @@ public class GamePlay extends World {
         gamePlayArea.width = GAME_PLAY_WIDTH;
         gamePlayArea.height = GAME_PLAY_HEIGHT-gamePlayArea.x;
 
-        newLevel();
+        switchState(STATE_NEW_LEVEL);
     }
 
 
@@ -199,6 +213,7 @@ public class GamePlay extends World {
         checkEnemyFlights();
         if(enemyFlightArray.length == 0 && enemyFlightCount == numEnemyFlights){
             cleanUpLevel();
+            player.cleanUp();
             switchState(STATE_GAME_SHOP);
             shopShowCase.showShopShowCase();
         }
@@ -252,6 +267,15 @@ public class GamePlay extends World {
     private function runGame():void {
         generateEnemies();
         checkForLevelEnd();
+    }
+
+    public function processEvent(type:String):void {
+        switch (type){
+            case EventConstants.SHOP_OK_BUTTON_CLICK:
+                    shopShowCase.hideShopShowCase();
+                    switchState(STATE_NEW_LEVEL);
+                break;
+        }
     }
 }
 }

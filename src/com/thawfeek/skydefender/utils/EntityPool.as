@@ -54,13 +54,13 @@ public class EntityPool {
     }
 
     public function putEntity(entity:Entity):void {
+        counter++;
         if(watchList.length > 0){
             var targetIndex:int = pool.indexOf(entity);
             watchList.splice(watchList.indexOf(targetIndex),1);
             pool[targetIndex] = entity;
-            counter++;
         } else {
-            pool[counter++] = entity;
+            pool[counter] = entity;
         }
         if(counter > totalCount){
             throw new Error("Counter value cannot go beyond total count");
@@ -77,6 +77,7 @@ public class EntityPool {
         }
         watchList = null;
         counter = 0;
+        totalCount = 0;
     }
 
 

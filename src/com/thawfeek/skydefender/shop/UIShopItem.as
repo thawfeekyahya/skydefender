@@ -55,9 +55,11 @@ public class UIShopItem extends Entity  {
 
         this.itemData = itemData;
 
-        titleText.text = itemData.getTitle();
         descripText.text = itemData.getDescription();
+        descripText.width = itemData.getIcon().width;
+        descripText.wordWrap = true;
 
+        titleText.text = itemData.getTitle();
         titleText.width = itemData.getIcon().width;
         titleText.wordWrap = true;
         titleText.x = ( itemData.getIcon().width >> 1 - titleText.textWidth >> 1);
@@ -101,7 +103,7 @@ public class UIShopItem extends Entity  {
     }
 
     private function onUIClicked(e:MouseEvent):void {
-        if(collidePoint(x,y,Input.mouseX,Input.mouseY)){
+        if(this.visible && collidePoint(x,y,Input.mouseX,Input.mouseY)){
             delegate.onShopItemAction(this.itemData);
         }
     }

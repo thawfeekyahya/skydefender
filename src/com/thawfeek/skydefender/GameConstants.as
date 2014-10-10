@@ -10,7 +10,7 @@ public class GameConstants {
 
     public static const PLAYER_BULLET:String = "playerBullet";
 
-    public static const PLAYER_SCORE = "Score";
+    public static const PLAYER_SCORE = "$";
 
 }
 }

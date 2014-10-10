@@ -7,6 +7,8 @@
  */
 package com.thawfeek.skydefender.shop {
 import com.thawfeek.skydefender.EmbededAssets;
+import com.thawfeek.skydefender.event.EventConstants;
+import com.thawfeek.skydefender.event.IEventDelegate;
 import com.thawfeek.skydefender.player.Player;
 import com.thawfeek.skydefender.ui.uielements.IUserInterfaceItem;
 import com.thawfeek.skydefender.ui.uielements.UICreator;
@@ -32,19 +34,22 @@ public class ShopMenu extends Entity implements  IShopDelegate,IShopMenu{
     private var startIndex:int;
     private var itemIDArray:Array;
     private var displayList:Array;
+    private var okBtn:Button;
 
-    public function ShopMenu(x:int=0,y:int=0) {
+    private var eventDelegate:IEventDelegate;
 
+    public function ShopMenu(eventDelegate:IEventDelegate,x:int=0,y:int=0) {
+        this.eventDelegate = eventDelegate;
         this.x = x;
         this.y = y;
-        gridStartX = this.x + 100;
-        gridStartY = this.y + 5;
+        gridStartX = this.x + 80;
+        gridStartY = this.y + 15;
 
         rowColSize = 3;
         maxGridPerPage = 9;
 
         bufferHeight = 10;
-        bufferWidth  = 10;
+        bufferWidth  = 20;
 
         data = [];
         gridArray = [];
@@ -59,24 +64,32 @@ public class ShopMenu extends Entity implements  IShopDelegate,IShopMenu{
 
         forwardBtn = new Button("forward",forwardClick,0,0,100,50);
         backwardBtn = new Button("backward",backwardClick,0,0,100,50);
+        okBtn = new Button("Okay",okayClick,0,0,100,50);
 
         forwardBtn.setX(this.x + this.width - forwardBtn.width);
         forwardBtn.setY(this.y+20);
         backwardBtn.setX(this.x + backwardBtn.width);
         backwardBtn.setY(this.y+20);
+        okBtn.setX(this.x+this.halfWidth-okBtn.halfWidth);
+        okBtn.setY(this.y+this.height-okBtn.height);
 
         displayList.push(this);
         displayList.push(forwardBtn);
         displayList.push(backwardBtn);
+        displayList.push(okBtn);
         createGrids();
+    }
+
+    private function okayClick():void {
+        eventDelegate.processEvent(EventConstants.SHOP_OK_BUTTON_CLICK);
     }
 
     private function createGrids():void {
        // var testItemData:ItemData = new ItemData("Test",EmbededAssets.SHOP_FW_BTN,"Rapid Fire Gun",300,1);
         for (var i:int = 0; i < maxGridPerPage; i++) {
             var grid:UIShopItem = new UIShopItem(this);
-            grid.x = gridStartX + grid.width  * int(i % rowColSize);
-            grid.y = gridStartY + grid.height * int(i / rowColSize);
+            grid.x = gridStartX + (grid.width + bufferWidth)  * int(i % rowColSize);
+            grid.y = gridStartY + (grid.height + bufferHeight) * int(i / rowColSize);
             gridArray.push(grid);
         }
         displayList = displayList.concat(gridArray);
@@ -157,8 +170,10 @@ public class ShopMenu extends Entity implements  IShopDelegate,IShopMenu{
         for (var i:int = 0; i < displayList.length; i++) {
             var e:Entity = displayList[i];
             FP.world.add(e);
+            e.visible = true;
         }
         loadShopGrids();
+        toggleNavButtons();
     }
 
     private function loadShopGrids():void {
@@ -172,7 +187,7 @@ public class ShopMenu extends Entity implements  IShopDelegate,IShopMenu{
         startIndex  = 0;
         for (var i:int = 0; i < displayList.length; i++) {
             var e:Entity = displayList[i];
-            FP.world.remove(e);
+            e.visible = false;
         }
     }
 

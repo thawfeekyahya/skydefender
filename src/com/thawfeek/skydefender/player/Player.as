@@ -133,20 +133,19 @@ public class Player extends Entity {
     }
 
     private function setBullet(type:int):void {
+        if(bulletPool !=null) bulletPool.destroy();
+
         switch (type){
 
             case ShopItemID.BULLET_HEAVY:
-                 if(bulletPool !=null) bulletPool.destroy();
                  bulletPool = new EntityPool(BULLET_COUNT,[BulletHeavy]);
             break;
 
             case ShopItemID.BULLET_MEDIUM:
-                if(bulletPool !=null) bulletPool.destroy();
                 bulletPool = new EntityPool(BULLET_COUNT,[BulletMedium]);
             break;
 
             case ShopItemID.BULLET_SMALL:
-                if(bulletPool !=null) bulletPool.destroy();
                 bulletPool = new EntityPool(BULLET_COUNT,[BulletSmall]);
             break;
         }
@@ -197,6 +196,7 @@ public class Player extends Entity {
 
     public function buyShopItem(itemData:ItemData):void {
         var id:int = itemData.getID();
+        var price:int = itemData.getPrice();
         switch (id){
             case ShopItemID.BULLET_HEAVY:
                     setBullet(ShopItemID.BULLET_HEAVY);
@@ -218,6 +218,7 @@ public class Player extends Entity {
                 break;
 
         }
+        this.score -= price;
     }
 
     public function setScore(val:int):void {
@@ -226,6 +227,14 @@ public class Player extends Entity {
 
     public function getScore():int {
         return this.score;
+    }
+
+    public function cleanUp():void {
+        for (var i:int = bulletVect.length - 1; i >= 0; i--) {
+            var bullet:BulletSmall = bulletVect[i];
+            bulletVect.splice(i,1);
+            FP.world.remove(bullet);
+        }
     }
 }
 }
