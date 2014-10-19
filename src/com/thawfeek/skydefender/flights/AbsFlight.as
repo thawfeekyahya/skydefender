@@ -79,7 +79,6 @@ public class AbsFlight extends Entity {
             finished = true;
         }
         checkCollision();
-
     }
 
     protected function checkCollision():void {

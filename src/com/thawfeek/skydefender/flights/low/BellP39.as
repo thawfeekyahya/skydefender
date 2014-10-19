@@ -9,6 +9,8 @@ package com.thawfeek.skydefender.flights.low {
 import com.thawfeek.skydefender.EmbededAssets;
 import com.thawfeek.skydefender.GameConfig;
 import com.thawfeek.skydefender.flights.AbsFlight;
+import com.thawfeek.skydefender.player.Player;
+import com.thawfeek.skydefender.player.weapons.missiles.P39Bomb;
 
 import net.flashpunk.FP;
 import net.flashpunk.Sfx;
@@ -23,7 +25,8 @@ public class BellP39 extends AbsFlight {
     private var linearPath:LinearPath;
     private var angleTween:VarTween;
     private var sfxExplosion:Sfx;
-
+    private var missileDropDelay:int;
+    private var missileArray:Array;
 
     private static var EXPLODE_ANIM:String = "explodeAnim";
 
@@ -37,6 +40,7 @@ public class BellP39 extends AbsFlight {
         this.height = img.height;
         this.centerOrigin();
         img.centerOrigin();
+        missileArray = [];
         health = 5;
         hitScore = 20;
         sfxExplosion = GameConfig.getInstance().addSound(EmbededAssets.SFX_ENEMY_EXPLODE);
@@ -57,9 +61,24 @@ public class BellP39 extends AbsFlight {
     }
 
 
+    override public function attack():void {
+        if(this.x <  300) {
+             dropMissile();
+        }
+    }
+
+    private function dropMissile():void {
+        missileDropDelay--;
+         if(missileDropDelay <= 0){
+             missileDropDelay = 30;
+             FP.world.add(new P39Bomb(this.x,this.y));
+         }
+    }
+
     override public function update():void {
         if (!isShotDown) {
             this.moveTowards(getDestinationPoint().x, getDestinationPoint().y, getSpeed());
+            attack();
         } else {
             angleTween.update();
             this.x = linearPath.x;
@@ -68,6 +87,7 @@ public class BellP39 extends AbsFlight {
         if (this.finished) {
             remove();
         }
+
         super.update();
     }
 
