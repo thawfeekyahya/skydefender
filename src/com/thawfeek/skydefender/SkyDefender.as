@@ -6,6 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 package com.thawfeek.skydefender {
+import com.thawfeek.skydefender.test.TestWorld;
 import com.thawfeek.skydefender.worlds.SplashScreen;
 
 import net.flashpunk.Engine;

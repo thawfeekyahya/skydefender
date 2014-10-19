@@ -8,6 +8,7 @@
 package com.thawfeek.skydefender.player {
 import com.thawfeek.skydefender.EmbededAssets;
 import com.thawfeek.skydefender.GameConfig;
+import com.thawfeek.skydefender.GameConstants;
 import com.thawfeek.skydefender.player.Player;
 import com.thawfeek.skydefender.player.weapons.bullets.BulletHeavy;
 import com.thawfeek.skydefender.player.weapons.bullets.BulletMedium;
@@ -219,6 +220,7 @@ public class Player extends Entity {
 
         }
         this.score -= price;
+        GamePlay(world).updateScoreBoard(GameConstants.PLAYER_SCORE,this.score);
     }
 
     public function setScore(val:int):void {

@@ -115,12 +115,12 @@ public class GamePlay extends World implements IEventDelegate{
 
     private function tempShopTest():void {
         shopShowCase = new ShopMenu(this,100, 200);
-        var itemData:Array = [new ItemData("120m Bullet", EmbededAssets.SHOP_FW_BTN, "Heavy", 80, ShopItemID.BULLET_HEAVY),
-                              new ItemData("90m Bullet", EmbededAssets.SHOP_FW_BTN, "Medium", 40, ShopItemID.BULLET_MEDIUM),
-                              new ItemData("40m Bullet", EmbededAssets.SHOP_FW_BTN, "Normal", 20, ShopItemID.BULLET_SMALL),
-                              new ItemData("Rapid Fire", EmbededAssets.SHOP_FW_BTN, "Pump Action", 140, ShopItemID.TURRET_RAPID_FIRE),
-                              new ItemData("Silver Killer", EmbededAssets.SHOP_FW_BTN, "Hydraulic", 180, ShopItemID.TURRET_SILVER_KILLER),
-                              new ItemData("Thunder Bolt", EmbededAssets.SHOP_FW_BTN, "Turbo Turret", 220, ShopItemID.TURRET_THUNDER_BOLT)
+        var itemData:Array = [new ItemData("120m Bullet", EmbededAssets.SHOP_FW_BTN, "80 $", 80, ShopItemID.BULLET_HEAVY),
+                              new ItemData("90m Bullet", EmbededAssets.SHOP_FW_BTN, "40 $", 40, ShopItemID.BULLET_MEDIUM),
+                              new ItemData("40m Bullet", EmbededAssets.SHOP_FW_BTN, "20 $", 20, ShopItemID.BULLET_SMALL),
+                              new ItemData("Rapid Fire", EmbededAssets.SHOP_FW_BTN, "140 $", 140, ShopItemID.TURRET_RAPID_FIRE),
+                              new ItemData("Silver Killer", EmbededAssets.SHOP_FW_BTN, "180 $", 180, ShopItemID.TURRET_SILVER_KILLER),
+                              new ItemData("Thunder Bolt", EmbededAssets.SHOP_FW_BTN, "220 $", 220, ShopItemID.TURRET_THUNDER_BOLT)
                              ];
         for (var i:int = 0 ,len:int = itemData.length; i < len; i++) {
             shopShowCase.addShopItem(itemData[i]);
@@ -149,6 +149,7 @@ public class GamePlay extends World implements IEventDelegate{
 
             switch (currentState) {
                 case STATE_GAME_PLAY:
+                    playGameMusic();
                     gameStarted = true;
                     currStateFunction = runGame;
                 break;
@@ -160,6 +161,7 @@ public class GamePlay extends World implements IEventDelegate{
 
                 case STATE_GAME_SHOP:
                      gameStarted = false;
+                     gameMusic.stop();
                      currStateFunction = stubFunction;
                 break;
 
@@ -187,7 +189,6 @@ public class GamePlay extends World implements IEventDelegate{
     override public function begin():void {
         init();
         //GameConfig.getInstance().muteSounds(false);
-        if(GameConfig.getInstance().isSoundOn()) gameMusic.loop();
         addGraphic(backgroundImage).layer = BG_STACK_ORDER;
         add(player);
         add(gameHud);
@@ -202,6 +203,10 @@ public class GamePlay extends World implements IEventDelegate{
         gamePlayArea.height = GAME_PLAY_HEIGHT-gamePlayArea.x;
 
         switchState(STATE_NEW_LEVEL);
+    }
+
+    private function playGameMusic():void {
+        if (GameConfig.getInstance().isSoundOn()) gameMusic.loop();
     }
 
 

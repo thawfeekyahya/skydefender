@@ -131,7 +131,7 @@ public class ShopMenu extends Entity implements  IShopDelegate,IShopMenu{
         var price:int = itemData.getPrice();
         var player:Player = Player.getInstance();
         var playerScore = player.getScore();
-        if(playerScore > price) {
+        if(playerScore >= price) {
             player.buyShopItem(itemData);
         }
     }

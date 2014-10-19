@@ -35,6 +35,7 @@ public class UIShopItem extends Entity  {
     private var descripText:Text;
     private var disableImg:Image;
     private var isEnabled:Boolean;
+    private var gList:Graphiclist;
 
     public function UIShopItem(delegate:IShopDelegate) {
 
@@ -45,6 +46,8 @@ public class UIShopItem extends Entity  {
         Text.size = 10;
         titleText  = new Text("title");
         descripText = new Text("value");
+        descripText.wordWrap = true;
+        titleText.wordWrap = true;
 
         this.width = 50;
         this.height = 50;
@@ -52,20 +55,20 @@ public class UIShopItem extends Entity  {
     }
 
     private function createItem(itemData:ItemData):void {
-
+        if(gList) gList.removeAll();
         this.itemData = itemData;
 
-        descripText.text = itemData.getDescription();
         descripText.width = itemData.getIcon().width;
-        descripText.wordWrap = true;
 
-        titleText.text = itemData.getTitle();
+        descripText.text = itemData.getDescription();
+
         titleText.width = itemData.getIcon().width;
-        titleText.wordWrap = true;
-        titleText.x = ( itemData.getIcon().width >> 1 - titleText.textWidth >> 1);
+        titleText.text = itemData.getTitle();
+
+        titleText.x = ( (itemData.getIcon().width >> 1) - (titleText.textWidth >> 1));
 
         descripText.y =  itemData.getIcon().height - descripText.textHeight;
-        descripText.x = ( itemData.getIcon().width >> 1 - descripText.textWidth >> 1);
+        descripText.x = ( (itemData.getIcon().width >> 1) - (descripText.textWidth >> 1));
 
         //Disable State Image
         var bitmapData:BitmapData = itemData.getIcon().getSrcBitmapData().clone();
@@ -73,7 +76,9 @@ public class UIShopItem extends Entity  {
         bitmapData.colorTransform(new Rectangle(0, 0, itemData.getIcon().width, itemData.getIcon().height), colorTransform);
         disableImg = new Image(bitmapData);
 
-        this.graphic = new Graphiclist(itemData.getIcon(), disableImg, titleText, descripText);
+
+        gList = new Graphiclist(itemData.getIcon(), disableImg, titleText, descripText);
+        this.graphic = gList;
 
         enable(); //Show Enabled Image
     }
