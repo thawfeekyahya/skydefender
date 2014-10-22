@@ -14,6 +14,7 @@ public class EntityPool {
     private var counter:int;
     private var totalCount:int;
     private var watchList:Vector.<int>;
+    private static var DEBUG:Boolean= false;
 
     public function EntityPool(numCount:int,classType:Array) {
         pool = new Array();
@@ -38,6 +39,7 @@ public class EntityPool {
             if(watchList.indexOf(index) == -1){
                 watchList.push(index);
                 counter--;
+                if(DEBUG) trace("Index is -> " + index);
                 return pool[index];
             } else {
                 var targetIndex:int = index;
@@ -46,6 +48,7 @@ public class EntityPool {
                 }
                 watchList.push(targetIndex);
                 counter--;
+                if(DEBUG) trace("TargetIndex is -> "+targetIndex);
                 return pool[targetIndex];
             }
         } else {
@@ -78,6 +81,10 @@ public class EntityPool {
         watchList = null;
         counter = 0;
         totalCount = 0;
+    }
+
+    public function get length():int {
+        return totalCount;
     }
 
 

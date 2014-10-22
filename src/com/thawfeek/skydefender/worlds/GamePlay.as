@@ -63,6 +63,7 @@ public class GamePlay extends World implements IEventDelegate{
     private var tempEnemyFlight:AbsFlight;
     private var enemyFlightArray:Array;
     private var enemyFlightWaveDelay:int = 30;
+    private var enemyFlightWaveMax:int;
     private var enemyFlightPool:EntityPool;
     private var enemyTimeCount:Number=0;
     private var level:int;
@@ -82,7 +83,7 @@ public class GamePlay extends World implements IEventDelegate{
     private var levelData:Array = [
             undefined,
             {
-                enemyFlights:[RedBarron]
+                enemyFlights:[BellP39]
             },
             {
                 enemyFlights:[BellP39]
@@ -136,10 +137,11 @@ public class GamePlay extends World implements IEventDelegate{
         level++;
         enemyFlightCount = 0;
         enemyFlightArray = [];
+        enemyFlightWaveMax   = (enemyFlightWaveMax > 8 ) ? 8 : level;
         enemyFlightWaveDelay = (enemyFlightWaveDelay < 8) ? enemyFlightWaveDelay = 8 : enemyFlightWaveDelay = 11-(level*2);     //todo: need to change this
-        numEnemyFlights      = (numEnemyFlights > 100 ) ? numEnemyFlights = 100 : numEnemyFlights  = 2;//level*10+3;
-        numEnemyFlights      =  numEnemyFlights / levelData[level].enemyFlights.length;           //Re-calculate num Enemies based on level Data
-        enemyFlightPool      = new EntityPool(numEnemyFlights, levelData[level].enemyFlights);
+        numEnemyFlights      = (numEnemyFlights > 100 ) ? numEnemyFlights = 100 : numEnemyFlights  = 3;//level*10+3;
+        //numEnemyFlights      =  numEnemyFlights / levelData[level].enemyFlights.length;           //Re-calculate num Enemies based on level Data
+        enemyFlightPool      = new EntityPool(enemyFlightWaveMax, levelData[level].enemyFlights);
     }
 
     private function switchState(state:int):void {
@@ -229,6 +231,7 @@ public class GamePlay extends World implements IEventDelegate{
             var enemyFlight:AbsFlight = enemyFlightArray[i];
             if(enemyFlight.isFinished()){
                 enemyFlightArray.splice(i,1);
+                enemyFlightPool.putEntity(enemyFlight);
             }
         }
     }
@@ -240,10 +243,11 @@ public class GamePlay extends World implements IEventDelegate{
     private function generateEnemies():void {
         enemyTimeCount += FP.elapsed;
 
-        if(enemyTimeCount > enemyFlightWaveDelay && enemyFlightCount < numEnemyFlights){
+        if(enemyTimeCount > enemyFlightWaveDelay && enemyFlightCount < numEnemyFlights && enemyFlightArray.length < enemyFlightWaveMax){
             enemyTimeCount -= enemyTimeCount;
             var rand:int = Math.floor(Math.random()*numEnemyFlights);
-            tempEnemyFlight = AbsFlight(enemyFlightPool.getEntity(rand));
+            tempEnemyFlight = AbsFlight(enemyFlightPool.getEntity(0));
+            FP.log(rand);
             var randomYPos:Number = gamePlayArea.y +tempEnemyFlight.height+ (Math.random()*(gamePlayArea.height/2));
             tempEnemyFlight.deploy(FP.width,randomYPos);
             tempEnemyFlight.destination(-tempEnemyFlight.width,randomYPos);

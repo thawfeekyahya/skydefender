@@ -40,6 +40,8 @@ public class AbsFlight extends Entity {
 
     public function deploy(targetX:int, targetY:int):void {
         finished = false;
+        isShotDown = false;
+        scoreBoardUpdated = false;
         deployX = targetX;
         deployY = targetY;
         this.x = targetX;
@@ -89,7 +91,7 @@ public class AbsFlight extends Entity {
             if(GameConfig.getInstance().isSoundOn()) weapon.playHitSound();
 
             FP.world.remove(weapon);
-            if(health <= 0){
+            if(health <= 0 && !isShotDown){
                 isShotDown = true;
                 shotDown();
                 dropReward();
@@ -113,7 +115,7 @@ public class AbsFlight extends Entity {
 
     }
 
-    protected function remove():void {
+    protected function cleanUp():void {
         FP.world.remove(this);
     }
 

@@ -6,6 +6,8 @@
  * To change this template use File | Settings | File Templates.
  */
 package com.thawfeek.skydefender.player.weapons {
+import flash.geom.Point;
+
 import net.flashpunk.Entity;
 import net.flashpunk.Sfx;
 
@@ -24,6 +26,14 @@ public class AbsWeapon extends Entity {
 
     public function playHitSound():void {
        weaponHitSound.play();
+    }
+
+    public function setPos(pos:Point):void {
+
+    }
+
+    protected function cleanUp():void {
+
     }
 }
 }

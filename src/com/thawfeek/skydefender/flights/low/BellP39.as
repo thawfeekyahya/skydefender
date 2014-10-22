@@ -10,7 +10,14 @@ import com.thawfeek.skydefender.EmbededAssets;
 import com.thawfeek.skydefender.GameConfig;
 import com.thawfeek.skydefender.flights.AbsFlight;
 import com.thawfeek.skydefender.player.Player;
+import com.thawfeek.skydefender.player.weapons.AbsWeapon;
 import com.thawfeek.skydefender.player.weapons.missiles.P39Bomb;
+import com.thawfeek.skydefender.player.weapons.missiles.P39Bomb;
+import com.thawfeek.skydefender.utils.EntityPool;
+
+import flash.geom.Point;
+
+import net.flashpunk.Entity;
 
 import net.flashpunk.FP;
 import net.flashpunk.Sfx;
@@ -27,6 +34,7 @@ public class BellP39 extends AbsFlight {
     private var sfxExplosion:Sfx;
     private var missileDropDelay:int;
     private var missileArray:Array;
+    private var missilePool:EntityPool;
 
     private static var EXPLODE_ANIM:String = "explodeAnim";
 
@@ -40,9 +48,9 @@ public class BellP39 extends AbsFlight {
         this.height = img.height;
         this.centerOrigin();
         img.centerOrigin();
-        missileArray = [];
-        health = 5;
-        hitScore = 20;
+
+        missilePool = new EntityPool(15,[P39Bomb])
+
         sfxExplosion = GameConfig.getInstance().addSound(EmbededAssets.SFX_ENEMY_EXPLODE);
 
         var onAnimComplete:Function = function ():void {
@@ -56,10 +64,21 @@ public class BellP39 extends AbsFlight {
         explodeAnim.originX = frameWidth >> 1;
         explodeAnim.originY = frameHeight >> 1;
         explodeAnim.add(EXPLODE_ANIM, [0, 1, 2, 3, 4, 5, 6, 7], 12, false);
-        explodeAnim.visible = false;
         this.graphicList.add(explodeAnim);
+
+        var flightImg:Image = Image(this.graphicList.children[0]);
+        angleTween = new VarTween(null, Tween.ONESHOT);
+        angleTween.tween(flightImg, "angle", 60, 1);
     }
 
+
+    override public function added():void {
+        missileArray = [];
+        health = 5;
+        hitScore = 20;
+        explodeAnim.visible = false;
+        super.added();
+    }
 
     override public function attack():void {
         if(this.x <  300) {
@@ -67,11 +86,14 @@ public class BellP39 extends AbsFlight {
         }
     }
 
+    private var tempMissile:AbsWeapon;
     private function dropMissile():void {
         missileDropDelay--;
          if(missileDropDelay <= 0){
              missileDropDelay = 30;
-             FP.world.add(new P39Bomb(this.x,this.y));
+             tempMissile = missilePool.getEntity(Math.random()*missilePool.length) as AbsWeapon;
+             tempMissile.setPos(new Point(this.x,this.y));
+             FP.world.add(tempMissile);
          }
     }
 
@@ -85,24 +107,31 @@ public class BellP39 extends AbsFlight {
             this.y = linearPath.y;
         }
         if (this.finished) {
-            remove();
+            cleanUp();
         }
 
         super.update();
     }
 
 
-    override protected function remove():void {
+    override protected function cleanUp():void {
+        restImage();
         clearTweens();
-        super.remove();
+        clearMissiles();
+        super.cleanUp();
+    }
+
+    private function clearMissiles():void {
+        for (var i:int = missileArray.length - 1; i >= 0; i--) {
+            var weapon:AbsWeapon = missileArray[i];
+            missileArray.splice(i,1);
+        }
+        missileArray = [];
     }
 
     override protected function shotDown():void {
-        var flightImg:Image = Image(this.graphicList.children[0]);
-        angleTween = new VarTween(null, Tween.ONESHOT);
-        angleTween.tween(flightImg, "angle", 60, 1);
-        angleTween.start();
 
+        angleTween.start();
         linearPath = new LinearPath(explode, Tween.ONESHOT);
         linearPath.addPoint(this.x, this.y);
         linearPath.addPoint(this.x - 200, FP.height - this.height - 20);
@@ -110,6 +139,12 @@ public class BellP39 extends AbsFlight {
         (this.x < FP.halfHeight) ? speed = 2 : speed = 1;
         linearPath.setMotion(speed);
         addTween(linearPath, true);
+
+    }
+
+    private function restImage():void {
+        var flightImg:Image = Image(this.graphicList.children[0]);
+        flightImg.angle = 0;
     }
 
     private function explode():void {
@@ -121,13 +156,14 @@ public class BellP39 extends AbsFlight {
 
 
     override public function removed():void {
-        explodeAnim = null;
+       /* explodeAnim = null;
         angleTween = null;
         linearPath = null;
-        sfxExplosion.stop();
         sfxExplosion = null;
-        graphicList.removeAll();
+        graphicList.removeAll();*/
+        sfxExplosion.stop();
         super.removed();
+
     }
 }
 }

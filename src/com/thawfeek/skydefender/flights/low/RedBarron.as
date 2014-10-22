@@ -44,7 +44,6 @@ public class RedBarron extends AbsFlight {
         explodeAnim.originX = frameWidth >> 1;
         explodeAnim.originY = frameHeight >> 1;
         explodeAnim.add(EXPLODE_ANIM, [0, 1, 2, 3, 4, 5, 6, 7], 12, false);
-        explodeAnim.visible = false;
         this.graphicList.add(explodeAnim);
 
         engineSound = GameConfig.getInstance().addSound(EmbededAssets.SFX_RED_BARRON_ENGINE);
@@ -52,6 +51,12 @@ public class RedBarron extends AbsFlight {
 
     private var explodeAnim:Spritemap;
     private var engineSound:Sfx;
+
+
+    override public function added():void {
+        super.added();
+        explodeAnim.visible = false;
+    }
 
     override public function deploy(targetX:int, targetY:int):void {
         super.deploy(targetX, targetY);
@@ -66,7 +71,7 @@ public class RedBarron extends AbsFlight {
         }
 
         if (this.finished) {
-            remove();
+            cleanUp();
         }
 
         super.update();
@@ -80,17 +85,18 @@ public class RedBarron extends AbsFlight {
         explodeAnim.play(EXPLODE_ANIM);
     }
 
-    override protected function remove():void {
-        super.remove();
+    override protected function cleanUp():void {
+        super.cleanUp();
     }
 
     override public function removed():void {
         super.removed();
         engineSound.stop();
-        graphicList.removeAll();
+        /*graphicList.removeAll();
         explodeAnim = null;
         engineSound = null;
         graphicList = null;
+        graphic = null;*/
     }
 }
 }
