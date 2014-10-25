@@ -54,5 +54,9 @@ public class UIMsgBox extends Entity implements IUserInterfaceItem {
         this.x = val.x;
         this.y = val.y;
     }
+
+    public function getPosition():Point {
+        return new Point(this.x,this.y);
+    }
 }
 }

@@ -5,8 +5,8 @@
  * Time: 7:47 AM
  * To change this template use File | Settings | File Templates.
  */
-package com.thawfeek.skydefender.shop {
-public class ShopItemID {
+package com.thawfeek.skydefender.player.weapons {
+public class WeaponConstants {
 
     public static const TURRET_BASIC:int = 0;
     public static const TURRET_RAPID_FIRE:int = 1;

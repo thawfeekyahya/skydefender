@@ -7,13 +7,11 @@
  */
 package com.thawfeek.skydefender.player.weapons.missiles {
 import com.thawfeek.skydefender.EmbededAssets;
-import com.thawfeek.skydefender.player.Player;
 import com.thawfeek.skydefender.player.weapons.AbsWeapon;
 
 import flash.geom.Point;
 
 import net.flashpunk.Entity;
-
 import net.flashpunk.FP;
 import net.flashpunk.graphics.Graphiclist;
 import net.flashpunk.graphics.Image;

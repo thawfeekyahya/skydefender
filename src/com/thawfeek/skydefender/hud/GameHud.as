@@ -21,6 +21,7 @@ import net.flashpunk.graphics.Image;
 
 public class GameHud extends Entity {
 
+
     public static const HUD_UI_INFO_ITEM:String = "infoItem";
     public static const HUD_UI_TEXT_ITEM:String;
     public static const HUD_UI_BUTTON_ITEM:String;
@@ -72,6 +73,10 @@ public class GameHud extends Entity {
          var posY:int = position.y;
          uiItem.setPosition(new Point(posX,posY));
 
+    }
+
+    public function getUI(key:String):IUserInterfaceItem {
+        return uiDict[key];
     }
 
     public function show():void {

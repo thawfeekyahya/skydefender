@@ -14,6 +14,7 @@ public interface IUserInterfaceItem {
     function enable():void;
     function disable():void;
     function setText(val:String):void;
-    function setPosition(val:Point):void
+    function setPosition(val:Point):void;
+    function getPosition():Point;
 }
 }

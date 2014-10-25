@@ -6,7 +6,6 @@
  * To change this template use File | Settings | File Templates.
  */
 package com.thawfeek.skydefender.player.weapons.bullets {
-import com.thawfeek.skydefender.player.weapons.*;
 import com.thawfeek.skydefender.EmbededAssets;
 
 import net.flashpunk.graphics.Image;

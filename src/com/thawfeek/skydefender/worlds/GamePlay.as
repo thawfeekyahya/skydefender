@@ -15,10 +15,11 @@ import com.thawfeek.skydefender.flights.AbsFlight;
 import com.thawfeek.skydefender.flights.low.BellP39;
 import com.thawfeek.skydefender.flights.low.RedBarron;
 import com.thawfeek.skydefender.hud.GameHud;
+import com.thawfeek.skydefender.hud.HUDConstants;
 import com.thawfeek.skydefender.player.Player;
 import com.thawfeek.skydefender.shop.IShopMenu;
 import com.thawfeek.skydefender.shop.ItemData;
-import com.thawfeek.skydefender.shop.ShopItemID;
+import com.thawfeek.skydefender.player.weapons.WeaponConstants;
 import com.thawfeek.skydefender.shop.ShopMenu;
 import com.thawfeek.skydefender.ui.uielements.IUserInterfaceItem;
 import com.thawfeek.skydefender.ui.uielements.UICreator;
@@ -116,12 +117,12 @@ public class GamePlay extends World implements IEventDelegate{
 
     private function tempShopTest():void {
         shopShowCase = new ShopMenu(this,100, 200);
-        var itemData:Array = [new ItemData("120m Bullet", EmbededAssets.SHOP_FW_BTN, "80 $", 80, ShopItemID.BULLET_HEAVY),
-                              new ItemData("90m Bullet", EmbededAssets.SHOP_FW_BTN, "40 $", 40, ShopItemID.BULLET_MEDIUM),
-                              new ItemData("40m Bullet", EmbededAssets.SHOP_FW_BTN, "20 $", 20, ShopItemID.BULLET_SMALL),
-                              new ItemData("Rapid Fire", EmbededAssets.SHOP_FW_BTN, "140 $", 140, ShopItemID.TURRET_RAPID_FIRE),
-                              new ItemData("Silver Killer", EmbededAssets.SHOP_FW_BTN, "180 $", 180, ShopItemID.TURRET_SILVER_KILLER),
-                              new ItemData("Thunder Bolt", EmbededAssets.SHOP_FW_BTN, "220 $", 220, ShopItemID.TURRET_THUNDER_BOLT)
+        var itemData:Array = [new ItemData("120m Bullet", EmbededAssets.SHOP_FW_BTN, "80 $", 80, WeaponConstants.BULLET_HEAVY),
+                              new ItemData("90m Bullet", EmbededAssets.SHOP_FW_BTN, "40 $", 40, WeaponConstants.BULLET_MEDIUM),
+                              new ItemData("40m Bullet", EmbededAssets.SHOP_FW_BTN, "20 $", 20, WeaponConstants.BULLET_SMALL),
+                              new ItemData("Rapid Fire", EmbededAssets.SHOP_FW_BTN, "140 $", 140, WeaponConstants.TURRET_RAPID_FIRE),
+                              new ItemData("Silver Killer", EmbededAssets.SHOP_FW_BTN, "180 $", 180, WeaponConstants.TURRET_SILVER_KILLER),
+                              new ItemData("Thunder Bolt", EmbededAssets.SHOP_FW_BTN, "220 $", 220, WeaponConstants.TURRET_THUNDER_BOLT)
                              ];
         for (var i:int = 0 ,len:int = itemData.length; i < len; i++) {
             shopShowCase.addShopItem(itemData[i]);
@@ -142,6 +143,11 @@ public class GamePlay extends World implements IEventDelegate{
         numEnemyFlights      = (numEnemyFlights > 100 ) ? numEnemyFlights = 100 : numEnemyFlights  = 3;//level*10+3;
         //numEnemyFlights      =  numEnemyFlights / levelData[level].enemyFlights.length;           //Re-calculate num Enemies based on level Data
         enemyFlightPool      = new EntityPool(enemyFlightWaveMax, levelData[level].enemyFlights);
+
+
+        gameHud.getUI(HUDConstants.PRIMARY_WEAPON).setText(player.getWeaponInfo().primeWep);
+//        gameHud.getUI(HUDConstants.SECONDARY_WEAPON).setText(player.getWeaponInfo().secWep);
+        gameHud.getUI(HUDConstants.TURRET).setText(player.getWeaponInfo().turret);
     }
 
     private function switchState(state:int):void {
@@ -194,9 +200,9 @@ public class GamePlay extends World implements IEventDelegate{
         addGraphic(backgroundImage).layer = BG_STACK_ORDER;
         add(player);
         add(gameHud);
-        gameHud.addUI(new Image(EmbededAssets.GAME_HUD_ICON_1),GameHud.HUD_UI_INFO_ITEM,"Fire Speed");
-        gameHud.addUI(new Image(EmbededAssets.GAME_HUD_ICON_2),GameHud.HUD_UI_INFO_ITEM,"Primary weapon");
-        gameHud.addUI(new Image(EmbededAssets.GAME_HUD_ICON_3),GameHud.HUD_UI_INFO_ITEM,"Seconday weapon");
+        gameHud.addUI(new Image(EmbededAssets.GAME_HUD_ICON_1),GameHud.HUD_UI_INFO_ITEM,HUDConstants.PRIMARY_WEAPON);
+//        gameHud.addUI(new Image(EmbededAssets.GAME_HUD_ICON_2),GameHud.HUD_UI_INFO_ITEM,HUDConstants.SECONDARY_WEAPON);
+        gameHud.addUI(new Image(EmbededAssets.GAME_HUD_ICON_3),GameHud.HUD_UI_INFO_ITEM,HUDConstants.TURRET);
         gameHud.show();
 
         gamePlayArea.x = 0;
@@ -285,6 +291,7 @@ public class GamePlay extends World implements IEventDelegate{
                     switchState(STATE_NEW_LEVEL);
                 break;
         }
+
     }
 
 }
