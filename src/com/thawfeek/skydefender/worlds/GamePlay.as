@@ -50,6 +50,7 @@ public class GamePlay extends World implements IEventDelegate{
     private static const STATE_GAME_PAUSED:int = 1;
     private static const STATE_GAME_SHOP:int = 2;
     private static const STATE_NEW_LEVEL:int = 3;
+    private static const STATE_GAME_OVER:int = 4;
 
     private var currentState:int = -1;
     private var prevState:int;
@@ -77,6 +78,8 @@ public class GamePlay extends World implements IEventDelegate{
 
     private var uiMsgBox:IUserInterfaceItem;
     private var uiScoreBoard:IUserInterfaceItem;
+    private var playerHealthBoard:IUserInterfaceItem;
+    private var levelInfo:IUserInterfaceItem;
 
     private var scoreBoardElementDict:Dictionary;
 
@@ -107,10 +110,15 @@ public class GamePlay extends World implements IEventDelegate{
         uiMsgBox = UICreator.createMsgBoxUI("Click to Start",new Point(FP.halfWidth-40,FP.halfHeight));
         backgroundImage = new Backdrop(EmbededAssets.GAME_BG_IMAGE);
         gameMusic = GameConfig.getInstance().addSound(EmbededAssets.GAME_MUSIC);
-        uiScoreBoard = UICreator.createScoreElement(GameConstants.PLAYER_SCORE,"0",new Point(400,40));
+        uiScoreBoard = UICreator.createScoreElement(GameConstants.PLAYER_SCORE,"0",new Point(350,40));
         scoreBoardElementDict[GameConstants.PLAYER_SCORE] = uiScoreBoard;
+        playerHealthBoard = UICreator.createScoreElement(GameConstants.PLAYER_HEALTH,player.health.toString(),new Point(450,40));
+        scoreBoardElementDict[GameConstants.PLAYER_HEALTH] = playerHealthBoard;
+        levelInfo = UICreator.createScoreElement(GameConstants.LEVEL_INFO,level.toString(),new Point(250,40));
+        scoreBoardElementDict[GameConstants.LEVEL_INFO] = levelInfo;
         uiScoreBoard.show();
-
+        playerHealthBoard.show();
+        levelInfo.show();
         //TODO: Shop Test function
         tempShopTest();
     }
@@ -148,6 +156,8 @@ public class GamePlay extends World implements IEventDelegate{
         gameHud.getUI(HUDConstants.PRIMARY_WEAPON).setText(player.getWeaponInfo().primeWep);
 //        gameHud.getUI(HUDConstants.SECONDARY_WEAPON).setText(player.getWeaponInfo().secWep);
         gameHud.getUI(HUDConstants.TURRET).setText(player.getWeaponInfo().turret);
+
+        updateScoreBoard(GameConstants.LEVEL_INFO,level) ;
     }
 
     private function switchState(state:int):void {
@@ -177,6 +187,11 @@ public class GamePlay extends World implements IEventDelegate{
                     currStateFunction = stubFunction;
                     newLevel();
                 break;
+
+                case STATE_GAME_OVER:
+                    gameStarted = false;
+                    currStateFunction = stubFunction;
+                break
             }
         }
 
@@ -274,6 +289,14 @@ public class GamePlay extends World implements IEventDelegate{
                player.setScore(val);
                targetValue = player.getScore();
                break;
+
+           case GameConstants.PLAYER_HEALTH:
+               targetValue = player.health;
+           break;
+
+           case GameConstants.LEVEL_INFO:
+               targetValue = level;
+           break;
        }
 
        scoreBoardElementDict[element].setText(targetValue);
@@ -282,6 +305,13 @@ public class GamePlay extends World implements IEventDelegate{
     private function runGame():void {
         generateEnemies();
         checkForLevelEnd();
+        checkForGameOver();
+    }
+
+    private function checkForGameOver():void {
+        if(player.health <= 0){
+            switchState(STATE_GAME_OVER);
+        }
     }
 
     public function processEvent(type:String):void {
@@ -290,6 +320,7 @@ public class GamePlay extends World implements IEventDelegate{
                     shopShowCase.hideShopShowCase();
                     switchState(STATE_NEW_LEVEL);
                 break;
+
         }
 
     }

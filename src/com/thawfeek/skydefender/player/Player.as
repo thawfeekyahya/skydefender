@@ -9,6 +9,7 @@ package com.thawfeek.skydefender.player {
 import com.thawfeek.skydefender.EmbededAssets;
 import com.thawfeek.skydefender.GameConfig;
 import com.thawfeek.skydefender.GameConstants;
+import com.thawfeek.skydefender.player.weapons.AbsWeapon;
 import com.thawfeek.skydefender.player.weapons.WeaponConstants;
 import com.thawfeek.skydefender.player.weapons.bullets.BulletHeavy;
 import com.thawfeek.skydefender.player.weapons.bullets.BulletMedium;
@@ -61,8 +62,10 @@ public class Player extends Entity {
     private var currPrimaryWep:String;
     private var currSecondaryWep:String;
     private var currTurret:String;
+    private var _health:int = 100;
 
     override public function added():void {
+        health = 100;
         super.added();
     }
 
@@ -70,7 +73,21 @@ public class Player extends Entity {
         moveTurret();
         checkBullets();
         checkMouseInput();
+        checkCollision();
         super.update();
+    }
+
+    private function checkCollision():void {
+        var enemyBullet:AbsWeapon = this.collide(GameConstants.ENEMY_BULLET,this.x,this.y) as AbsWeapon;
+        if(enemyBullet){
+            checkHealth(enemyBullet.getPower());
+            enemyBullet.collidable = false;
+        }
+    }
+
+    private function checkHealth(power:int):void {
+        this.health -= power;
+        GamePlay(world).updateScoreBoard(GameConstants.PLAYER_HEALTH,health);
     }
 
     public function buyShopItem(itemData:ItemData):void {
@@ -253,7 +270,15 @@ public class Player extends Entity {
         if (gList.count > 0) gList.removeAll();
         gList.add(turret);
         gList.add(turretBase);
+        setHitboxTo(turretBase);
+    }
 
+    public function get health():int {
+        return _health;
+    }
+
+    public function set health(value:int):void {
+        _health = value;
     }
 }
 }

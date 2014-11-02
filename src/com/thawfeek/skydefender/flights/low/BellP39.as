@@ -11,8 +11,8 @@ import com.thawfeek.skydefender.GameConfig;
 import com.thawfeek.skydefender.flights.AbsFlight;
 import com.thawfeek.skydefender.player.Player;
 import com.thawfeek.skydefender.player.weapons.AbsWeapon;
-import com.thawfeek.skydefender.player.weapons.missiles.P39Bomb;
-import com.thawfeek.skydefender.player.weapons.missiles.P39Bomb;
+import com.thawfeek.skydefender.flights.missiles.P39Bomb;
+import com.thawfeek.skydefender.flights.missiles.P39Bomb;
 import com.thawfeek.skydefender.utils.EntityPool;
 
 import flash.geom.Point;

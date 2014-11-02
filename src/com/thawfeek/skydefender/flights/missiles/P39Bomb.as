@@ -5,17 +5,21 @@
  * Time: 7:49 PM
  * To change this template use File | Settings | File Templates.
  */
-package com.thawfeek.skydefender.player.weapons.missiles {
+package com.thawfeek.skydefender.flights.missiles {
 import com.thawfeek.skydefender.EmbededAssets;
+import com.thawfeek.skydefender.GameConfig;
+import com.thawfeek.skydefender.GameConstants;
 import com.thawfeek.skydefender.player.weapons.AbsWeapon;
 
 import flash.geom.Point;
 
 import net.flashpunk.Entity;
 import net.flashpunk.FP;
+import net.flashpunk.Graphic;
 import net.flashpunk.graphics.Graphiclist;
 import net.flashpunk.graphics.Image;
 import net.flashpunk.graphics.Spritemap;
+import net.flashpunk.graphics.Stamp;
 
 public class P39Bomb extends AbsWeapon {
 
@@ -29,15 +33,18 @@ public class P39Bomb extends AbsWeapon {
 
         this.power = 12;
         this.speed = 4;
-
+        this.type = GameConstants.ENEMY_BULLET;
         var e:Entity = this;
+
+        weaponHitSound = GameConfig.getInstance().addSound(EmbededAssets.SFX_ENEMY_EXPLODE);
 
         var onAnimComplete:Function = function ():void {
             cleanUp();
             FP.world.remove(e);
         }
+
         this.graphicList = new Graphiclist();
-        this.graphicList.add(new Image(EmbededAssets.BOMB_P39));
+        this.graphicList.add(new Stamp(EmbededAssets.BOMB_P39));
 
         var frameWidth:int = 200;
         var frameHeight:int = 200;
@@ -49,9 +56,11 @@ public class P39Bomb extends AbsWeapon {
         this.graphicList.add(explodeAnim);
 
         this.graphic = graphicList;
+        setHitboxTo(graphicList.children[0]);
     }
 
     override public function setPos(pos:Point):void {
+        collidable = true;
         this.x = pos.x;
         this.y = pos.y;
     }
@@ -71,6 +80,7 @@ public class P39Bomb extends AbsWeapon {
         explodeAnim.visible = true;
         explodeAnim.setAnimFrame(EXPLODE_ANIM, 0);
         explodeAnim.play(EXPLODE_ANIM);
+        weaponHitSound.play();
     }
 
     override protected function cleanUp():void {

@@ -11,6 +11,9 @@ public class GameConstants {
     public static const PLAYER_BULLET:String = "playerBullet";
 
     public static const PLAYER_SCORE = "$";
+    public static const ENEMY_BULLET:String = "enemyBullet";
+    public static const PLAYER_HEALTH:String = "Health";
+    public static const LEVEL_INFO:String = "Level ";
 
 }
 }
