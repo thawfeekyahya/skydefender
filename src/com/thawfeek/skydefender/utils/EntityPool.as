@@ -83,6 +83,13 @@ public class EntityPool {
         totalCount = 0;
     }
 
+    public function resetPool():void {
+        for (var i:int = watchList.length - 1; i >= 0; i--) {
+            watchList.splice(i,1);
+        }
+        counter = totalCount;
+    }
+
     public function get length():int {
         return totalCount;
     }

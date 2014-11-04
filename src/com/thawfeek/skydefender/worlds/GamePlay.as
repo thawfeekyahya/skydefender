@@ -75,6 +75,7 @@ public class GamePlay extends World implements IEventDelegate{
     private var gameStarted:Boolean;
     private var playerScore:int;
     private var shopShowCase:IShopMenu;
+    private var gameOver:Boolean;
 
     private var uiMsgBox:IUserInterfaceItem;
     private var uiScoreBoard:IUserInterfaceItem;
@@ -190,6 +191,8 @@ public class GamePlay extends World implements IEventDelegate{
 
                 case STATE_GAME_OVER:
                     gameStarted = false;
+                    gameOver = true;
+                    gameMusic.stop();
                     currStateFunction = stubFunction;
                 break
             }
@@ -239,7 +242,7 @@ public class GamePlay extends World implements IEventDelegate{
     }
     private function checkForLevelEnd():void {
         checkEnemyFlights();
-        if(enemyFlightArray.length == 0 && enemyFlightCount == numEnemyFlights){
+        if(enemyFlightArray.length == 0 && enemyFlightCount == numEnemyFlights && !gameOver){
             cleanUpLevel();
             player.cleanUp();
             switchState(STATE_GAME_SHOP);
@@ -310,6 +313,8 @@ public class GamePlay extends World implements IEventDelegate{
 
     private function checkForGameOver():void {
         if(player.health <= 0){
+            cleanUpLevel();
+            player.cleanUp();
             switchState(STATE_GAME_OVER);
         }
     }

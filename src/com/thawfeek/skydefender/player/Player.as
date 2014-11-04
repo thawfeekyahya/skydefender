@@ -86,8 +86,13 @@ public class Player extends Entity {
     }
 
     private function checkHealth(power:int):void {
-        this.health -= power;
-        GamePlay(world).updateScoreBoard(GameConstants.PLAYER_HEALTH,health);
+        if (health - power > 0) {
+            health -= power;
+        }  else {
+            health = 0;
+        }
+
+        GamePlay(world).updateScoreBoard(GameConstants.PLAYER_HEALTH, health);
     }
 
     public function buyShopItem(itemData:ItemData):void {

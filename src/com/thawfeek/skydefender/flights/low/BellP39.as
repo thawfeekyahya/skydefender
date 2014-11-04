@@ -35,10 +35,13 @@ public class BellP39 extends AbsFlight {
     private var missileDropDelay:int;
     private var missileArray:Array;
     private var missilePool:EntityPool;
-
+    private var missileCount:int;
     private static var EXPLODE_ANIM:String = "explodeAnim";
 
     private var explodeAnim:Spritemap;
+
+    private static var MAX_MISSILE:int = 6;
+
 
     public function BellP39(moveSpeed:int = 2) {
         super(moveSpeed);
@@ -49,7 +52,7 @@ public class BellP39 extends AbsFlight {
         this.centerOrigin();
         img.centerOrigin();
 
-        missilePool = new EntityPool(15,[P39Bomb])
+        missilePool = new EntityPool(MAX_MISSILE,[P39Bomb])
 
         sfxExplosion = GameConfig.getInstance().addSound(EmbededAssets.SFX_ENEMY_EXPLODE);
 
@@ -77,6 +80,8 @@ public class BellP39 extends AbsFlight {
         health = 5;
         hitScore = 20;
         explodeAnim.visible = false;
+        missilePool.resetPool();
+        missileCount = 0;
         super.added();
     }
 
@@ -89,11 +94,12 @@ public class BellP39 extends AbsFlight {
     private var tempMissile:AbsWeapon;
     private function dropMissile():void {
         missileDropDelay--;
-         if(missileDropDelay <= 0){
+         if(missileDropDelay <= 0 && missileCount < MAX_MISSILE){
              missileDropDelay = 30;
              tempMissile = missilePool.getEntity(Math.random()*missilePool.length) as AbsWeapon;
              tempMissile.setPos(new Point(this.x,this.y));
              FP.world.add(tempMissile);
+             missileCount++;
          }
     }
 
