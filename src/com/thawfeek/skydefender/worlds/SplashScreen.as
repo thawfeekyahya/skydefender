@@ -11,6 +11,7 @@ import com.thawfeek.skydefender.EmbededAssets;
 import net.flashpunk.FP;
 import net.flashpunk.World;
 import net.flashpunk.graphics.Backdrop;
+import net.flashpunk.graphics.Text;
 import net.flashpunk.utils.Button;
 
 public class SplashScreen extends World {
@@ -26,6 +27,8 @@ public class SplashScreen extends World {
     }
 
     private function init():void {
+        Text.font = "Arial";
+        Text.size = 18;
         image = new Backdrop(EmbededAssets.SPLASH_SCREEN_IMAGE);
         addGraphic(image);
         startButton     = new Button("Play",startButtonClicked,FP.halfWidth,FP.halfHeight,100,50);
@@ -33,6 +36,7 @@ public class SplashScreen extends World {
     }
 
     private function startButtonClicked():void {
+        removeAll();
         FP.world = new GamePlay();
     }
 

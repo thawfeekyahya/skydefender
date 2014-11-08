@@ -193,11 +193,17 @@ public class GamePlay extends World implements IEventDelegate{
                     gameStarted = false;
                     gameOver = true;
                     gameMusic.stop();
+                    showGameOverScreen();
                     currStateFunction = stubFunction;
                 break
             }
         }
 
+    }
+
+    private function showGameOverScreen():void {
+        removeAll();
+        FP.world = new GameOverScreen();
     }
 
     private function stubFunction():void {

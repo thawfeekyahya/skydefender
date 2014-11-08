@@ -7,6 +7,7 @@
  */
 package com.thawfeek.skydefender.utils {
 import net.flashpunk.Entity;
+import net.flashpunk.FP;
 
 public class EntityPool {
 

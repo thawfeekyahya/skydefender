@@ -39,7 +39,7 @@ public class P39Bomb extends AbsWeapon {
         weaponHitSound = GameConfig.getInstance().addSound(EmbededAssets.SFX_ENEMY_EXPLODE);
 
         var onAnimComplete:Function = function ():void {
-            cleanUp();
+            //cleanUp();
             FP.world.remove(e);
         }
 
@@ -94,6 +94,13 @@ public class P39Bomb extends AbsWeapon {
 
     override public function removed():void {
         super.removed();
+    }
+
+
+    override public function added():void {
+        super.added();
+        finished = false;
+        explodeAnim.visible = false;
     }
 }
 }

@@ -62,10 +62,10 @@ public class Player extends Entity {
     private var currPrimaryWep:String;
     private var currSecondaryWep:String;
     private var currTurret:String;
-    private var _health:int = 100;
+    private var _health:int;
 
     override public function added():void {
-        health = 100;
+        health = 10;
         super.added();
     }
 
