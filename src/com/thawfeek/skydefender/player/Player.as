@@ -7,7 +7,7 @@
  */
 package com.thawfeek.skydefender.player {
 import com.thawfeek.skydefender.EmbededAssets;
-import com.thawfeek.skydefender.GameConfig;
+import com.thawfeek.skydefender.SoundManager;
 import com.thawfeek.skydefender.GameConstants;
 import com.thawfeek.skydefender.player.weapons.AbsWeapon;
 import com.thawfeek.skydefender.player.weapons.WeaponConstants;
@@ -155,7 +155,7 @@ public class Player extends Entity {
         turretBase.y = FP.height - turretBase.height - 8;
 
         //Create Sounds
-        sfxShoot = GameConfig.getInstance().addSound(EmbededAssets.PLAYER_SHOOT_BASIC);
+        sfxShoot = SoundManager.getInstance().addSound(EmbededAssets.PLAYER_SHOOT_BASIC);
         weaponNameList = new Dictionary();
         weaponNameList[WeaponConstants.BULLET_HEAVY] = "120m";
         weaponNameList[WeaponConstants.BULLET_MEDIUM] = "40m";
@@ -191,7 +191,7 @@ public class Player extends Entity {
     private function fireBullets():void {
         delayTime += FP.elapsed;
         if (delayTime > fireDelay) {
-            if (GameConfig.getInstance().isSoundOn()) sfxShoot.play();
+            if (SoundManager.getInstance().isSoundOn()) sfxShoot.play();
             delayTime -= fireDelay;
             var rand:int = Math.random() * BULLET_COUNT;
             var bullet:BulletSmall = BulletSmall(FP.world.add(bulletPool.getEntity(rand)));

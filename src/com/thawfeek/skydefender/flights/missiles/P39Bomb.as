@@ -7,7 +7,8 @@
  */
 package com.thawfeek.skydefender.flights.missiles {
 import com.thawfeek.skydefender.EmbededAssets;
-import com.thawfeek.skydefender.GameConfig;
+import com.thawfeek.skydefender.SoundManager;
+import com.thawfeek.skydefender.SoundManager;
 import com.thawfeek.skydefender.GameConstants;
 import com.thawfeek.skydefender.player.weapons.AbsWeapon;
 
@@ -16,6 +17,7 @@ import flash.geom.Point;
 import net.flashpunk.Entity;
 import net.flashpunk.FP;
 import net.flashpunk.Graphic;
+import net.flashpunk.Sfx;
 import net.flashpunk.graphics.Graphiclist;
 import net.flashpunk.graphics.Image;
 import net.flashpunk.graphics.Spritemap;
@@ -36,7 +38,7 @@ public class P39Bomb extends AbsWeapon {
         this.type = GameConstants.ENEMY_BULLET;
         var e:Entity = this;
 
-        weaponHitSound = GameConfig.getInstance().addSound(EmbededAssets.SFX_ENEMY_EXPLODE);
+        weaponHitSound = SoundManager.getInstance().addSound(EmbededAssets.SFX_ENEMY_EXPLODE);
 
         var onAnimComplete:Function = function ():void {
             //cleanUp();
@@ -80,7 +82,7 @@ public class P39Bomb extends AbsWeapon {
         explodeAnim.visible = true;
         explodeAnim.setAnimFrame(EXPLODE_ANIM, 0);
         explodeAnim.play(EXPLODE_ANIM);
-        weaponHitSound.play();
+        SoundManager.getInstance().playSound(EmbededAssets.SFX_ENEMY_EXPLODE);
     }
 
     override protected function cleanUp():void {

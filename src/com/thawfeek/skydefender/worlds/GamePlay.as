@@ -7,7 +7,7 @@
  */
 package com.thawfeek.skydefender.worlds {
 import com.thawfeek.skydefender.EmbededAssets;
-import com.thawfeek.skydefender.GameConfig;
+import com.thawfeek.skydefender.SoundManager;
 import com.thawfeek.skydefender.GameConstants;
 import com.thawfeek.skydefender.event.EventConstants;
 import com.thawfeek.skydefender.event.IEventDelegate;
@@ -42,7 +42,7 @@ import net.flashpunk.utils.Input;
 public class GamePlay extends World implements IEventDelegate{
 
     private var backgroundImage:Backdrop;
-    private var gameMusic:Sfx;
+    private var GameMusic:Class;
     private var player:Player   ;
     private var gameHud:GameHud;
 
@@ -110,7 +110,7 @@ public class GamePlay extends World implements IEventDelegate{
         scoreBoardElementDict = new Dictionary(true);
         uiMsgBox = UICreator.createMsgBoxUI("Click to Start",new Point(FP.halfWidth-40,FP.halfHeight));
         backgroundImage = new Backdrop(EmbededAssets.GAME_BG_IMAGE);
-        gameMusic = GameConfig.getInstance().addSound(EmbededAssets.GAME_MUSIC);
+        GameMusic = SoundManager.getInstance().addMusic(EmbededAssets.GAME_MUSIC);
         uiScoreBoard = UICreator.createScoreElement(GameConstants.PLAYER_SCORE,"0",new Point(350,40));
         scoreBoardElementDict[GameConstants.PLAYER_SCORE] = uiScoreBoard;
         playerHealthBoard = UICreator.createScoreElement(GameConstants.PLAYER_HEALTH,player.health.toString(),new Point(450,40));
@@ -180,7 +180,7 @@ public class GamePlay extends World implements IEventDelegate{
 
                 case STATE_GAME_SHOP:
                      gameStarted = false;
-                     gameMusic.stop();
+                     SoundManager.getInstance().stopMusic();
                      currStateFunction = stubFunction;
                 break;
 
@@ -192,7 +192,7 @@ public class GamePlay extends World implements IEventDelegate{
                 case STATE_GAME_OVER:
                     gameStarted = false;
                     gameOver = true;
-                    gameMusic.stop();
+                    SoundManager.getInstance().stopMusic();
                     showGameOverScreen();
                     currStateFunction = stubFunction;
                 break
@@ -220,7 +220,7 @@ public class GamePlay extends World implements IEventDelegate{
 
     override public function begin():void {
         init();
-        //GameConfig.getInstance().muteSounds(false);
+        //SoundManager.getInstance().muteSounds(true);
         addGraphic(backgroundImage).layer = BG_STACK_ORDER;
         add(player);
         add(gameHud);
@@ -238,7 +238,7 @@ public class GamePlay extends World implements IEventDelegate{
     }
 
     private function playGameMusic():void {
-        if (GameConfig.getInstance().isSoundOn()) gameMusic.loop();
+        SoundManager.getInstance().playMusic(GameMusic);
     }
 
 

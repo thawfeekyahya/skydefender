@@ -7,7 +7,7 @@
  */
 package com.thawfeek.skydefender.flights.low {
 import com.thawfeek.skydefender.EmbededAssets;
-import com.thawfeek.skydefender.GameConfig;
+import com.thawfeek.skydefender.SoundManager;
 import com.thawfeek.skydefender.flights.AbsFlight;
 
 import net.flashpunk.Sfx;
@@ -46,7 +46,7 @@ public class RedBarron extends AbsFlight {
         explodeAnim.add(EXPLODE_ANIM, [0, 1, 2, 3, 4, 5, 6, 7], 12, false);
         this.graphicList.add(explodeAnim);
 
-        engineSound = GameConfig.getInstance().addSound(EmbededAssets.SFX_RED_BARRON_ENGINE);
+        engineSound = SoundManager.getInstance().addSound(EmbededAssets.SFX_RED_BARRON_ENGINE);
     }
 
     private var explodeAnim:Spritemap;
@@ -60,7 +60,7 @@ public class RedBarron extends AbsFlight {
 
     override public function deploy(targetX:int, targetY:int):void {
         super.deploy(targetX, targetY);
-        if(GameConfig.getInstance().isSoundOn()) engineSound.loop()
+        if(SoundManager.getInstance().isSoundOn()) engineSound.loop()
     }
 
     override public function update():void {

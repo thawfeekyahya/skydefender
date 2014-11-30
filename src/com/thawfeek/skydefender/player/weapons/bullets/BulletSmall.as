@@ -7,7 +7,7 @@
  */
 package com.thawfeek.skydefender.player.weapons.bullets {
 import com.thawfeek.skydefender.EmbededAssets;
-import com.thawfeek.skydefender.GameConfig;
+import com.thawfeek.skydefender.SoundManager;
 import com.thawfeek.skydefender.GameConstants;
 import com.thawfeek.skydefender.player.weapons.*;
 
@@ -31,7 +31,7 @@ public class BulletSmall extends AbsWeapon {
         this.type = GameConstants.PLAYER_BULLET;
         this.power = 2;
         Image(this.graphic).centerOrigin();
-        weaponHitSound = GameConfig.getInstance().addSound(EmbededAssets.SFX_BULLET_HIT);
+        weaponHitSound = SoundManager.getInstance().addSound(EmbededAssets.SFX_BULLET_HIT);
     }
 
 

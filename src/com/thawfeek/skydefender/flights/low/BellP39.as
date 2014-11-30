@@ -7,7 +7,7 @@
  */
 package com.thawfeek.skydefender.flights.low {
 import com.thawfeek.skydefender.EmbededAssets;
-import com.thawfeek.skydefender.GameConfig;
+import com.thawfeek.skydefender.SoundManager;
 import com.thawfeek.skydefender.flights.AbsFlight;
 import com.thawfeek.skydefender.player.Player;
 import com.thawfeek.skydefender.player.weapons.AbsWeapon;
@@ -64,7 +64,7 @@ public class BellP39 extends AbsFlight {
 
         missilePool = new EntityPool(MAX_MISSILE,[P39Bomb])
 
-        sfxExplosion = GameConfig.getInstance().addSound(EmbededAssets.SFX_ENEMY_EXPLODE);
+        sfxExplosion = SoundManager.getInstance().addSound(EmbededAssets.SFX_ENEMY_EXPLODE);
 
         var onAnimComplete:Function = function ():void {
            //explodeAnim.visible = false;
@@ -187,7 +187,7 @@ public class BellP39 extends AbsFlight {
     }
 
     private function explode():void {
-        if (!sfxExplosion.playing && GameConfig.getInstance().isSoundOn()) sfxExplosion.play();
+        if (!sfxExplosion.playing && SoundManager.getInstance().isSoundOn()) sfxExplosion.play();
         explodeAnim.visible = true;
         explodeAnim.setAnimFrame(EXPLODE_ANIM, 0);
         explodeAnim.play(EXPLODE_ANIM);
