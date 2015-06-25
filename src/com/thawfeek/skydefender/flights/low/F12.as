@@ -32,7 +32,7 @@ import net.flashpunk.graphics.Spritemap;
 import net.flashpunk.tweens.misc.VarTween;
 import net.flashpunk.tweens.motion.LinearPath;
 
-public class BellP39 extends AbsFlight {
+public class F12 extends AbsFlight {
 
     private var linearPath:LinearPath;
     private var angleTween:VarTween;
@@ -52,9 +52,9 @@ public class BellP39 extends AbsFlight {
     private var SMOKE_EMITTER:String="smoke";
 
 
-    public function BellP39(moveSpeed:int = 2) {
+    public function F12(moveSpeed:int = 6) {
         super(moveSpeed);
-        var img:Image = new Image(EmbededAssets.ENEMY_FLIGHT_P39);
+        var img:Image = new Image(EmbededAssets.ENEMY_FLIGHT_F12);
         graphicList.add(img);
         this.width = img.width;
         this.height = img.height;

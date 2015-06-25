@@ -65,7 +65,8 @@ public class Player extends Entity {
     private var _health:int;
 
     override public function added():void {
-        health = 10;
+        health = 100;
+        checkHealth(0); //Intially update the value to Game World
         super.added();
     }
 

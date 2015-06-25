@@ -32,7 +32,7 @@ import net.flashpunk.graphics.Spritemap;
 import net.flashpunk.tweens.misc.VarTween;
 import net.flashpunk.tweens.motion.LinearPath;
 
-public class BellP39 extends AbsFlight {
+public class MiG extends AbsFlight {
 
     private var linearPath:LinearPath;
     private var angleTween:VarTween;
@@ -52,9 +52,10 @@ public class BellP39 extends AbsFlight {
     private var SMOKE_EMITTER:String="smoke";
 
 
-    public function BellP39(moveSpeed:int = 2) {
+    public function MiG(moveSpeed:int = 6) {
         super(moveSpeed);
-        var img:Image = new Image(EmbededAssets.ENEMY_FLIGHT_P39);
+        var img:Image = new Image(EmbededAssets.ENEMY_FLIGHT_MiG);
+        img.scale = 0.7;
         graphicList.add(img);
         this.width = img.width;
         this.height = img.height;
@@ -98,11 +99,12 @@ public class BellP39 extends AbsFlight {
 
     override public function added():void {
         finished = false;
+        explodeAnim.visible = false;
+        smokeEmitter.visible = false;
         missileArray = [];
         health = 5;
         initialHealth = health;
         hitScore = 20;
-        explodeAnim.visible = false;
         missilePool.resetPool();
         missileCount = 0;
         super.added();
@@ -151,6 +153,7 @@ public class BellP39 extends AbsFlight {
     }
 
     private function emitSmoke():void {
+        smokeEmitter.visible = true;
         smokeEmitter.emit(SMOKE_EMITTER,-25,-25);
     }
 

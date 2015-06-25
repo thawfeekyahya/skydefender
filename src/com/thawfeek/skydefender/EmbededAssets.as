@@ -53,6 +53,12 @@ public class EmbededAssets {
             [Embed(source="../../../../assets/enemy/plane3.png")]
             public static const ENEMY_FLIGHT_P39:Class;
 
+            [Embed(source="../../../../assets/enemy/plane8.png")]
+            public static const ENEMY_FLIGHT_F12:Class;
+
+            [Embed(source="../../../../assets/enemy/plane10.png")]
+            public static const ENEMY_FLIGHT_MiG:Class;
+
             [Embed(source="../../../../assets/enemy/plane3_bomb.png")]
             public static const BOMB_P39:Class;
 

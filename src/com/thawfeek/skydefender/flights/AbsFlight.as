@@ -67,7 +67,7 @@ public class AbsFlight extends Entity {
     }
 
     public function getSpeed():int {
-        return moveSpeed;
+        return moveSpeed * FP.frameRate;
     }
 
     protected function getCurrentPos():Point {

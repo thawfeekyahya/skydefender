@@ -13,6 +13,8 @@ import com.thawfeek.skydefender.event.EventConstants;
 import com.thawfeek.skydefender.event.IEventDelegate;
 import com.thawfeek.skydefender.flights.AbsFlight;
 import com.thawfeek.skydefender.flights.low.BellP39;
+import com.thawfeek.skydefender.flights.low.F12;
+import com.thawfeek.skydefender.flights.low.MiG;
 import com.thawfeek.skydefender.flights.low.RedBarron;
 import com.thawfeek.skydefender.hud.GameHud;
 import com.thawfeek.skydefender.hud.HUDConstants;
@@ -88,7 +90,7 @@ public class GamePlay extends World implements IEventDelegate{
     private var levelData:Array = [
             undefined,
             {
-                enemyFlights:[BellP39]
+                enemyFlights:[MiG]
             },
             {
                 enemyFlights:[BellP39]
@@ -103,6 +105,7 @@ public class GamePlay extends World implements IEventDelegate{
 
     //TODO: Init function should be made sync with begin()
     private function init():void {
+        SoundManager.getInstance().muteSounds(true);
         player = Player.getInstance();
         gameHud = new GameHud(0,20);
         gameHud.layer = HUD_STACK_ORDER;
@@ -149,7 +152,7 @@ public class GamePlay extends World implements IEventDelegate{
         enemyFlightArray = [];
         enemyFlightWaveMax   = (enemyFlightWaveMax > 8 ) ? 8 : level;
         enemyFlightWaveDelay = (enemyFlightWaveDelay < 8) ? enemyFlightWaveDelay = 8 : enemyFlightWaveDelay = 11-(level*2);     //todo: need to change this
-        numEnemyFlights      = (numEnemyFlights > 100 ) ? numEnemyFlights = 100 : numEnemyFlights  = 3;//level*10+3;
+        numEnemyFlights      = (numEnemyFlights > 100 ) ? numEnemyFlights = 100 : numEnemyFlights  = 8;//level*10+3;
         //numEnemyFlights      =  numEnemyFlights / levelData[level].enemyFlights.length;           //Re-calculate num Enemies based on level Data
         enemyFlightPool      = new EntityPool(enemyFlightWaveMax, levelData[level].enemyFlights);
 
@@ -195,7 +198,7 @@ public class GamePlay extends World implements IEventDelegate{
                     SoundManager.getInstance().stopMusic();
                     showGameOverScreen();
                     currStateFunction = stubFunction;
-                break
+                break;
             }
         }
 
