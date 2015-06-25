@@ -27,8 +27,6 @@ public class SplashScreen extends World {
     }
 
     private function init():void {
-        Text.font = "Arial";
-        Text.size = 18;
         image = new Backdrop(EmbededAssets.SPLASH_SCREEN_IMAGE);
         addGraphic(image);
         startButton     = new Button("Play",startButtonClicked,FP.halfWidth,FP.halfHeight,100,50);
