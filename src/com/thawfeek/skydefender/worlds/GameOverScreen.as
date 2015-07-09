@@ -17,8 +17,6 @@ public class GameOverScreen extends World {
     }
 
     private function init():void {
-        Text.font = "Arial";
-        Text.size = 18;
         removeAll();
         var btn:Button = new Button("Replay",onMainMenuClick,FP.halfWidth,FP.halfHeight);
         add(btn);

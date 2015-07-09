@@ -13,7 +13,26 @@ import flash.ui.Keyboard;
 
 public class Test extends Sprite {
     public function Test() {
-       init();
+       //init();
+       var s:String = (5 > 6) ? "first" : (7 > 1) ? "second" : (3 == 2) ? "third" : "4th";
+       trace(s);
+
+        switch(s){
+            case "first":
+                trace(1);
+                break;
+            case "second":
+                trace(3);
+                break;
+        }
+
+        var i:int = 0;
+        i++
+        trace(i);
+
+        var j:int =0;
+        ++j
+        trace(j);
     }
 
     private var hero:Sprite;

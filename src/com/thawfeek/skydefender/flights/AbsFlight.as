@@ -28,6 +28,7 @@ public class AbsFlight extends Entity {
     private var scoreBoardUpdated:Boolean;
     protected var graphicList:Graphiclist;
     protected var finished:Boolean;
+    private var enemyReached:Boolean;
     protected var health:int;
     protected var hitScore:int;
     protected var isShotDown:Boolean;
@@ -79,6 +80,7 @@ public class AbsFlight extends Entity {
         super.update();
         if(getCurrentPos().x == getDestinationPoint().x && getCurrentPos().y == getDestinationPoint().y){
             finished = true;
+            enemyReached = true;
         }
         checkCollision();
     }
@@ -124,6 +126,8 @@ public class AbsFlight extends Entity {
     }
 
 
-
+    public function isReached():Boolean {
+        return enemyReached;
+    }
 }
 }

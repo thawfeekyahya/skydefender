@@ -30,7 +30,7 @@ public class EmbededAssets {
 
     //Entity Graphic Assets-------------------------------------------------
 
-        //Player
+        //Player  Weapons
             [Embed(source="../../../../assets/player/turetBase.png")]
             public static const PLAYER_TURRET_BASE:Class;
 
@@ -48,6 +48,10 @@ public class EmbededAssets {
 
             [Embed(source="../../../../assets/player/bullet_heavy.png")]
             public static const PLAYER_BULLET_HEAVY:Class;
+
+        //Player Misc
+            [Embed(source="../../../../assets/player/star_enabled.png")]
+            public static const STAR:Class;
 
         //Enemy
             [Embed(source="../../../../assets/enemy/plane3.png")]

@@ -19,6 +19,7 @@ import com.thawfeek.skydefender.flights.low.RedBarron;
 import com.thawfeek.skydefender.hud.GameHud;
 import com.thawfeek.skydefender.hud.HUDConstants;
 import com.thawfeek.skydefender.player.Player;
+import com.thawfeek.skydefender.player.weapons.lives.LivesTriad;
 import com.thawfeek.skydefender.shop.IShopMenu;
 import com.thawfeek.skydefender.shop.ItemData;
 import com.thawfeek.skydefender.player.weapons.WeaponConstants;
@@ -78,6 +79,8 @@ public class GamePlay extends World implements IEventDelegate{
     private var playerScore:int;
     private var shopShowCase:IShopMenu;
     private var gameOver:Boolean;
+    private var livesTriad:LivesTriad;
+    private var lives:int;
 
     private var uiMsgBox:IUserInterfaceItem;
     private var uiScoreBoard:IUserInterfaceItem;
@@ -90,7 +93,7 @@ public class GamePlay extends World implements IEventDelegate{
     private var levelData:Array = [
             undefined,
             {
-                enemyFlights:[MiG]
+                enemyFlights:[BellP39]
             },
             {
                 enemyFlights:[BellP39]
@@ -105,7 +108,7 @@ public class GamePlay extends World implements IEventDelegate{
 
     //TODO: Init function should be made sync with begin()
     private function init():void {
-        SoundManager.getInstance().muteSounds(true);
+        SoundManager.getInstance().muteSounds(false);
         player = Player.getInstance();
         gameHud = new GameHud(0,20);
         gameHud.layer = HUD_STACK_ORDER;
@@ -120,11 +123,16 @@ public class GamePlay extends World implements IEventDelegate{
         scoreBoardElementDict[GameConstants.PLAYER_HEALTH] = playerHealthBoard;
         levelInfo = UICreator.createScoreElement(GameConstants.LEVEL_INFO,level.toString(),new Point(250,40));
         scoreBoardElementDict[GameConstants.LEVEL_INFO] = levelInfo;
+
         uiScoreBoard.show();
         playerHealthBoard.show();
         levelInfo.show();
         //TODO: Shop Test function
         tempShopTest();
+
+        livesTriad = new LivesTriad(this);
+        lives = 3;
+        livesTriad.setLives(lives);
     }
 
     private function tempShopTest():void {
@@ -152,7 +160,7 @@ public class GamePlay extends World implements IEventDelegate{
         enemyFlightArray = [];
         enemyFlightWaveMax   = (enemyFlightWaveMax > 8 ) ? 8 : level;
         enemyFlightWaveDelay = (enemyFlightWaveDelay < 8) ? enemyFlightWaveDelay = 8 : enemyFlightWaveDelay = 11-(level*2);     //todo: need to change this
-        numEnemyFlights      = (numEnemyFlights > 100 ) ? numEnemyFlights = 100 : numEnemyFlights  = 8;//level*10+3;
+        numEnemyFlights      = (numEnemyFlights > 100 ) ? numEnemyFlights = 100 : numEnemyFlights  = 2;//level*10+3;
         //numEnemyFlights      =  numEnemyFlights / levelData[level].enemyFlights.length;           //Re-calculate num Enemies based on level Data
         enemyFlightPool      = new EntityPool(enemyFlightWaveMax, levelData[level].enemyFlights);
 
@@ -265,6 +273,9 @@ public class GamePlay extends World implements IEventDelegate{
             if(enemyFlight.isFinished()){
                 enemyFlightArray.splice(i,1);
                 enemyFlightPool.putEntity(enemyFlight);
+                if(enemyFlight.isReached()){
+                    livesTriad.setLives(--lives);
+                }
             }
         }
     }
